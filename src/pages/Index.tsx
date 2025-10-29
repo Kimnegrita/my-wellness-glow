@@ -89,20 +89,22 @@ const Index = () => {
 
         {/* Cycle Status */}
         {cycleInfo && (
-          <div className="bg-card rounded-lg p-6 shadow-elegant animate-fade-in-up">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold">Estado del Ciclo</h2>
-              <PhaseIndicator phase={cycleInfo.phase} />
+          <div className="bg-gradient-to-br from-card to-primary/5 rounded-2xl p-8 shadow-elegant border border-primary/20 animate-fade-in-up backdrop-blur">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-foreground">Estado del Ciclo</h2>
+              <PhaseIndicator phase={cycleInfo.phase} className="text-base px-4 py-2" />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-muted-foreground">Día del ciclo</p>
-                <p className="text-3xl font-bold text-primary">{cycleInfo.currentDay}</p>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-card/80 backdrop-blur rounded-xl p-5 border border-primary/10">
+                <p className="text-sm text-muted-foreground mb-2 font-medium">Día del ciclo</p>
+                <p className="text-5xl font-bold bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent">
+                  {cycleInfo.currentDay}
+                </p>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Próxima menstruación</p>
-                <p className="text-3xl font-bold text-secondary">
-                  {cycleInfo.daysUntilNext > 0 ? `${cycleInfo.daysUntilNext} días` : 'Hoy'}
+              <div className="bg-card/80 backdrop-blur rounded-xl p-5 border border-secondary/10">
+                <p className="text-sm text-muted-foreground mb-2 font-medium">Próxima menstruación</p>
+                <p className="text-4xl font-bold bg-gradient-to-br from-secondary to-accent bg-clip-text text-transparent">
+                  {cycleInfo.daysUntilNext > 0 ? `${cycleInfo.daysUntilNext}d` : 'Hoy'}
                 </p>
               </div>
             </div>

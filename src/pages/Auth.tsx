@@ -72,23 +72,27 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
-      <Card className="w-full max-w-md shadow-elegant">
-        <CardHeader className="text-center space-y-2">
-          <div className="flex justify-center mb-2">
-            <img src="/logo.png" alt="My Wellness Glow" className="h-16 w-16" />
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
+      <Card className="w-full max-w-md shadow-elegant border-primary/20 bg-card/95 backdrop-blur">
+        <CardHeader className="text-center space-y-4 pb-8">
+          <div className="flex justify-center mb-4">
+            <div className="relative">
+              <img src="/logo.png" alt="My Wellness Glow" className="h-20 w-20 animate-glow-pulse" />
+              <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full -z-10"></div>
+            </div>
           </div>
-          <CardTitle className="text-3xl font-bold text-gradient">
-            My Wellness Glow
-          </CardTitle>
-          <CardDescription className="flex items-center justify-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
-            Tu compañera de bienestar integral
-          </CardDescription>
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold text-gradient">
+              Conecta con tu bienestar
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              Registrarte para iniciar tu viaje de autoconocimiento y cuidado personal
+            </p>
+          </div>
         </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+        <CardContent className="pb-8">
+          <Tabs defaultValue="signup" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 bg-muted/50">
               <TabsTrigger value="signin">Iniciar Sesión</TabsTrigger>
               <TabsTrigger value="signup">Registrarse</TabsTrigger>
             </TabsList>
@@ -117,10 +121,10 @@ export default function Auth() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-primary hover:opacity-90"
+                  className="w-full bg-gradient-primary hover:opacity-90 h-12 text-base font-semibold shadow-lg hover:shadow-xl transition-all"
                   disabled={loading}
                 >
-                  {loading ? 'Ingresando...' : 'Ingresar'}
+                  {loading ? 'Ingresando...' : 'Iniciar Sesión'}
                 </Button>
               </form>
             </TabsContent>
@@ -160,10 +164,10 @@ export default function Auth() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-primary hover:opacity-90"
+                  className="w-full bg-gradient-primary hover:opacity-90 h-12 text-base font-semibold shadow-lg hover:shadow-xl transition-all"
                   disabled={loading}
                 >
-                  {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
+                  {loading ? 'Creando cuenta...' : 'Crear una cuenta'}
                 </Button>
               </form>
             </TabsContent>

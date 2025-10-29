@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SymptomChip } from '@/components/SymptomChip';
+import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { ArrowLeft, Save } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -26,6 +27,15 @@ const SYMPTOMS = [
   'Cólicos',
 ];
 
+const MOODS = [
+  { emoji: '😊', label: 'Feliz', value: 'Feliz' },
+  { emoji: '😌', label: 'Tranquila', value: 'Tranquila' },
+  { emoji: '😓', label: 'Estresada', value: 'Estresada' },
+  { emoji: '😢', label: 'Triste', value: 'Triste' },
+  { emoji: '😤', label: 'Irritable', value: 'Irritable' },
+  { emoji: '😴', label: 'Cansada', value: 'Cansada' },
+];
+
 export default function DailyCheckin() {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -33,6 +43,7 @@ export default function DailyCheckin() {
 
   const [periodStatus, setPeriodStatus] = useState<'started' | 'ended' | 'none'>('none');
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
+  const [selectedMood, setSelectedMood] = useState<string>('');
   const [journalEntry, setJournalEntry] = useState('');
 
   const saveMutation = useMutation({
@@ -40,6 +51,11 @@ export default function DailyCheckin() {
       if (!user) throw new Error('No user');
 
       const today = format(new Date(), 'yyyy-MM-dd');
+      
+      // Add mood to symptoms if selected
+      const allSymptoms = selectedMood 
+        ? [...selectedSymptoms, `Ánimo: ${selectedMood}`]
+        : selectedSymptoms;
 
       const { error } = await supabase
         .from('daily_logs')
@@ -48,7 +64,7 @@ export default function DailyCheckin() {
           log_date: today,
           period_started: periodStatus === 'started',
           period_ended: periodStatus === 'ended',
-          symptoms: selectedSymptoms,
+          symptoms: allSymptoms,
           journal_entry: journalEntry || null,
         }, {
           onConflict: 'user_id,log_date'
@@ -58,6 +74,7 @@ export default function DailyCheckin() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['daily_logs'] });
+      queryClient.invalidateQueries({ queryKey: ['weekly_logs'] });
       toast.success('¡Registro guardado exitosamente! ✨');
       navigate('/');
     },
@@ -90,44 +107,82 @@ export default function DailyCheckin() {
           Volver
         </Button>
 
-        <Card className="shadow-elegant">
-          <CardHeader>
-            <CardTitle className="text-2xl text-gradient">Registro Diario</CardTitle>
-            <CardDescription>
-              Toma un momento para conectar con tu cuerpo
+        <Card className="shadow-elegant border-primary/20 bg-card/95 backdrop-blur">
+          <CardHeader className="space-y-1 pb-6">
+            <CardTitle className="text-3xl font-bold">
+              <span className="text-gradient">¿Cómo te sientes hoy?</span>
+            </CardTitle>
+            <CardDescription className="text-base">
+              Día {format(new Date(), 'd')} • Toma un momento para conectar con tu cuerpo
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-8">
             {/* Period Status */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Estado del Período</h3>
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <span className="text-lg">🩸</span>
+                Ciclo Menstrual
+              </h3>
               <div className="flex gap-3 flex-wrap">
                 <Button
                   variant={periodStatus === 'started' ? 'default' : 'outline'}
                   onClick={() => setPeriodStatus(periodStatus === 'started' ? 'none' : 'started')}
-                  className={periodStatus === 'started' ? 'bg-gradient-primary' : ''}
+                  className={periodStatus === 'started' ? 'bg-gradient-primary shadow-lg' : 'border-2'}
+                  size="lg"
                 >
                   Comenzó hoy
                 </Button>
                 <Button
                   variant={periodStatus === 'ended' ? 'default' : 'outline'}
                   onClick={() => setPeriodStatus(periodStatus === 'ended' ? 'none' : 'ended')}
-                  className={periodStatus === 'ended' ? 'bg-gradient-primary' : ''}
+                  className={periodStatus === 'ended' ? 'bg-gradient-primary shadow-lg' : 'border-2'}
+                  size="lg"
                 >
                   Terminó hoy
                 </Button>
                 <Button
                   variant={periodStatus === 'none' ? 'default' : 'outline'}
                   onClick={() => setPeriodStatus('none')}
+                  className={periodStatus === 'none' ? '' : 'border-2'}
+                  size="lg"
                 >
                   Sin cambios
                 </Button>
               </div>
             </div>
 
-            {/* Symptoms */}
+            {/* Mood Selection */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">¿Cómo te sientes hoy?</h3>
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <span className="text-lg">💭</span>
+                Mi Estado de Ánimo
+              </h3>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                {MOODS.map((mood) => (
+                  <button
+                    key={mood.value}
+                    onClick={() => setSelectedMood(selectedMood === mood.value ? '' : mood.value)}
+                    className={`
+                      flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all
+                      ${selectedMood === mood.value 
+                        ? 'border-primary bg-primary/10 scale-105 shadow-lg' 
+                        : 'border-border hover:border-primary/50 hover:bg-muted/50'
+                      }
+                    `}
+                  >
+                    <span className="text-3xl mb-1">{mood.emoji}</span>
+                    <span className="text-xs font-medium">{mood.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Physical Symptoms */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <span className="text-lg">🌡️</span>
+                Síntomas Físicos
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {SYMPTOMS.map((symptom) => (
                   <SymptomChip
@@ -142,25 +197,31 @@ export default function DailyCheckin() {
 
             {/* Journal */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Reflexión Personal</h3>
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <span className="text-lg">✨</span>
+                Intención o Gratitud
+              </h3>
               <Textarea
-                placeholder="Intención o Gratitud de hoy..."
+                placeholder="Escribe sobre tu intención o gratitud de hoy..."
                 value={journalEntry}
                 onChange={(e) => setJournalEntry(e.target.value)}
                 rows={4}
-                className="resize-none"
+                className="resize-none border-2 focus:border-primary/50"
               />
+              <p className="text-xs text-muted-foreground">
+                Este es tu espacio privado para reflexionar
+              </p>
             </div>
 
             {/* Save Button */}
             <Button
               onClick={handleSave}
               disabled={saveMutation.isPending}
-              className="w-full bg-gradient-primary hover:opacity-90"
+              className="w-full bg-gradient-primary hover:opacity-90 h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               size="lg"
             >
               {saveMutation.isPending ? 'Guardando...' : 'Guardar Registro'}
-              <Save className="ml-2 h-4 w-4" />
+              <Save className="ml-2 h-5 w-5" />
             </Button>
           </CardContent>
         </Card>
