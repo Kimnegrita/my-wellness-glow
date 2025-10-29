@@ -57,7 +57,7 @@ export type Database = {
           id: string
           is_irregular: boolean | null
           last_period_date: string | null
-          name: string
+          name: string | null
           updated_at: string | null
         }
         Insert: {
@@ -66,7 +66,7 @@ export type Database = {
           id: string
           is_irregular?: boolean | null
           last_period_date?: string | null
-          name: string
+          name?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -75,7 +75,7 @@ export type Database = {
           id?: string
           is_irregular?: boolean | null
           last_period_date?: string | null
-          name?: string
+          name?: string | null
           updated_at?: string | null
         }
         Relationships: []
