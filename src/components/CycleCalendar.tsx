@@ -38,7 +38,7 @@ export const CycleCalendar = () => {
   const loggedDates = logs?.map(log => parseISO(log.log_date)) || [];
 
   return (
-    <Card className="p-6" style={{ boxShadow: 'var(--shadow-card)' }}>
+    <Card className="p-6 animate-fade-in-up bg-gradient-to-br from-card to-primary/5 border-primary/20 backdrop-blur" style={{ boxShadow: 'var(--shadow-card)' }}>
       <h2 className="text-2xl font-bold mb-4 text-foreground">Calendario de Ciclo</h2>
       <p className="text-sm text-muted-foreground mb-6">
         Historial de tu ciclo y registros diarios
@@ -49,7 +49,7 @@ export const CycleCalendar = () => {
           locale={es}
           month={currentMonth}
           onMonthChange={setCurrentMonth}
-          className="rounded-md border-border"
+          className="rounded-md border-border w-full"
           modifiers={{
             period: periodDates,
             logged: loggedDates,
@@ -68,7 +68,7 @@ export const CycleCalendar = () => {
         />
         
         {/* Legend */}
-        <div className="mt-6 flex gap-6 text-sm">
+        <div className="mt-6 flex flex-wrap gap-4 md:gap-6 text-sm justify-center">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded-full bg-destructive/20 border-2 border-destructive"></div>
             <span className="text-muted-foreground">Menstruación</span>

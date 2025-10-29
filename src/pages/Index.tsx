@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { getCycleInfo } from "@/lib/cycleCalculations";
 import { getDailyTip } from "@/data/dailyTips";
 import { Calendar, Heart, Flame, LogOut, Settings, BarChart3 } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -76,6 +77,7 @@ const Index = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Button variant="ghost" size="sm" onClick={() => navigate('/history')}>
               <BarChart3 className="h-4 w-4" />
             </Button>
@@ -120,7 +122,7 @@ const Index = () => {
         )}
 
         {/* Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-fade-in-up">
           <DashboardCard
             icon={<Calendar className="h-6 w-6" />}
             title="Registros esta semana"

@@ -92,6 +92,10 @@ export default function DailyCheckin() {
   };
 
   const handleSave = () => {
+    if (!selectedMood && selectedSymptoms.length === 0 && !journalEntry) {
+      toast.error('Por favor, selecciona al menos un estado de ánimo, síntoma o escribe algo en el diario');
+      return;
+    }
     saveMutation.mutate();
   };
 
