@@ -2,6 +2,7 @@ import { DashboardCard } from "@/components/DashboardCard";
 import { CycleCalendar } from "@/components/CycleCalendar";
 import { WellnessTips } from "@/components/WellnessTips";
 import { TipCard } from "@/components/TipCard";
+import { FAQSection } from "@/components/FAQSection";
 import { PhaseIndicator } from "@/components/PhaseIndicator";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { useAuth } from "@/contexts/AuthContext";
@@ -148,6 +149,9 @@ const Index = () => {
           <CycleCalendar />
           <WellnessTips />
         </div>
+
+        {/* FAQ Section */}
+        <FAQSection />
       </div>
 
       {/* Floating Action Button */}
