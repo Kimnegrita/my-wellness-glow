@@ -191,6 +191,10 @@
     "menstrual": "Menstrual",
     "follicular": "Folicular",
     "ovulation": "Ovulação",
-    "luteal": "Lútea"
+    "luteal": "Lútea",
+    "menstrualDesc": "Fase menstrual (dias 1-5): O início do ciclo onde ocorre a menstruação. Os níveis hormonais estão baixos. É normal sentir fadiga, cólicas e precisar de mais descanso.",
+    "follicularDesc": "Fase folicular (dias 6-13): Após o período, os níveis de estrogénio aumentam. Muitas mulheres experimentam mais energia, melhor humor e clareza mental.",
+    "ovulationDesc": "Fase de ovulação (dia 14): O óvulo é libertado. Os níveis de estrogénio estão no seu pico. Pode haver mais energia, confiança e libido.",
+    "lutealDesc": "Fase lútea (dias 15-28): Após a ovulação, a progesterona aumenta. Algumas experimentam sintomas pré-menstruais como alterações de humor, inchaço ou sensibilidade nos seios."
   }
 }

@@ -191,6 +191,10 @@
     "menstrual": "Menstrual",
     "follicular": "Follicular",
     "ovulation": "Ovulation",
-    "luteal": "Luteal"
+    "luteal": "Luteal",
+    "menstrualDesc": "Menstrual phase (days 1-5): The beginning of the cycle when menstruation occurs. Hormone levels are low. It's normal to feel fatigue, cramps, and need more rest.",
+    "follicularDesc": "Follicular phase (days 6-13): After the period, estrogen levels rise. Many women experience more energy, better mood, and mental clarity.",
+    "ovulationDesc": "Ovulation phase (day 14): The egg is released. Estrogen levels are at their peak. There may be more energy, confidence, and libido.",
+    "lutealDesc": "Luteal phase (days 15-28): After ovulation, progesterone increases. Some experience premenstrual symptoms like mood changes, bloating, or breast tenderness."
   }
 }

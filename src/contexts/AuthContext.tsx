@@ -90,27 +90,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string, name: string) => {
     const redirectUrl = `${window.location.origin}/`;
     
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: redirectUrl,
+        data: {
+          name: name, // Store name in user metadata
+        }
       }
     });
 
     if (signUpError) return { error: signUpError };
 
-    // Update profile with name after signup
-    setTimeout(async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        await supabase
-          .from('profiles')
-          .update({ name })
-          .eq('id', user.id);
-        queryClient.invalidateQueries({ queryKey: ['profile'] });
+    // Immediately update profile with name
+    if (data.user) {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ name, language: 'es' }) // Set default language
+        .eq('id', data.user.id);
+      
+      if (profileError) {
+        console.error('Error updating profile:', profileError);
       }
-    }, 1000);
+      
+      // Invalidate queries to refresh profile data
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    }
 
     return { error: null };
   };
