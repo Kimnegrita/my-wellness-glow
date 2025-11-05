@@ -60,20 +60,22 @@ export function PhaseIndicator({ phase, className }: PhaseIndicatorProps) {
       <DialogTrigger asChild>
         <Button 
           variant="ghost" 
-          className={`${config.className} ${className} cursor-pointer transition-all border`}
+          className={`${config.className} ${className} cursor-pointer transition-all duration-300 border transform hover:scale-105 hover:shadow-lg active:scale-95`}
         >
-          <Icon className="h-3 w-3 mr-1" />
+          <Icon className="h-3 w-3 mr-1 transition-transform duration-300 group-hover:rotate-12" />
           {phase === 'irregular' ? config.label : t(config.label)}
-          <Info className="h-3 w-3 ml-1 opacity-50" />
+          <Info className="h-3 w-3 ml-1 opacity-50 animate-pulse" />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Icon className="h-5 w-5" />
+          <DialogTitle className="flex items-center gap-2 text-xl">
+            <div className="p-2 rounded-full bg-primary/10 animate-scale-in">
+              <Icon className="h-6 w-6 text-primary" />
+            </div>
             {phase === 'irregular' ? config.label : t(config.label)}
           </DialogTitle>
-          <DialogDescription className="text-base leading-relaxed pt-2">
+          <DialogDescription className="text-base leading-relaxed pt-4 text-left animate-fade-in">
             {phase === 'irregular' ? config.desc : t(config.desc)}
           </DialogDescription>
         </DialogHeader>
