@@ -34,6 +34,8 @@ export default function Profile() {
     setLoading(true);
 
     try {
+      console.log('Saving profile with language:', language);
+      
       await updateProfile({
         name,
         language,
@@ -44,6 +46,10 @@ export default function Profile() {
         is_irregular: isIrregular,
       });
 
+      console.log('Profile saved, changing i18n language to:', language);
+      // Force language change immediately after save
+      await i18n.changeLanguage(language);
+      
       toast.success(t('profile.saveSuccess'));
       navigate('/', { replace: true });
     } catch (error: any) {

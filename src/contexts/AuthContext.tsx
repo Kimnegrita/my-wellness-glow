@@ -54,10 +54,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Change language when profile language changes
   useEffect(() => {
-    if (profile?.language && profile.language !== i18n.language) {
-      i18n.changeLanguage(profile.language);
+    if (profile?.language) {
+      const currentLang = i18n.language;
+      if (profile.language !== currentLang) {
+        console.log('Changing language from', currentLang, 'to', profile.language);
+        i18n.changeLanguage(profile.language);
+      }
+    } else if (profile && !profile.language) {
+      // Set default language if profile exists but no language is set
+      console.log('Setting default language to es');
+      i18n.changeLanguage('es');
     }
-  }, [profile?.language, i18n]);
+  }, [profile?.language, profile, i18n]);
 
   useEffect(() => {
     // Set up auth state listener FIRST
