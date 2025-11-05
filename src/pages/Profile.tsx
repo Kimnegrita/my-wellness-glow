@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Calendar } from '@/components/ui/calendar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { ArrowLeft, Save, User, Calendar as CalendarIcon } from 'lucide-react';
+import { ArrowLeft, Save, User, Calendar as CalendarIcon, Globe } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -20,6 +21,7 @@ export default function Profile() {
 
   // Form state
   const [name, setName] = useState(profile?.name || '');
+  const [language, setLanguage] = useState(profile?.language || 'es');
   const [lastPeriodDate, setLastPeriodDate] = useState<Date | undefined>(
     profile?.last_period_date ? new Date(profile.last_period_date) : undefined
   );
@@ -32,6 +34,7 @@ export default function Profile() {
     try {
       await updateProfile({
         name,
+        language,
         last_period_date: lastPeriodDate 
           ? format(lastPeriodDate, 'yyyy-MM-dd')
           : null,
@@ -73,6 +76,11 @@ export default function Profile() {
           <CardContent className="space-y-8">
             {/* Personal Information */}
             <div className="space-y-4">
+              <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
+                <User className="h-5 w-5 text-primary" />
+                Información Personal
+              </h3>
+              
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-base font-semibold">
                   Nombre
@@ -85,6 +93,26 @@ export default function Profile() {
                   placeholder="Tu nombre"
                   className="border-2"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="language" className="text-base font-semibold flex items-center gap-2">
+                  <Globe className="h-4 w-4" />
+                  Idioma de la aplicación
+                </Label>
+                <Select value={language} onValueChange={setLanguage}>
+                  <SelectTrigger id="language" className="border-2">
+                    <SelectValue placeholder="Selecciona un idioma" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="es">Español</SelectItem>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="pt">Português</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  El idioma se aplicará en la próxima actualización
+                </p>
               </div>
             </div>
 

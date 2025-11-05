@@ -9,6 +9,7 @@ interface Profile {
   last_period_date: string | null;
   avg_cycle_length: number | null;
   is_irregular: boolean;
+  language: string;
   created_at: string;
   updated_at: string;
 }
