@@ -196,5 +196,53 @@
     "follicularDesc": "Fase folicular (días 6-13): Después del período, los niveles de estrógeno aumentan. Muchas mujeres experimentan más energía, mejor estado de ánimo y claridad mental.",
     "ovulationDesc": "Fase de ovulación (día 14): El óvulo es liberado. Los niveles de estrógeno están en su punto máximo. Puede haber más energía, confianza y libido.",
     "lutealDesc": "Fase lútea (días 15-28): Después de la ovulación, aumenta la progesterona. Algunas experimentan síntomas premenstruales como cambios de humor, hinchazón o sensibilidad en los senos."
+  },
+  "tips": {
+    "personalizedRecommendations": "Recomendaciones personalizadas",
+    "categories": {
+      "nutrition": "Alimentación",
+      "exercise": "Ejercicio",
+      "selfcare": "Autocuidado"
+    },
+    "menstruation": {
+      "nutrition_iron": "Incluye alimentos ricos en hierro: espinacas, lentejas, carne roja",
+      "nutrition_hydration": "Mantente hidratada con agua e infusiones de jengibre",
+      "exercise_yoga": "Yoga restaurativo y ejercicio suave para aliviar cólicos",
+      "exercise_walks": "Caminatas ligeras si te sientes con energía",
+      "selfcare_rest": "Descansa y escucha las necesidades de tu cuerpo",
+      "selfcare_introspection": "Permítete un espacio para la introspección"
+    },
+    "follicular": {
+      "nutrition_protein": "Aumenta proteínas de calidad en cada comida",
+      "nutrition_metabolism": "Tu metabolismo está acelerado, come nutritivo",
+      "exercise_intense": "Ejercicio intenso: tu cuerpo responderá muy bien",
+      "exercise_strength": "Prueba entrenamientos de fuerza y cardio",
+      "selfcare_projects": "Momento ideal para nuevos proyectos y planificación",
+      "selfcare_energy": "Aprovecha tu energía y creatividad aumentadas"
+    },
+    "ovulation": {
+      "nutrition_antioxidants": "Antioxidantes: bayas, té verde, vegetales de hoja",
+      "nutrition_fresh": "Alimentos frescos y coloridos para pico de energía",
+      "exercise_social": "Actividades sociales: deportes de equipo, clases grupales",
+      "exercise_stamina": "Tu resistencia está en su máximo",
+      "selfcare_conversations": "Momento perfecto para conversaciones importantes",
+      "selfcare_confidence": "Aprovecha tu confianza para presentaciones o entrevistas"
+    },
+    "luteal": {
+      "nutrition_carbs": "Carbohidratos complejos para equilibrar el ánimo",
+      "nutrition_magnesium": "Magnesio: nueces, semillas, para hinchazón y calambres",
+      "exercise_moderate": "Caminatas ligeras y ejercicio moderado",
+      "exercise_listen": "Reduce la intensidad, escucha a tu cuerpo",
+      "selfcare_priority": "Prioriza autocuidado: baños tibios, meditación",
+      "selfcare_caffeine": "Reduce cafeína si sientes ansiedad"
+    },
+    "irregular": {
+      "nutrition_omega": "Omega-3 para regular hormonas naturalmente",
+      "nutrition_balanced": "Dieta equilibrada y consistente",
+      "exercise_routine": "Rutina de ejercicio regular para balance hormonal",
+      "exercise_consistency": "Evita extremos, busca consistencia",
+      "selfcare_sleep": "Rutina de sueño regular es fundamental",
+      "selfcare_stress": "Manejo del estrés: respiración profunda, mindfulness"
+    }
   }
 }

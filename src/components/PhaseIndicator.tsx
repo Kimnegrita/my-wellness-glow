@@ -19,7 +19,7 @@ import phaseLutealImg from '@/assets/phase-luteal.png';
 
 interface PhaseTip {
   category: 'nutrition' | 'exercise' | 'selfcare';
-  text: string;
+  key: string;
 }
 
 interface PhaseIndicatorProps {
@@ -29,44 +29,44 @@ interface PhaseIndicatorProps {
 
 const phaseTips: Record<CyclePhase, PhaseTip[]> = {
   menstruation: [
-    { category: 'nutrition', text: 'Incluye alimentos ricos en hierro: espinacas, lentejas, carne roja' },
-    { category: 'nutrition', text: 'Mantente hidratada con agua e infusiones de jengibre' },
-    { category: 'exercise', text: 'Yoga restaurativo y ejercicio suave para aliviar cólicos' },
-    { category: 'exercise', text: 'Caminatas ligeras si te sientes con energía' },
-    { category: 'selfcare', text: 'Descansa y escucha las necesidades de tu cuerpo' },
-    { category: 'selfcare', text: 'Permítete un espacio para la introspección' },
+    { category: 'nutrition', key: 'tips.menstruation.nutrition_iron' },
+    { category: 'nutrition', key: 'tips.menstruation.nutrition_hydration' },
+    { category: 'exercise', key: 'tips.menstruation.exercise_yoga' },
+    { category: 'exercise', key: 'tips.menstruation.exercise_walks' },
+    { category: 'selfcare', key: 'tips.menstruation.selfcare_rest' },
+    { category: 'selfcare', key: 'tips.menstruation.selfcare_introspection' },
   ],
   follicular: [
-    { category: 'nutrition', text: 'Aumenta proteínas de calidad en cada comida' },
-    { category: 'nutrition', text: 'Tu metabolismo está acelerado, come nutritivo' },
-    { category: 'exercise', text: 'Ejercicio intenso: tu cuerpo responderá muy bien' },
-    { category: 'exercise', text: 'Prueba entrenamientos de fuerza y cardio' },
-    { category: 'selfcare', text: 'Momento ideal para nuevos proyectos y planificación' },
-    { category: 'selfcare', text: 'Aprovecha tu energía y creatividad aumentadas' },
+    { category: 'nutrition', key: 'tips.follicular.nutrition_protein' },
+    { category: 'nutrition', key: 'tips.follicular.nutrition_metabolism' },
+    { category: 'exercise', key: 'tips.follicular.exercise_intense' },
+    { category: 'exercise', key: 'tips.follicular.exercise_strength' },
+    { category: 'selfcare', key: 'tips.follicular.selfcare_projects' },
+    { category: 'selfcare', key: 'tips.follicular.selfcare_energy' },
   ],
   ovulation: [
-    { category: 'nutrition', text: 'Antioxidantes: bayas, té verde, vegetales de hoja' },
-    { category: 'nutrition', text: 'Alimentos frescos y coloridos para pico de energía' },
-    { category: 'exercise', text: 'Actividades sociales: deportes de equipo, clases grupales' },
-    { category: 'exercise', text: 'Tu resistencia está en su máximo' },
-    { category: 'selfcare', text: 'Momento perfecto para conversaciones importantes' },
-    { category: 'selfcare', text: 'Aprovecha tu confianza para presentaciones o entrevistas' },
+    { category: 'nutrition', key: 'tips.ovulation.nutrition_antioxidants' },
+    { category: 'nutrition', key: 'tips.ovulation.nutrition_fresh' },
+    { category: 'exercise', key: 'tips.ovulation.exercise_social' },
+    { category: 'exercise', key: 'tips.ovulation.exercise_stamina' },
+    { category: 'selfcare', key: 'tips.ovulation.selfcare_conversations' },
+    { category: 'selfcare', key: 'tips.ovulation.selfcare_confidence' },
   ],
   luteal: [
-    { category: 'nutrition', text: 'Carbohidratos complejos para equilibrar el ánimo' },
-    { category: 'nutrition', text: 'Magnesio: nueces, semillas, para hinchazón y calambres' },
-    { category: 'exercise', text: 'Caminatas ligeras y ejercicio moderado' },
-    { category: 'exercise', text: 'Reduce la intensidad, escucha a tu cuerpo' },
-    { category: 'selfcare', text: 'Prioriza autocuidado: baños tibios, meditación' },
-    { category: 'selfcare', text: 'Reduce cafeína si sientes ansiedad' },
+    { category: 'nutrition', key: 'tips.luteal.nutrition_carbs' },
+    { category: 'nutrition', key: 'tips.luteal.nutrition_magnesium' },
+    { category: 'exercise', key: 'tips.luteal.exercise_moderate' },
+    { category: 'exercise', key: 'tips.luteal.exercise_listen' },
+    { category: 'selfcare', key: 'tips.luteal.selfcare_priority' },
+    { category: 'selfcare', key: 'tips.luteal.selfcare_caffeine' },
   ],
   irregular: [
-    { category: 'nutrition', text: 'Omega-3 para regular hormonas naturalmente' },
-    { category: 'nutrition', text: 'Dieta equilibrada y consistente' },
-    { category: 'exercise', text: 'Rutina de ejercicio regular para balance hormonal' },
-    { category: 'exercise', text: 'Evita extremos, busca consistencia' },
-    { category: 'selfcare', text: 'Rutina de sueño regular es fundamental' },
-    { category: 'selfcare', text: 'Manejo del estrés: respiración profunda, mindfulness' },
+    { category: 'nutrition', key: 'tips.irregular.nutrition_omega' },
+    { category: 'nutrition', key: 'tips.irregular.nutrition_balanced' },
+    { category: 'exercise', key: 'tips.irregular.exercise_routine' },
+    { category: 'exercise', key: 'tips.irregular.exercise_consistency' },
+    { category: 'selfcare', key: 'tips.irregular.selfcare_sleep' },
+    { category: 'selfcare', key: 'tips.irregular.selfcare_stress' },
   ],
 };
 
@@ -109,9 +109,9 @@ const phaseConfig = {
 };
 
 const categoryConfig = {
-  nutrition: { icon: Apple, label: 'Alimentación', color: 'text-green-600' },
-  exercise: { icon: Dumbbell, label: 'Ejercicio', color: 'text-blue-600' },
-  selfcare: { icon: Heart, label: 'Autocuidado', color: 'text-pink-600' },
+  nutrition: { icon: Apple, key: 'tips.categories.nutrition', color: 'text-green-600' },
+  exercise: { icon: Dumbbell, key: 'tips.categories.exercise', color: 'text-blue-600' },
+  selfcare: { icon: Heart, key: 'tips.categories.selfcare', color: 'text-pink-600' },
 };
 
 export function PhaseIndicator({ phase, className }: PhaseIndicatorProps) {
@@ -168,7 +168,7 @@ export function PhaseIndicator({ phase, className }: PhaseIndicatorProps) {
             {/* Tip Cards by Category */}
             <div className="space-y-4 pt-4">
               <h4 className="font-semibold text-foreground text-sm uppercase tracking-wide">
-                Recomendaciones personalizadas
+                {t('tips.personalizedRecommendations')}
               </h4>
               
               {Object.entries(tipsByCategory).map(([category, categoryTips]) => {
@@ -180,13 +180,13 @@ export function PhaseIndicator({ phase, className }: PhaseIndicatorProps) {
                     <CardContent className="p-4">
                       <div className="flex items-center gap-2 mb-3">
                         <CategoryIcon className={`h-5 w-5 ${catConfig.color}`} />
-                        <h5 className="font-semibold text-foreground">{catConfig.label}</h5>
+                        <h5 className="font-semibold text-foreground">{t(catConfig.key)}</h5>
                       </div>
                       <ul className="space-y-2">
                         {categoryTips.map((tip, idx) => (
                           <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
                             <span className="text-primary mt-1">•</span>
-                            <span>{tip.text}</span>
+                            <span>{t(tip.key)}</span>
                           </li>
                         ))}
                       </ul>

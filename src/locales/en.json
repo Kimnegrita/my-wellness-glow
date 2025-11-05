@@ -196,5 +196,53 @@
     "follicularDesc": "Follicular phase (days 6-13): After the period, estrogen levels rise. Many women experience more energy, better mood, and mental clarity.",
     "ovulationDesc": "Ovulation phase (day 14): The egg is released. Estrogen levels are at their peak. There may be more energy, confidence, and libido.",
     "lutealDesc": "Luteal phase (days 15-28): After ovulation, progesterone increases. Some experience premenstrual symptoms like mood changes, bloating, or breast tenderness."
+  },
+  "tips": {
+    "personalizedRecommendations": "Personalized Recommendations",
+    "categories": {
+      "nutrition": "Nutrition",
+      "exercise": "Exercise",
+      "selfcare": "Self-care"
+    },
+    "menstruation": {
+      "nutrition_iron": "Include iron-rich foods: spinach, lentils, red meat",
+      "nutrition_hydration": "Stay hydrated with water and ginger tea",
+      "exercise_yoga": "Restorative yoga and gentle exercise to relieve cramps",
+      "exercise_walks": "Light walks if you feel energized",
+      "selfcare_rest": "Rest and listen to your body's needs",
+      "selfcare_introspection": "Allow yourself space for introspection"
+    },
+    "follicular": {
+      "nutrition_protein": "Increase quality protein in every meal",
+      "nutrition_metabolism": "Your metabolism is accelerated, eat nutritiously",
+      "exercise_intense": "Intense exercise: your body will respond very well",
+      "exercise_strength": "Try strength training and cardio workouts",
+      "selfcare_projects": "Ideal time for new projects and planning",
+      "selfcare_energy": "Leverage your increased energy and creativity"
+    },
+    "ovulation": {
+      "nutrition_antioxidants": "Antioxidants: berries, green tea, leafy vegetables",
+      "nutrition_fresh": "Fresh and colorful foods for peak energy",
+      "exercise_social": "Social activities: team sports, group classes",
+      "exercise_stamina": "Your endurance is at its maximum",
+      "selfcare_conversations": "Perfect time for important conversations",
+      "selfcare_confidence": "Use your confidence for presentations or interviews"
+    },
+    "luteal": {
+      "nutrition_carbs": "Complex carbohydrates to balance mood",
+      "nutrition_magnesium": "Magnesium: nuts, seeds, for bloating and cramps",
+      "exercise_moderate": "Light walks and moderate exercise",
+      "exercise_listen": "Reduce intensity, listen to your body",
+      "selfcare_priority": "Prioritize self-care: warm baths, meditation",
+      "selfcare_caffeine": "Reduce caffeine if you feel anxious"
+    },
+    "irregular": {
+      "nutrition_omega": "Omega-3 to regulate hormones naturally",
+      "nutrition_balanced": "Balanced and consistent diet",
+      "exercise_routine": "Regular exercise routine for hormonal balance",
+      "exercise_consistency": "Avoid extremes, seek consistency",
+      "selfcare_sleep": "Regular sleep routine is essential",
+      "selfcare_stress": "Stress management: deep breathing, mindfulness"
+    }
   }
 }
