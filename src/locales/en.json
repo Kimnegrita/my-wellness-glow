@@ -1,0 +1,248 @@
+{
+  "common": {
+    "backToHome": "Back to home",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password?",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "signInSuccess": "Signed in successfully",
+    "signUpSuccess": "Account created successfully",
+    "signOutSuccess": "Signed out successfully"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "welcomeBack": "Welcome back",
+    "cycleDay": "Cycle day",
+    "currentPhase": "Current phase",
+    "nextPeriod": "Next period",
+    "daysUntil": "In {{days}} days",
+    "todaysTip": "Today's tip",
+    "quickActions": "Quick actions",
+    "dailyCheckin": "Daily check-in",
+    "viewHistory": "View history",
+    "resources": "Educational resources",
+    "healthContacts": "Health contacts",
+    "completeProfile": "Complete your profile",
+    "completeProfileDesc": "Add information about your cycle to get personalized predictions"
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "language": "Application language",
+    "selectLanguage": "Select a language",
+    "languageNote": "Language will be applied immediately",
+    "cycleInfo": "Cycle Information",
+    "lastPeriod": "Last period",
+    "selectDate": "Select a date",
+    "irregularCycle": "Irregular cycle",
+    "irregularCycleDesc": "Most cycles last between 21 and 35 days",
+    "avgCycleLength": "Average cycle length (days)",
+    "saveSuccess": "Profile updated successfully",
+    "saveError": "Error saving profile"
+  },
+  "checkin": {
+    "title": "Daily Check-in",
+    "description": "Record your symptoms and how you feel today",
+    "periodStatus": "Period status",
+    "periodStarted": "Period started today",
+    "periodEnded": "Period ended today",
+    "symptoms": "Symptoms",
+    "selectSymptoms": "Select the symptoms you're experiencing today",
+    "journalEntry": "Daily notes",
+    "journalPlaceholder": "How are you feeling today? Write any observations...",
+    "saveSuccess": "Check-in saved successfully",
+    "saveError": "Error saving check-in",
+    "symptomsList": {
+      "hotFlashes": "Hot flashes",
+      "nightSweats": "Night sweats",
+      "moodSwings": "Mood swings",
+      "anxiety": "Anxiety",
+      "insomnia": "Insomnia",
+      "fatigue": "Fatigue",
+      "brainFog": "Brain fog",
+      "jointPain": "Joint pain",
+      "headache": "Headache",
+      "irritability": "Irritability"
+    }
+  },
+  "history": {
+    "title": "History",
+    "description": "Review your previous records and symptom patterns",
+    "noLogs": "No records yet",
+    "noLogsDesc": "Start recording your daily symptoms to see your history here",
+    "periodDay": "Period day",
+    "symptoms": "Symptoms",
+    "notes": "Notes"
+  },
+  "resources": {
+    "title": "Educational Resources",
+    "description": "Complete and reliable information about perimenopause, menopause, symptoms and treatments to help you navigate this stage with knowledge and confidence.",
+    "perimenopause": "Perimenopause",
+    "menopause": "Menopause",
+    "symptoms": "Symptoms",
+    "treatments": "Treatments",
+    "onlineResources": "Online Resources",
+    "onlineResourcesDesc": "Links to organizations, educational videos, documents and support communities available online.",
+    "visitResource": "Visit resource",
+    "disclaimer": "This information is for educational purposes and does not replace professional medical consultation. Every woman is unique and symptoms, as well as appropriate treatments, vary. Always consult with your healthcare professional for personalized advice.",
+    "importantNote": "Important Note",
+    "perimenopauseArticles": {
+      "what": {
+        "title": "What is Perimenopause?",
+        "desc": "Understand the transition phase before menopause and its main characteristics.",
+        "content": "Perimenopause is the transition period preceding menopause. It can begin several years before menstruation ceases, typically between ages 40 and 44, although it may start earlier. During this phase, hormone levels fluctuate irregularly, causing various symptoms."
+      },
+      "symptoms": {
+        "title": "Common Symptoms",
+        "desc": "Identify the most frequent signs of perimenopause.",
+        "content": "Symptoms include: irregular menstrual cycles, hot flashes, night sweats, sleep problems, mood changes, vaginal dryness, decreased libido, difficulty concentrating, and weight changes. Intensity varies in each woman."
+      },
+      "duration": {
+        "title": "Duration and Stages",
+        "desc": "Learn how long this transition phase can last.",
+        "content": "Perimenopause can last from a few months to 10 years, with an average duration of 4 years. It officially ends when a woman has not had menstruation for 12 consecutive months, at which point she is considered to have reached menopause."
+      }
+    },
+    "menopauseArticles": {
+      "understanding": {
+        "title": "Understanding Menopause",
+        "desc": "Everything you need to know about this natural stage of life.",
+        "content": "Menopause is the permanent cessation of menstruation. It is confirmed after 12 consecutive months without a menstrual period. The average age is around 51 years, although it can occur earlier or later. It is a natural phase and not a disease."
+      },
+      "hormonal": {
+        "title": "Hormonal Changes",
+        "desc": "How hormones affect your body during menopause.",
+        "content": "During menopause, the ovaries produce less estrogen and progesterone. This hormonal decrease affects multiple body systems, including the cardiovascular, bone, metabolic, and nervous systems. Understanding these changes helps better manage symptoms."
+      },
+      "bone": {
+        "title": "Bone Health",
+        "desc": "The importance of bone care in menopause.",
+        "content": "Decreased estrogen increases the risk of osteoporosis. It is crucial to consume sufficient calcium (1200mg/day) and vitamin D, perform resistance exercise, avoid tobacco and excess alcohol, and consult about bone density testing."
+      }
+    },
+    "symptomsArticles": {
+      "hotFlashes": {
+        "title": "Hot Flashes and Night Sweats",
+        "desc": "Managing the most common vasomotor symptoms.",
+        "content": "Hot flashes affect 75% of women. Management strategies: dress in layers, keep environment cool, avoid triggers (alcohol, caffeine, spicy foods), deep breathing techniques, and consider hormonal therapies if severe."
+      },
+      "mood": {
+        "title": "Mood Changes and Anxiety",
+        "desc": "Understanding the emotional impact of hormonal changes.",
+        "content": "Hormonal fluctuations can cause irritability, anxiety, and depression. Regular exercise, relaxation techniques, maintaining social connections, sleeping well, and seeking professional support when necessary are important strategies."
+      },
+      "sleep": {
+        "title": "Sleep Problems",
+        "desc": "Strategies to improve sleep quality.",
+        "content": "Maintain a regular sleep schedule, create a cool and dark environment, avoid screens before bed, limit caffeine in the afternoon, practice relaxation techniques, and consider melatonin under medical supervision."
+      }
+    },
+    "treatmentsArticles": {
+      "hormonal": {
+        "title": "Hormone Therapy",
+        "desc": "Hormone treatment options and their considerations.",
+        "content": "Hormone therapy can relieve severe symptoms. It includes estrogen alone or combined with progesterone. It is most effective when started near the onset of menopause. It should be personalized and medically supervised, evaluating individual risks and benefits."
+      },
+      "nonHormonal": {
+        "title": "Non-Hormonal Treatments",
+        "desc": "Effective alternatives without hormones.",
+        "content": "Options include: antidepressants (SSRIs/SNRIs) for hot flashes, gabapentin, phytoestrogens, vaginal lubricants, cognitive-behavioral therapy, acupuncture, and supplements like black cohosh. Always consult with a professional before starting any treatment."
+      },
+      "lifestyle": {
+        "title": "Lifestyle Changes",
+        "desc": "Daily modifications that make a difference.",
+        "content": "Balanced diet rich in calcium and vitamin D, regular exercise (150 min/week), maintain healthy weight, don't smoke, limit alcohol, stress management techniques (yoga, meditation), and maintain active social life are fundamental."
+      }
+    },
+    "externalResources": {
+      "organizations": "Organizations and Official Websites",
+      "videos": "Educational Videos",
+      "documents": "Guides and Documents",
+      "community": "Communities and Support"
+    }
+  },
+  "contacts": {
+    "title": "Health Contacts",
+    "description": "Hospitals, clinics and support lines in Portugal specialized in women's health during perimenopause and menopause.",
+    "hospitals": "Hospitals",
+    "clinics": "Clinics",
+    "supportLines": "Support Lines",
+    "phone": "Phone",
+    "website": "Website",
+    "visit": "Visit"
+  },
+  "phases": {
+    "menstrual": "Menstrual",
+    "follicular": "Follicular",
+    "ovulation": "Ovulation",
+    "luteal": "Luteal",
+    "menstrualDesc": "Menstrual phase (days 1-5): The beginning of the cycle when menstruation occurs. Hormone levels are low. It's normal to feel fatigue, cramps, and need more rest.",
+    "follicularDesc": "Follicular phase (days 6-13): After the period, estrogen levels rise. Many women experience more energy, better mood, and mental clarity.",
+    "ovulationDesc": "Ovulation phase (day 14): The egg is released. Estrogen levels are at their peak. There may be more energy, confidence, and libido.",
+    "lutealDesc": "Luteal phase (days 15-28): After ovulation, progesterone increases. Some experience premenstrual symptoms like mood changes, bloating, or breast tenderness."
+  },
+  "tips": {
+    "personalizedRecommendations": "Personalized Recommendations",
+    "categories": {
+      "nutrition": "Nutrition",
+      "exercise": "Exercise",
+      "selfcare": "Self-care"
+    },
+    "menstruation": {
+      "nutrition_iron": "Include iron-rich foods: spinach, lentils, red meat",
+      "nutrition_hydration": "Stay hydrated with water and ginger tea",
+      "exercise_yoga": "Restorative yoga and gentle exercise to relieve cramps",
+      "exercise_walks": "Light walks if you feel energized",
+      "selfcare_rest": "Rest and listen to your body's needs",
+      "selfcare_introspection": "Allow yourself space for introspection"
+    },
+    "follicular": {
+      "nutrition_protein": "Increase quality protein in every meal",
+      "nutrition_metabolism": "Your metabolism is accelerated, eat nutritiously",
+      "exercise_intense": "Intense exercise: your body will respond very well",
+      "exercise_strength": "Try strength training and cardio workouts",
+      "selfcare_projects": "Ideal time for new projects and planning",
+      "selfcare_energy": "Leverage your increased energy and creativity"
+    },
+    "ovulation": {
+      "nutrition_antioxidants": "Antioxidants: berries, green tea, leafy vegetables",
+      "nutrition_fresh": "Fresh and colorful foods for peak energy",
+      "exercise_social": "Social activities: team sports, group classes",
+      "exercise_stamina": "Your endurance is at its maximum",
+      "selfcare_conversations": "Perfect time for important conversations",
+      "selfcare_confidence": "Use your confidence for presentations or interviews"
+    },
+    "luteal": {
+      "nutrition_carbs": "Complex carbohydrates to balance mood",
+      "nutrition_magnesium": "Magnesium: nuts, seeds, for bloating and cramps",
+      "exercise_moderate": "Light walks and moderate exercise",
+      "exercise_listen": "Reduce intensity, listen to your body",
+      "selfcare_priority": "Prioritize self-care: warm baths, meditation",
+      "selfcare_caffeine": "Reduce caffeine if you feel anxious"
+    },
+    "irregular": {
+      "nutrition_omega": "Omega-3 to regulate hormones naturally",
+      "nutrition_balanced": "Balanced and consistent diet",
+      "exercise_routine": "Regular exercise routine for hormonal balance",
+      "exercise_consistency": "Avoid extremes, seek consistency",
+      "selfcare_sleep": "Regular sleep routine is essential",
+      "selfcare_stress": "Stress management: deep breathing, mindfulness"
+    }
+  }
+}

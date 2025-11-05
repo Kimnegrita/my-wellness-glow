@@ -1,0 +1,248 @@
+{
+  "common": {
+    "backToHome": "Voltar ao início",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "loading": "A carregar...",
+    "error": "Erro",
+    "success": "Sucesso"
+  },
+  "auth": {
+    "signIn": "Iniciar sessão",
+    "signUp": "Registar",
+    "signOut": "Terminar sessão",
+    "email": "E-mail",
+    "password": "Palavra-passe",
+    "confirmPassword": "Confirmar palavra-passe",
+    "forgotPassword": "Esqueceu a palavra-passe?",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "dontHaveAccount": "Não tem uma conta?",
+    "signInSuccess": "Sessão iniciada com sucesso",
+    "signUpSuccess": "Conta criada com sucesso",
+    "signOutSuccess": "Sessão terminada com sucesso"
+  },
+  "home": {
+    "welcome": "Bem-vinda",
+    "welcomeBack": "Bem-vinda de volta",
+    "cycleDay": "Dia do ciclo",
+    "currentPhase": "Fase atual",
+    "nextPeriod": "Próxima menstruação",
+    "daysUntil": "Em {{days}} dias",
+    "todaysTip": "Dica do dia",
+    "quickActions": "Ações rápidas",
+    "dailyCheckin": "Registo diário",
+    "viewHistory": "Ver histórico",
+    "resources": "Recursos educativos",
+    "healthContacts": "Contactos de saúde",
+    "completeProfile": "Complete o seu perfil",
+    "completeProfileDesc": "Adicione informação sobre o seu ciclo para obter previsões personalizadas"
+  },
+  "profile": {
+    "title": "Perfil",
+    "personalInfo": "Informação Pessoal",
+    "name": "Nome",
+    "namePlaceholder": "O seu nome",
+    "language": "Idioma da aplicação",
+    "selectLanguage": "Selecione um idioma",
+    "languageNote": "O idioma será aplicado imediatamente",
+    "cycleInfo": "Informação do Ciclo",
+    "lastPeriod": "Última menstruação",
+    "selectDate": "Selecione uma data",
+    "irregularCycle": "Ciclo irregular",
+    "irregularCycleDesc": "A maioria dos ciclos dura entre 21 e 35 dias",
+    "avgCycleLength": "Duração média do ciclo (dias)",
+    "saveSuccess": "Perfil atualizado com sucesso",
+    "saveError": "Erro ao guardar o perfil"
+  },
+  "checkin": {
+    "title": "Registo Diário",
+    "description": "Registe os seus sintomas e como se sente hoje",
+    "periodStatus": "Estado da menstruação",
+    "periodStarted": "A menstruação começou hoje",
+    "periodEnded": "A menstruação terminou hoje",
+    "symptoms": "Sintomas",
+    "selectSymptoms": "Selecione os sintomas que está a sentir hoje",
+    "journalEntry": "Notas do dia",
+    "journalPlaceholder": "Como se sente hoje? Escreva qualquer observação...",
+    "saveSuccess": "Registo guardado com sucesso",
+    "saveError": "Erro ao guardar o registo",
+    "symptomsList": {
+      "hotFlashes": "Afrontamentos",
+      "nightSweats": "Suores noturnos",
+      "moodSwings": "Alterações de humor",
+      "anxiety": "Ansiedade",
+      "insomnia": "Insónia",
+      "fatigue": "Fadiga",
+      "brainFog": "Névoa mental",
+      "jointPain": "Dor articular",
+      "headache": "Dor de cabeça",
+      "irritability": "Irritabilidade"
+    }
+  },
+  "history": {
+    "title": "Histórico",
+    "description": "Reveja os seus registos anteriores e padrões de sintomas",
+    "noLogs": "Ainda não há registos",
+    "noLogsDesc": "Comece a registar os seus sintomas diários para ver o seu histórico aqui",
+    "periodDay": "Dia de menstruação",
+    "symptoms": "Sintomas",
+    "notes": "Notas"
+  },
+  "resources": {
+    "title": "Recursos Educativos",
+    "description": "Informação completa e confiável sobre perimenopausa, menopausa, sintomas e tratamentos para ajudá-la a navegar esta etapa com conhecimento e confiança.",
+    "perimenopause": "Perimenopausa",
+    "menopause": "Menopausa",
+    "symptoms": "Sintomas",
+    "treatments": "Tratamentos",
+    "onlineResources": "Recursos Online",
+    "onlineResourcesDesc": "Links para organizações, vídeos educativos, documentos e comunidades de apoio disponíveis na internet.",
+    "visitResource": "Visitar recurso",
+    "disclaimer": "Esta informação tem fins educativos e não substitui a consulta médica profissional. Cada mulher é única e os sintomas, bem como os tratamentos apropriados, variam. Consulte sempre o seu profissional de saúde para aconselhamento personalizado.",
+    "importantNote": "Nota Importante",
+    "perimenopauseArticles": {
+      "what": {
+        "title": "O que é a Perimenopausa?",
+        "desc": "Compreenda a fase de transição antes da menopausa e as suas características principais.",
+        "content": "A perimenopausa é o período de transição que precede a menopausa. Pode começar vários anos antes da cessação da menstruação, tipicamente entre os 40 e 44 anos, embora possa começar mais cedo. Durante esta fase, os níveis hormonais flutuam de forma irregular, causando diversos sintomas."
+      },
+      "symptoms": {
+        "title": "Sintomas Comuns",
+        "desc": "Identifique os sinais mais frequentes da perimenopausa.",
+        "content": "Os sintomas incluem: ciclos menstruais irregulares, afrontamentos, suores noturnos, problemas de sono, alterações de humor, secura vaginal, diminuição da libido, dificuldade de concentração e alterações de peso. A intensidade varia em cada mulher."
+      },
+      "duration": {
+        "title": "Duração e Etapas",
+        "desc": "Saiba quanto tempo pode durar esta fase de transição.",
+        "content": "A perimenopausa pode durar desde alguns meses até 10 anos, com uma duração média de 4 anos. Termina oficialmente quando uma mulher não teve menstruação durante 12 meses consecutivos, momento em que se considera que chegou à menopausa."
+      }
+    },
+    "menopauseArticles": {
+      "understanding": {
+        "title": "Compreender a Menopausa",
+        "desc": "Tudo o que precisa de saber sobre esta etapa natural da vida.",
+        "content": "A menopausa é a cessação permanente da menstruação. É confirmada após 12 meses consecutivos sem período menstrual. A idade média é cerca de 51 anos, embora possa ocorrer antes ou depois. É uma fase natural e não uma doença."
+      },
+      "hormonal": {
+        "title": "Alterações Hormonais",
+        "desc": "Como as hormonas afetam o seu corpo durante a menopausa.",
+        "content": "Durante a menopausa, os ovários produzem menos estrogénio e progesterona. Esta diminuição hormonal afeta múltiplos sistemas do corpo, incluindo o sistema cardiovascular, ósseo, metabólico e nervoso. Compreender estas alterações ajuda a gerir melhor os sintomas."
+      },
+      "bone": {
+        "title": "Saúde Óssea",
+        "desc": "A importância do cuidado dos ossos na menopausa.",
+        "content": "A diminuição de estrogénio aumenta o risco de osteoporose. É crucial consumir cálcio suficiente (1200mg/dia) e vitamina D, realizar exercício de resistência, evitar o tabaco e o excesso de álcool, e consultar sobre densitometria óssea."
+      }
+    },
+    "symptomsArticles": {
+      "hotFlashes": {
+        "title": "Afrontamentos e Suores Noturnos",
+        "desc": "Gestão dos sintomas vasomotores mais comuns.",
+        "content": "Os afrontamentos afetam 75% das mulheres. Estratégias de gestão: vestir-se em camadas, manter o ambiente fresco, evitar desencadeantes (álcool, cafeína, comidas picantes), técnicas de respiração profunda, e considerar terapias hormonais se forem graves."
+      },
+      "mood": {
+        "title": "Alterações de Humor e Ansiedade",
+        "desc": "Compreender o impacto emocional das alterações hormonais.",
+        "content": "As flutuações hormonais podem causar irritabilidade, ansiedade e depressão. O exercício regular, técnicas de relaxamento, manter conexões sociais, dormir bem e procurar apoio profissional quando necessário são estratégias importantes."
+      },
+      "sleep": {
+        "title": "Problemas de Sono",
+        "desc": "Estratégias para melhorar a qualidade do sono.",
+        "content": "Mantenha um horário regular de sono, crie um ambiente fresco e escuro, evite ecrãs antes de dormir, limite a cafeína à tarde, pratique técnicas de relaxamento e considere a melatonina sob supervisão médica."
+      }
+    },
+    "treatmentsArticles": {
+      "hormonal": {
+        "title": "Terapia Hormonal",
+        "desc": "Opções de tratamento hormonal e as suas considerações.",
+        "content": "A terapia hormonal pode aliviar sintomas graves. Inclui estrogénio sozinho ou combinado com progesterona. É mais eficaz quando iniciada perto do início da menopausa. Deve ser personalizada e supervisionada medicamente, avaliando riscos e benefícios individuais."
+      },
+      "nonHormonal": {
+        "title": "Tratamentos Não Hormonais",
+        "desc": "Alternativas eficazes sem hormonas.",
+        "content": "As opções incluem: antidepressivos (ISRS/IRSN) para afrontamentos, gabapentina, fitoestrogénios, lubrificantes vaginais, terapia cognitivo-comportamental, acupuntura, e suplementos como cohosh negro. Consulte sempre um profissional antes de iniciar qualquer tratamento."
+      },
+      "lifestyle": {
+        "title": "Mudanças no Estilo de Vida",
+        "desc": "Modificações diárias que fazem a diferença.",
+        "content": "Dieta equilibrada rica em cálcio e vitamina D, exercício regular (150 min/semana), manter peso saudável, não fumar, limitar álcool, técnicas de gestão do stress (yoga, meditação), e manter vida social ativa são fundamentais."
+      }
+    },
+    "externalResources": {
+      "organizations": "Organizações e Sites Oficiais",
+      "videos": "Vídeos Educativos",
+      "documents": "Guias e Documentos",
+      "community": "Comunidades e Apoio"
+    }
+  },
+  "contacts": {
+    "title": "Contactos de Saúde",
+    "description": "Hospitais, clínicas e linhas de apoio em Portugal especializados em saúde da mulher durante a perimenopausa e menopausa.",
+    "hospitals": "Hospitais",
+    "clinics": "Clínicas",
+    "supportLines": "Linhas de Apoio",
+    "phone": "Telefone",
+    "website": "Website",
+    "visit": "Visitar"
+  },
+  "phases": {
+    "menstrual": "Menstrual",
+    "follicular": "Folicular",
+    "ovulation": "Ovulação",
+    "luteal": "Lútea",
+    "menstrualDesc": "Fase menstrual (dias 1-5): O início do ciclo onde ocorre a menstruação. Os níveis hormonais estão baixos. É normal sentir fadiga, cólicas e precisar de mais descanso.",
+    "follicularDesc": "Fase folicular (dias 6-13): Após o período, os níveis de estrogénio aumentam. Muitas mulheres experimentam mais energia, melhor humor e clareza mental.",
+    "ovulationDesc": "Fase de ovulação (dia 14): O óvulo é libertado. Os níveis de estrogénio estão no seu pico. Pode haver mais energia, confiança e libido.",
+    "lutealDesc": "Fase lútea (dias 15-28): Após a ovulação, a progesterona aumenta. Algumas experimentam sintomas pré-menstruais como alterações de humor, inchaço ou sensibilidade nos seios."
+  },
+  "tips": {
+    "personalizedRecommendations": "Recomendações Personalizadas",
+    "categories": {
+      "nutrition": "Alimentação",
+      "exercise": "Exercício",
+      "selfcare": "Autocuidado"
+    },
+    "menstruation": {
+      "nutrition_iron": "Inclua alimentos ricos em ferro: espinafre, lentilhas, carne vermelha",
+      "nutrition_hydration": "Mantenha-se hidratada com água e chá de gengibre",
+      "exercise_yoga": "Yoga restaurativo e exercício suave para aliviar cólicas",
+      "exercise_walks": "Caminhadas leves se você se sentir energizada",
+      "selfcare_rest": "Descanse e ouça as necessidades do seu corpo",
+      "selfcare_introspection": "Permita-se um espaço para introspecção"
+    },
+    "follicular": {
+      "nutrition_protein": "Aumente proteínas de qualidade em cada refeição",
+      "nutrition_metabolism": "Seu metabolismo está acelerado, coma nutritivo",
+      "exercise_intense": "Exercício intenso: seu corpo responderá muito bem",
+      "exercise_strength": "Experimente treinos de força e cardio",
+      "selfcare_projects": "Momento ideal para novos projetos e planejamento",
+      "selfcare_energy": "Aproveite sua energia e criatividade aumentadas"
+    },
+    "ovulation": {
+      "nutrition_antioxidants": "Antioxidantes: frutas vermelhas, chá verde, vegetais de folha",
+      "nutrition_fresh": "Alimentos frescos e coloridos para pico de energia",
+      "exercise_social": "Atividades sociais: esportes em equipe, aulas em grupo",
+      "exercise_stamina": "Sua resistência está no máximo",
+      "selfcare_conversations": "Momento perfeito para conversas importantes",
+      "selfcare_confidence": "Aproveite sua confiança para apresentações ou entrevistas"
+    },
+    "luteal": {
+      "nutrition_carbs": "Carboidratos complexos para equilibrar o humor",
+      "nutrition_magnesium": "Magnésio: nozes, sementes, para inchaço e cãibras",
+      "exercise_moderate": "Caminhadas leves e exercício moderado",
+      "exercise_listen": "Reduza a intensidade, ouça seu corpo",
+      "selfcare_priority": "Priorize autocuidado: banhos mornos, meditação",
+      "selfcare_caffeine": "Reduza cafeína se sentir ansiedade"
+    },
+    "irregular": {
+      "nutrition_omega": "Ômega-3 para regular hormônios naturalmente",
+      "nutrition_balanced": "Dieta equilibrada e consistente",
+      "exercise_routine": "Rotina de exercício regular para equilíbrio hormonal",
+      "exercise_consistency": "Evite extremos, busque consistência",
+      "selfcare_sleep": "Rotina de sono regular é fundamental",
+      "selfcare_stress": "Gerenciamento do estresse: respiração profunda, mindfulness"
+    }
+  }
+}
