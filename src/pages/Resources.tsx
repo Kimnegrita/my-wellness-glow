@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Heart, Pill, Activity } from "lucide-react";
+import { ArrowLeft, BookOpen, Heart, Pill, Activity, ExternalLink, Video, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const Resources = () => {
   const navigate = useNavigate();
@@ -91,6 +92,107 @@ const Resources = () => {
     },
   ];
 
+  const externalResources = [
+    {
+      title: "Organizaciones y Sitios Web Oficiales",
+      resources: [
+        {
+          name: "North American Menopause Society (NAMS)",
+          url: "https://www.menopause.org",
+          description: "Recursos completos sobre menopausia basados en evidencia científica",
+          type: "web"
+        },
+        {
+          name: "International Menopause Society",
+          url: "https://www.imsociety.org",
+          description: "Información global y guías clínicas sobre menopausia",
+          type: "web"
+        },
+        {
+          name: "Asociación Española para el Estudio de la Menopausia (AEEM)",
+          url: "https://www.aeem.es",
+          description: "Recursos en español sobre menopausia y climaterio",
+          type: "web"
+        },
+        {
+          name: "Office on Women's Health",
+          url: "https://www.womenshealth.gov/menopause",
+          description: "Información del gobierno de EE.UU. sobre menopausia",
+          type: "web"
+        }
+      ]
+    },
+    {
+      title: "Videos Educativos",
+      resources: [
+        {
+          name: "Menopausia: Todo lo que necesitas saber - TED Talk",
+          url: "https://www.youtube.com/results?search_query=menopause+ted+talk",
+          description: "Charlas TED sobre menopausia y salud de la mujer",
+          type: "video"
+        },
+        {
+          name: "Johns Hopkins Medicine - Menopause Explained",
+          url: "https://www.youtube.com/c/JohnsHopkinsMedicine",
+          description: "Videos educativos de expertos médicos sobre menopausia",
+          type: "video"
+        },
+        {
+          name: "The Menopause Society YouTube Channel",
+          url: "https://www.youtube.com/@TheMenopauseSociety",
+          description: "Canal oficial con webinars y contenido educativo",
+          type: "video"
+        }
+      ]
+    },
+    {
+      title: "Guías y Documentos",
+      resources: [
+        {
+          name: "Guía de Práctica Clínica sobre la Menopausia",
+          url: "https://portal.guiasalud.es",
+          description: "Guías clínicas basadas en evidencia para profesionales y pacientes",
+          type: "document"
+        },
+        {
+          name: "Manual de Menopausia - OMS",
+          url: "https://www.who.int/health-topics/menopause",
+          description: "Recursos de la Organización Mundial de la Salud",
+          type: "document"
+        },
+        {
+          name: "Menopause Matters",
+          url: "https://www.menopausematters.co.uk",
+          description: "Información práctica y recursos descargables",
+          type: "document"
+        }
+      ]
+    },
+    {
+      title: "Comunidades y Apoyo",
+      resources: [
+        {
+          name: "HealthUnlocked - Menopause Community",
+          url: "https://healthunlocked.com/menopausematters",
+          description: "Comunidad en línea para compartir experiencias y apoyo",
+          type: "web"
+        },
+        {
+          name: "Reddit - r/Menopause",
+          url: "https://www.reddit.com/r/Menopause",
+          description: "Foro activo con miles de mujeres compartiendo experiencias",
+          type: "web"
+        },
+        {
+          name: "Menopause Support Facebook Groups",
+          url: "https://www.facebook.com/search/groups/?q=menopause%20support",
+          description: "Grupos de apoyo en Facebook en diferentes idiomas",
+          type: "web"
+        }
+      ]
+    }
+  ];
+
   const renderArticles = (articles: typeof perimenopauseArticles) => (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {articles.map((article, index) => {
@@ -117,6 +219,17 @@ const Resources = () => {
     </div>
   );
 
+  const getResourceIcon = (type: string) => {
+    switch (type) {
+      case 'video':
+        return Video;
+      case 'document':
+        return FileText;
+      default:
+        return ExternalLink;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -140,11 +253,12 @@ const Resources = () => {
         </div>
 
         <Tabs defaultValue="perimenopausia" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
             <TabsTrigger value="perimenopausia">Perimenopausia</TabsTrigger>
             <TabsTrigger value="menopausia">Menopausia</TabsTrigger>
             <TabsTrigger value="sintomas">Síntomas</TabsTrigger>
             <TabsTrigger value="tratamientos">Tratamientos</TabsTrigger>
+            <TabsTrigger value="recursos">Recursos Online</TabsTrigger>
           </TabsList>
 
           <TabsContent value="perimenopausia" className="space-y-4">
@@ -185,6 +299,56 @@ const Resources = () => {
               </p>
             </div>
             {renderArticles(treatmentsArticles)}
+          </TabsContent>
+
+          <TabsContent value="recursos" className="space-y-4">
+            <div className="mb-4">
+              <h2 className="text-2xl font-semibold mb-2">Recursos Online</h2>
+              <p className="text-muted-foreground">
+                Enlaces a organizaciones, videos educativos, documentos y comunidades de apoyo disponibles en internet.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-4">
+              {externalResources.map((category, catIndex) => (
+                <AccordionItem key={catIndex} value={`item-${catIndex}`} className="border rounded-lg px-6 bg-card">
+                  <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+                    {category.title}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-4 pt-2">
+                      {category.resources.map((resource, resIndex) => {
+                        const Icon = getResourceIcon(resource.type);
+                        return (
+                          <Card key={resIndex} className="hover:shadow-md transition-shadow">
+                            <CardContent className="p-4">
+                              <div className="flex items-start gap-3">
+                                <div className="p-2 rounded-lg bg-primary/10 mt-1">
+                                  <Icon className="h-4 w-4 text-primary" />
+                                </div>
+                                <div className="flex-1 space-y-1">
+                                  <h4 className="font-semibold text-base">{resource.name}</h4>
+                                  <p className="text-sm text-muted-foreground">{resource.description}</p>
+                                  <a
+                                    href={resource.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 text-sm text-primary hover:underline mt-2"
+                                  >
+                                    Visitar recurso
+                                    <ExternalLink className="h-3 w-3" />
+                                  </a>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </TabsContent>
         </Tabs>
 
