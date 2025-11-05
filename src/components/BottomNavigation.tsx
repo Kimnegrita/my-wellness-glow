@@ -1,21 +1,23 @@
 import { Link, useLocation } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface NavItem {
   icon: string;
-  label: string;
+  labelKey: keyof ReturnType<typeof useLanguage>["t"]["nav"];
   path: string;
 }
 
 const navItems: NavItem[] = [
-  { icon: "home", label: "Inicio", path: "/" },
-  { icon: "calendar_month", label: "Calendario", path: "/calendar" },
-  { icon: "spa", label: "Bienestar", path: "/wellness" },
-  { icon: "bar_chart", label: "Registro", path: "/daily-log" },
-  { icon: "person", label: "Perfil", path: "/profile" },
+  { icon: "home", labelKey: "home", path: "/" },
+  { icon: "calendar_month", labelKey: "calendar", path: "/calendar" },
+  { icon: "spa", labelKey: "wellness", path: "/wellness" },
+  { icon: "bar_chart", labelKey: "dailyLog", path: "/daily-log" },
+  { icon: "person", labelKey: "profile", path: "/profile" },
 ];
 
 export const BottomNavigation = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-10 flex justify-around bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm border-t border-gray-200 dark:border-white/10 p-2">
@@ -39,7 +41,9 @@ export const BottomNavigation = () => {
             >
               {item.icon}
             </span>
-            <span className={`text-xs ${isActive ? "font-bold" : "font-medium"}`}>{item.label}</span>
+            <span className={`text-xs ${isActive ? "font-bold" : "font-medium"}`}>
+              {t.nav[item.labelKey]}
+            </span>
           </Link>
         );
       })}
