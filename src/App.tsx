@@ -11,6 +11,7 @@ import Onboarding from "./pages/Onboarding";
 import DailyCheckin from "./pages/DailyCheckin";
 import Profile from "./pages/Profile";
 import History from "./pages/History";
+import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -61,6 +62,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <History />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/resources"
+              element={
+                <ProtectedRoute>
+                  <Resources />
                 </ProtectedRoute>
               }
             />
