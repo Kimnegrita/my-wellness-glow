@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import type { Language } from "@/i18n/translations";
 import { toast } from "sonner";
 
 const Profile = () => {
   const { t, language, setLanguage } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [showLanguageModal, setShowLanguageModal] = useState(false);
 
   const handleLanguageChange = (newLanguage: Language) => {
@@ -110,7 +112,12 @@ const Profile = () => {
                 <span className="material-symbols-outlined mr-4 text-primary">dark_mode</span>
                 <span className="flex-1 text-base font-medium">{t.profile.darkMode}</span>
                 <label className="relative inline-flex cursor-pointer items-center">
-                  <input className="peer sr-only" type="checkbox" />
+                  <input
+                    className="peer sr-only"
+                    type="checkbox"
+                    checked={theme === "dark"}
+                    onChange={toggleTheme}
+                  />
                   <div className="peer h-6 w-11 rounded-full bg-outline after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:bg-outline-dark dark:peer-focus:ring-primary/50"></div>
                 </label>
               </div>
