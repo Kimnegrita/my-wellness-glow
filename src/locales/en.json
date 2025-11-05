@@ -1,0 +1,66 @@
+{
+  "common": {
+    "backToHome": "Back to home",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password?",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "signInSuccess": "Signed in successfully",
+    "signUpSuccess": "Account created successfully",
+    "signOutSuccess": "Signed out successfully"
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "language": "Application language",
+    "selectLanguage": "Select a language",
+    "languageNote": "Language will be applied immediately",
+    "cycleInfo": "Cycle Information",
+    "lastPeriod": "Last period",
+    "selectDate": "Select a date",
+    "irregularCycle": "Irregular cycle",
+    "irregularCycleDesc": "Check this option if your cycles vary significantly",
+    "avgCycleLength": "Average cycle length (days)",
+    "saveSuccess": "Profile updated successfully",
+    "saveError": "Error saving profile"
+  },
+  "resources": {
+    "title": "Educational Resources",
+    "description": "Complete and reliable information about perimenopause, menopause, symptoms and treatments to help you navigate this stage with knowledge and confidence.",
+    "perimenopause": "Perimenopause",
+    "menopause": "Menopause",
+    "symptoms": "Symptoms",
+    "treatments": "Treatments",
+    "onlineResources": "Online Resources",
+    "onlineResourcesDesc": "Links to organizations, educational videos, documents and support communities available online.",
+    "visitResource": "Visit resource",
+    "disclaimer": "This information is for educational purposes and does not replace professional medical consultation. Every woman is unique and symptoms, as well as appropriate treatments, vary. Always consult with your healthcare professional for personalized advice.",
+    "importantNote": "Important Note"
+  },
+  "contacts": {
+    "title": "Health Contacts",
+    "description": "Hospitals, clinics and support lines in Portugal specialized in women's health during perimenopause and menopause.",
+    "hospitals": "Hospitals",
+    "clinics": "Clinics",
+    "supportLines": "Support Lines",
+    "phone": "Phone",
+    "website": "Website",
+    "visit": "Visit"
+  }
+}

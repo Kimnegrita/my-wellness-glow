@@ -1,0 +1,66 @@
+{
+  "common": {
+    "backToHome": "Volver al inicio",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "dontHaveAccount": "¿No tienes una cuenta?",
+    "signInSuccess": "Sesión iniciada correctamente",
+    "signUpSuccess": "Cuenta creada correctamente",
+    "signOutSuccess": "Sesión cerrada correctamente"
+  },
+  "profile": {
+    "title": "Perfil",
+    "personalInfo": "Información Personal",
+    "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "language": "Idioma de la aplicación",
+    "selectLanguage": "Selecciona un idioma",
+    "languageNote": "El idioma se aplicará inmediatamente",
+    "cycleInfo": "Información del Ciclo",
+    "lastPeriod": "Última menstruación",
+    "selectDate": "Selecciona una fecha",
+    "irregularCycle": "Ciclo irregular",
+    "irregularCycleDesc": "Marca esta opción si tus ciclos varían significativamente",
+    "avgCycleLength": "Duración promedio del ciclo (días)",
+    "saveSuccess": "Perfil actualizado correctamente",
+    "saveError": "Error al guardar el perfil"
+  },
+  "resources": {
+    "title": "Recursos Educativos",
+    "description": "Información completa y confiable sobre perimenopausia, menopausia, síntomas y tratamientos para ayudarte a navegar esta etapa con conocimiento y confianza.",
+    "perimenopause": "Perimenopausia",
+    "menopause": "Menopausia",
+    "symptoms": "Síntomas",
+    "treatments": "Tratamientos",
+    "onlineResources": "Recursos Online",
+    "onlineResourcesDesc": "Enlaces a organizaciones, videos educativos, documentos y comunidades de apoyo disponibles en internet.",
+    "visitResource": "Visitar recurso",
+    "disclaimer": "Esta información tiene fines educativos y no reemplaza la consulta médica profesional. Cada mujer es única y los síntomas, así como los tratamientos apropiados, varían. Siempre consulta con tu profesional de la salud para obtener asesoramiento personalizado.",
+    "importantNote": "Nota Importante"
+  },
+  "contacts": {
+    "title": "Contactos de Salud",
+    "description": "Hospitales, clínicas y líneas de apoyo en Portugal especializados en salud de la mujer durante la perimenopausia y menopausia.",
+    "hospitals": "Hospitales",
+    "clinics": "Clínicas",
+    "supportLines": "Líneas de Apoyo",
+    "phone": "Teléfono",
+    "website": "Sitio web",
+    "visit": "Visitar"
+  }
+}

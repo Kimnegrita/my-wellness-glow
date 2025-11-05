@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,12 +12,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { ArrowLeft, Save, User, Calendar as CalendarIcon, Globe } from 'lucide-react';
 import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { es, enUS, pt } from 'date-fns/locale';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 export default function Profile() {
   const navigate = useNavigate();
   const { updateProfile, profile } = useAuth();
+  const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(false);
 
   // Form state
@@ -42,12 +44,23 @@ export default function Profile() {
         is_irregular: isIrregular,
       });
 
-      toast.success('¡Perfil actualizado correctamente! ✨');
+      toast.success(t('profile.saveSuccess'));
       navigate('/', { replace: true });
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(t('profile.saveError'));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getDateLocale = () => {
+    switch (i18n.language) {
+      case 'en':
+        return enUS;
+      case 'pt':
+        return pt;
+      default:
+        return es;
     }
   };
 
@@ -60,17 +73,17 @@ export default function Profile() {
           className="mb-4"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Volver
+          {t('common.backToHome')}
         </Button>
 
         <Card className="shadow-elegant border-primary/20 bg-card/95 backdrop-blur">
           <CardHeader className="space-y-1 pb-6">
             <CardTitle className="text-3xl font-bold flex items-center gap-2">
               <User className="h-8 w-8 text-primary" />
-              <span className="text-gradient">Mi Perfil</span>
+              <span className="text-gradient">{t('profile.title')}</span>
             </CardTitle>
             <CardDescription className="text-base">
-              Actualiza tu información personal y configuración del ciclo
+              {t('profile.personalInfo')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
@@ -78,19 +91,19 @@ export default function Profile() {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
                 <User className="h-5 w-5 text-primary" />
-                Información Personal
+                {t('profile.personalInfo')}
               </h3>
               
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-base font-semibold">
-                  Nombre
+                  {t('profile.name')}
                 </Label>
                 <Input
                   id="name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Tu nombre"
+                  placeholder={t('profile.namePlaceholder')}
                   className="border-2"
                 />
               </div>
@@ -98,11 +111,11 @@ export default function Profile() {
               <div className="space-y-2">
                 <Label htmlFor="language" className="text-base font-semibold flex items-center gap-2">
                   <Globe className="h-4 w-4" />
-                  Idioma de la aplicación
+                  {t('profile.language')}
                 </Label>
                 <Select value={language} onValueChange={setLanguage}>
                   <SelectTrigger id="language" className="border-2">
-                    <SelectValue placeholder="Selecciona un idioma" />
+                    <SelectValue placeholder={t('profile.selectLanguage')} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="es">Español</SelectItem>
@@ -111,7 +124,7 @@ export default function Profile() {
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground">
-                  El idioma se aplicará en la próxima actualización
+                  {t('profile.languageNote')}
                 </p>
               </div>
             </div>
@@ -120,12 +133,12 @@ export default function Profile() {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
                 <CalendarIcon className="h-5 w-5 text-primary" />
-                Información del Ciclo
+                {t('profile.cycleInfo')}
               </h3>
               
               <div className="space-y-2">
                 <Label className="text-base font-semibold">
-                  Fecha de última menstruación
+                  {t('profile.lastPeriod')}
                 </Label>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -135,9 +148,9 @@ export default function Profile() {
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {lastPeriodDate ? (
-                        format(lastPeriodDate, "PPP", { locale: es })
+                        format(lastPeriodDate, "PPP", { locale: getDateLocale() })
                       ) : (
-                        <span>Selecciona una fecha</span>
+                        <span>{t('profile.selectDate')}</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -147,7 +160,7 @@ export default function Profile() {
                       selected={lastPeriodDate}
                       onSelect={setLastPeriodDate}
                       disabled={(date) => date > new Date()}
-                      locale={es}
+                      locale={getDateLocale()}
                       initialFocus
                     />
                   </PopoverContent>
@@ -156,7 +169,7 @@ export default function Profile() {
 
               <div className="space-y-2">
                 <Label htmlFor="cycle-length" className="text-base font-semibold">
-                  Duración promedio del ciclo (días)
+                  {t('profile.avgCycleLength')}
                 </Label>
                 <Input
                   id="cycle-length"
@@ -169,7 +182,7 @@ export default function Profile() {
                   className="text-center text-lg font-semibold border-2"
                 />
                 <p className="text-xs text-muted-foreground">
-                  La mayoría de los ciclos duran entre 21 y 35 días
+                  {t('profile.irregularCycleDesc')}
                 </p>
               </div>
 
@@ -183,7 +196,7 @@ export default function Profile() {
                   htmlFor="irregular"
                   className="text-sm font-medium leading-none cursor-pointer"
                 >
-                  Mi ciclo es irregular
+                  {t('profile.irregularCycle')}
                 </label>
               </div>
             </div>
@@ -195,7 +208,7 @@ export default function Profile() {
               className="w-full bg-gradient-primary hover:opacity-90 h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               size="lg"
             >
-              {loading ? 'Guardando...' : 'Guardar Cambios'}
+              {loading ? t('common.loading') : t('common.save')}
               <Save className="ml-2 h-5 w-5" />
             </Button>
           </CardContent>

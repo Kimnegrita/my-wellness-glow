@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 interface Profile {
   id: string;
@@ -32,6 +33,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const queryClient = useQueryClient();
+  const { i18n } = useTranslation();
 
   // Fetch profile data
   const { data: profile } = useQuery({
@@ -49,6 +51,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
     enabled: !!user,
   });
+
+  // Change language when profile language changes
+  useEffect(() => {
+    if (profile?.language && profile.language !== i18n.language) {
+      i18n.changeLanguage(profile.language);
+    }
+  }, [profile?.language, i18n]);
 
   useEffect(() => {
     // Set up auth state listener FIRST
