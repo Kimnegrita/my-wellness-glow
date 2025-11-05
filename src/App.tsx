@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import History from "./pages/History";
 import Resources from "./pages/Resources";
 import Contacts from "./pages/Contacts";
+import Assistant from "./pages/Assistant";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -79,6 +80,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Contacts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/assistant"
+              element={
+                <ProtectedRoute>
+                  <Assistant />
                 </ProtectedRoute>
               }
             />
