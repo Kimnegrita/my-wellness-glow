@@ -15,28 +15,25 @@ import { es } from 'date-fns/locale';
 export default function Onboarding() {
   const navigate = useNavigate();
   const { updateProfile, profile } = useAuth();
-  const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // Form state
-  const [lastPeriodDate, setLastPeriodDate] = useState<Date | undefined>(undefined);
-  const [dontRemember, setDontRemember] = useState(false);
-  const [cycleLength, setCycleLength] = useState<number>(28);
-  const [isIrregular, setIsIrregular] = useState(false);
+  // Simplified - just ask for name if needed
+  const [name, setName] = useState(profile?.name || '');
 
   const handleComplete = async () => {
+    if (!name.trim()) {
+      toast.error('Por favor, ingresa tu nombre');
+      return;
+    }
+
     setLoading(true);
 
     try {
       await updateProfile({
-        last_period_date: dontRemember || !lastPeriodDate 
-          ? null 
-          : format(lastPeriodDate, 'yyyy-MM-dd'),
-        avg_cycle_length: isIrregular ? null : cycleLength,
-        is_irregular: isIrregular,
+        name: name.trim(),
       });
 
-      toast.success('¡Perfil completado! Bienvenida a tu viaje de bienestar ✨');
+      toast.success('¡Bienvenida! Tu información del ciclo se actualizará automáticamente cuando hagas tu primer registro ✨');
       navigate('/', { replace: true });
     } catch (error: any) {
       toast.error(error.message);
@@ -53,123 +50,57 @@ export default function Onboarding() {
             <img src="/logo.png" alt="My Wellness Glow" className="h-16 w-16" />
           </div>
           <CardTitle className="text-2xl font-bold text-gradient">
-            ¡Bienvenida, {profile?.name}!
+            ¡Bienvenida!
           </CardTitle>
           <CardDescription className="flex items-center justify-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
-            Paso {step} de 2
+            Comienza tu viaje de bienestar
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {step === 1 && (
-            <div className="space-y-6 animate-fade-in-up">
-              <div className="text-center space-y-2">
-                <h3 className="text-lg font-semibold">
-                  ¿Cuándo comenzó tu última menstruación?
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Esto nos ayudará a personalizar tus consejos
-                </p>
-              </div>
-
-              <div className="flex justify-center">
-                <Calendar
-                  mode="single"
-                  selected={lastPeriodDate}
-                  onSelect={setLastPeriodDate}
-                  disabled={(date) => date > new Date()}
-                  locale={es}
-                  className="rounded-md border"
-                />
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="dont-remember"
-                  checked={dontRemember}
-                  onCheckedChange={(checked) => setDontRemember(checked as boolean)}
-                />
-                <label
-                  htmlFor="dont-remember"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  No me acuerdo
-                </label>
-              </div>
-
-              <Button
-                onClick={() => setStep(2)}
-                className="w-full bg-gradient-primary hover:opacity-90"
-              >
-                Continuar
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+          <div className="space-y-6 animate-fade-in-up">
+            <div className="text-center space-y-2">
+              <h3 className="text-lg font-semibold">
+                ¿Cómo te llamas?
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Personaliza tu experiencia
+              </p>
             </div>
-          )}
 
-          {step === 2 && (
-            <div className="space-y-6 animate-fade-in-up">
-              <div className="text-center space-y-2">
-                <h3 className="text-lg font-semibold">
-                  Información de tu ciclo
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Ayúdanos a entender mejor tu cuerpo
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="cycle-length">
-                  Duración promedio de tu ciclo (días)
-                </Label>
-                <Input
-                  id="cycle-length"
-                  type="number"
-                  min={21}
-                  max={35}
-                  value={cycleLength}
-                  onChange={(e) => setCycleLength(parseInt(e.target.value))}
-                  disabled={isIrregular}
-                  className="text-center text-lg font-semibold"
-                />
-                <p className="text-xs text-muted-foreground text-center">
-                  La mayoría de los ciclos duran entre 21 y 35 días
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="irregular"
-                  checked={isIrregular}
-                  onCheckedChange={(checked) => setIsIrregular(checked as boolean)}
-                />
-                <label
-                  htmlFor="irregular"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Mi ciclo es irregular
-                </label>
-              </div>
-
-              <div className="flex gap-3">
-                <Button
-                  onClick={() => setStep(1)}
-                  variant="outline"
-                  className="flex-1"
-                >
-                  Atrás
-                </Button>
-                <Button
-                  onClick={handleComplete}
-                  disabled={loading}
-                  className="flex-1 bg-gradient-primary hover:opacity-90"
-                >
-                  {loading ? 'Guardando...' : 'Comenzar mi viaje'}
-                  <Sparkles className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="name">Tu nombre</Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Ingresa tu nombre"
+                className="text-center text-lg"
+              />
             </div>
-          )}
+
+            <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-2">
+              <p className="text-sm font-medium flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary" />
+                Seguimiento automático del ciclo
+              </p>
+              <p className="text-xs text-muted-foreground">
+                No te preocupes por configurar tu ciclo ahora. Cuando hagas tu primer registro diario 
+                y marques el inicio de tu período, el sistema automáticamente guardará la fecha y 
+                calculará la duración de tu ciclo basándose en tus registros futuros.
+              </p>
+            </div>
+
+            <Button
+              onClick={handleComplete}
+              disabled={loading || !name.trim()}
+              className="w-full bg-gradient-primary hover:opacity-90 h-12"
+            >
+              {loading ? 'Guardando...' : 'Comenzar mi viaje'}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

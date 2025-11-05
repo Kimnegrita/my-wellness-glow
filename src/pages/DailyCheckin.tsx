@@ -8,9 +8,9 @@ import { SymptomChip } from '@/components/SymptomChip';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { ArrowLeft, Save } from 'lucide-react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { format } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 
 const SYMPTOMS = [
   'Energía Baja',
@@ -38,13 +38,32 @@ const MOODS = [
 
 export default function DailyCheckin() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, profile, updateProfile } = useAuth();
   const queryClient = useQueryClient();
 
   const [periodStatus, setPeriodStatus] = useState<'started' | 'ended' | 'none'>('none');
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [journalEntry, setJournalEntry] = useState('');
+
+  // Fetch previous period start dates to calculate cycle length
+  const { data: previousPeriods } = useQuery({
+    queryKey: ['previous_periods', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      const { data, error } = await supabase
+        .from('daily_logs')
+        .select('log_date')
+        .eq('user_id', user.id)
+        .eq('period_started', true)
+        .order('log_date', { ascending: false })
+        .limit(5);
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user,
+  });
 
   const saveMutation = useMutation({
     mutationFn: async () => {
@@ -57,6 +76,7 @@ export default function DailyCheckin() {
         ? [...selectedSymptoms, `Ánimo: ${selectedMood}`]
         : selectedSymptoms;
 
+      // Save daily log
       const { error } = await supabase
         .from('daily_logs')
         .upsert({
@@ -71,10 +91,54 @@ export default function DailyCheckin() {
         });
 
       if (error) throw error;
+
+      // If period started today, update profile automatically
+      if (periodStatus === 'started') {
+        // Calculate average cycle length if we have previous periods
+        let calculatedCycleLength = profile?.avg_cycle_length;
+        
+        if (previousPeriods && previousPeriods.length > 0 && profile?.last_period_date) {
+          const lastPeriodDate = new Date(profile.last_period_date);
+          const todayDate = new Date(today);
+          const currentCycleLength = differenceInDays(todayDate, lastPeriodDate);
+          
+          // Calculate average from last few cycles
+          if (previousPeriods.length >= 2 && currentCycleLength > 15 && currentCycleLength < 45) {
+            const cycleLengths: number[] = [];
+            
+            for (let i = 0; i < previousPeriods.length - 1; i++) {
+              const diff = differenceInDays(
+                new Date(previousPeriods[i].log_date),
+                new Date(previousPeriods[i + 1].log_date)
+              );
+              if (diff > 15 && diff < 45) { // Valid cycle length range
+                cycleLengths.push(diff);
+              }
+            }
+            
+            // Add current cycle
+            cycleLengths.push(currentCycleLength);
+            
+            if (cycleLengths.length > 0) {
+              calculatedCycleLength = Math.round(
+                cycleLengths.reduce((a, b) => a + b, 0) / cycleLengths.length
+              );
+            }
+          }
+        }
+
+        // Update profile with new period date and calculated cycle length
+        await updateProfile({
+          last_period_date: today,
+          avg_cycle_length: calculatedCycleLength,
+        });
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['daily_logs'] });
       queryClient.invalidateQueries({ queryKey: ['weekly_logs'] });
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+      queryClient.invalidateQueries({ queryKey: ['previous_periods'] });
       toast.success('¡Registro guardado exitosamente! ✨');
       navigate('/');
     },
