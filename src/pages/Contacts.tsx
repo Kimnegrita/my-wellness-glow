@@ -2,9 +2,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, MapPin, Globe, Hospital, Heart, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const Contacts = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const hospitals = [
     {
@@ -152,23 +154,22 @@ const Contacts = () => {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Volver al inicio
+          {t('common.backToHome')}
         </Button>
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            Contactos y Recursos en Portugal
+            {t('contacts.title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Encuentra hospitales, clínicas, líneas de apoyo y asociaciones especializadas 
-            en salud de la mujer y menopausia en Portugal.
+            {t('contacts.description')}
           </p>
         </div>
 
         <div className="space-y-8">
-          {renderContacts(hospitals, "Hospitales Privados")}
-          {renderContacts(clinics, "Clínicas Especializadas")}
-          {renderContacts(supportLines, "Líneas de Apoyo Telefónico")}
+          {renderContacts(hospitals, t('contacts.hospitals'))}
+          {renderContacts(clinics, t('contacts.clinics'))}
+          {renderContacts(supportLines, t('contacts.supportLines'))}
           {renderContacts(associations, "Asociaciones y Recursos Online")}
         </div>
 

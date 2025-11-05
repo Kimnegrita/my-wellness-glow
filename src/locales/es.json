@@ -23,6 +23,22 @@
     "signUpSuccess": "Cuenta creada correctamente",
     "signOutSuccess": "Sesión cerrada correctamente"
   },
+  "home": {
+    "welcome": "Bienvenida",
+    "welcomeBack": "¡Bienvenida de nuevo",
+    "cycleDay": "Día del ciclo",
+    "currentPhase": "Fase actual",
+    "nextPeriod": "Próxima menstruación",
+    "daysUntil": "En {{days}} días",
+    "todaysTip": "Consejo del día",
+    "quickActions": "Acciones rápidas",
+    "dailyCheckin": "Registro diario",
+    "viewHistory": "Ver historial",
+    "resources": "Recursos educativos",
+    "healthContacts": "Contactos de salud",
+    "completeProfile": "Completa tu perfil",
+    "completeProfileDesc": "Añade información sobre tu ciclo para obtener predicciones personalizadas"
+  },
   "profile": {
     "title": "Perfil",
     "personalInfo": "Información Personal",
@@ -35,10 +51,44 @@
     "lastPeriod": "Última menstruación",
     "selectDate": "Selecciona una fecha",
     "irregularCycle": "Ciclo irregular",
-    "irregularCycleDesc": "Marca esta opción si tus ciclos varían significativamente",
+    "irregularCycleDesc": "La mayoría de los ciclos duran entre 21 y 35 días",
     "avgCycleLength": "Duración promedio del ciclo (días)",
     "saveSuccess": "Perfil actualizado correctamente",
     "saveError": "Error al guardar el perfil"
+  },
+  "checkin": {
+    "title": "Registro Diario",
+    "description": "Registra tus síntomas y cómo te sientes hoy",
+    "periodStatus": "Estado de la menstruación",
+    "periodStarted": "La menstruación comenzó hoy",
+    "periodEnded": "La menstruación terminó hoy",
+    "symptoms": "Síntomas",
+    "selectSymptoms": "Selecciona los síntomas que experimentas hoy",
+    "journalEntry": "Notas del día",
+    "journalPlaceholder": "¿Cómo te sientes hoy? Escribe cualquier observación...",
+    "saveSuccess": "Registro guardado correctamente",
+    "saveError": "Error al guardar el registro",
+    "symptomsList": {
+      "hotFlashes": "Sofocos",
+      "nightSweats": "Sudores nocturnos",
+      "moodSwings": "Cambios de humor",
+      "anxiety": "Ansiedad",
+      "insomnia": "Insomnio",
+      "fatigue": "Fatiga",
+      "brainFog": "Niebla mental",
+      "jointPain": "Dolor articular",
+      "headache": "Dolor de cabeza",
+      "irritability": "Irritabilidad"
+    }
+  },
+  "history": {
+    "title": "Historial",
+    "description": "Revisa tus registros anteriores y patrones de síntomas",
+    "noLogs": "No hay registros todavía",
+    "noLogsDesc": "Comienza a registrar tus síntomas diarios para ver tu historial aquí",
+    "periodDay": "Día de menstruación",
+    "symptoms": "Síntomas",
+    "notes": "Notas"
   },
   "resources": {
     "title": "Recursos Educativos",
@@ -51,7 +101,81 @@
     "onlineResourcesDesc": "Enlaces a organizaciones, videos educativos, documentos y comunidades de apoyo disponibles en internet.",
     "visitResource": "Visitar recurso",
     "disclaimer": "Esta información tiene fines educativos y no reemplaza la consulta médica profesional. Cada mujer es única y los síntomas, así como los tratamientos apropiados, varían. Siempre consulta con tu profesional de la salud para obtener asesoramiento personalizado.",
-    "importantNote": "Nota Importante"
+    "importantNote": "Nota Importante",
+    "perimenopauseArticles": {
+      "what": {
+        "title": "¿Qué es la Perimenopausia?",
+        "desc": "Comprende la fase de transición antes de la menopausia y sus características principales.",
+        "content": "La perimenopausia es el período de transición que precede a la menopausia. Puede comenzar varios años antes de que cese la menstruación, típicamente entre los 40 y 44 años, aunque puede empezar antes. Durante esta fase, los niveles hormonales fluctúan de manera irregular, causando diversos síntomas."
+      },
+      "symptoms": {
+        "title": "Síntomas Comunes",
+        "desc": "Identifica los signos más frecuentes de la perimenopausia.",
+        "content": "Los síntomas incluyen: ciclos menstruales irregulares, sofocos, sudores nocturnos, problemas de sueño, cambios de humor, sequedad vaginal, disminución de la libido, dificultad para concentrarse y cambios en el peso. La intensidad varía en cada mujer."
+      },
+      "duration": {
+        "title": "Duración y Etapas",
+        "desc": "Conoce cuánto puede durar esta fase de transición.",
+        "content": "La perimenopausia puede durar desde unos meses hasta 10 años, con una duración promedio de 4 años. Termina oficialmente cuando una mujer no ha tenido menstruación durante 12 meses consecutivos, momento en el que se considera que ha llegado a la menopausia."
+      }
+    },
+    "menopauseArticles": {
+      "understanding": {
+        "title": "Entendiendo la Menopausia",
+        "desc": "Todo lo que necesitas saber sobre esta etapa natural de la vida.",
+        "content": "La menopausia es el cese permanente de la menstruación. Se confirma después de 12 meses consecutivos sin período menstrual. La edad promedio es alrededor de los 51 años, aunque puede ocurrir antes o después. Es una fase natural y no una enfermedad."
+      },
+      "hormonal": {
+        "title": "Cambios Hormonales",
+        "desc": "Cómo afectan las hormonas a tu cuerpo durante la menopausia.",
+        "content": "Durante la menopausia, los ovarios producen menos estrógeno y progesterona. Esta disminución hormonal afecta a múltiples sistemas del cuerpo, incluyendo el sistema cardiovascular, óseo, metabólico y nervioso. Entender estos cambios ayuda a manejar mejor los síntomas."
+      },
+      "bone": {
+        "title": "Salud Ósea",
+        "desc": "La importancia del cuidado de los huesos en la menopausia.",
+        "content": "La disminución de estrógeno aumenta el riesgo de osteoporosis. Es crucial consumir suficiente calcio (1200mg/día) y vitamina D, realizar ejercicio de resistencia, evitar el tabaco y el exceso de alcohol, y consultar sobre densitometría ósea."
+      }
+    },
+    "symptomsArticles": {
+      "hotFlashes": {
+        "title": "Sofocos y Sudores Nocturnos",
+        "desc": "Manejo de los síntomas vasomotores más comunes.",
+        "content": "Los sofocos afectan al 75% de las mujeres. Estrategias de manejo: vestirse en capas, mantener el ambiente fresco, evitar desencadenantes (alcohol, cafeína, comidas picantes), técnicas de respiración profunda, y considerar terapias hormonales si son severos."
+      },
+      "mood": {
+        "title": "Cambios de Humor y Ansiedad",
+        "desc": "Comprendiendo el impacto emocional de los cambios hormonales.",
+        "content": "Las fluctuaciones hormonales pueden causar irritabilidad, ansiedad y depresión. El ejercicio regular, técnicas de relajación, mantener conexiones sociales, dormir bien y buscar apoyo profesional cuando sea necesario son estrategias importantes."
+      },
+      "sleep": {
+        "title": "Problemas de Sueño",
+        "desc": "Estrategias para mejorar la calidad del sueño.",
+        "content": "Mantén un horario regular de sueño, crea un ambiente fresco y oscuro, evita pantallas antes de dormir, limita la cafeína por la tarde, practica técnicas de relajación y considera la melatonina bajo supervisión médica."
+      }
+    },
+    "treatmentsArticles": {
+      "hormonal": {
+        "title": "Terapia Hormonal",
+        "desc": "Opciones de tratamiento hormonal y sus consideraciones.",
+        "content": "La terapia hormonal puede aliviar síntomas severos. Incluye estrógeno solo o combinado con progesterona. Es más efectiva cuando se inicia cerca del inicio de la menopausia. Debe ser personalizada y supervisada médicamente, evaluando riesgos y beneficios individuales."
+      },
+      "nonHormonal": {
+        "title": "Tratamientos No Hormonales",
+        "desc": "Alternativas efectivas sin hormonas.",
+        "content": "Opciones incluyen: antidepresivos (ISRS/IRSN) para sofocos, gabapentina, fitoestrógenos, lubricantes vaginales, terapia cognitivo-conductual, acupuntura, y suplementos como cohosh negro. Consulta siempre con un profesional antes de iniciar cualquier tratamiento."
+      },
+      "lifestyle": {
+        "title": "Cambios en el Estilo de Vida",
+        "desc": "Modificaciones diarias que marcan la diferencia.",
+        "content": "Dieta balanceada rica en calcio y vitamina D, ejercicio regular (150 min/semana), mantener peso saludable, no fumar, limitar alcohol, técnicas de manejo del estrés (yoga, meditación), y mantener vida social activa son fundamentales."
+      }
+    },
+    "externalResources": {
+      "organizations": "Organizaciones y Sitios Web Oficiales",
+      "videos": "Videos Educativos",
+      "documents": "Guías y Documentos",
+      "community": "Comunidades y Apoyo"
+    }
   },
   "contacts": {
     "title": "Contactos de Salud",
@@ -62,5 +186,11 @@
     "phone": "Teléfono",
     "website": "Sitio web",
     "visit": "Visitar"
+  },
+  "phases": {
+    "menstrual": "Menstrual",
+    "follicular": "Folicular",
+    "ovulation": "Ovulación",
+    "luteal": "Lútea"
   }
 }

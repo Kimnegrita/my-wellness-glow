@@ -4,27 +4,29 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookOpen, Heart, Pill, Activity, ExternalLink, Video, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useTranslation } from 'react-i18next';
 
 const Resources = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const perimenopauseArticles = [
     {
-      title: "¿Qué es la Perimenopausia?",
-      description: "Comprende la fase de transición antes de la menopausia y sus características principales.",
-      content: "La perimenopausia es el período de transición que precede a la menopausia. Puede comenzar varios años antes de que cese la menstruación, típicamente entre los 40 y 44 años, aunque puede empezar antes. Durante esta fase, los niveles hormonales fluctúan de manera irregular, causando diversos síntomas.",
+      title: t('resources.perimenopauseArticles.what.title'),
+      description: t('resources.perimenopauseArticles.what.desc'),
+      content: t('resources.perimenopauseArticles.what.content'),
       icon: BookOpen,
     },
     {
-      title: "Síntomas Comunes",
-      description: "Identifica los signos más frecuentes de la perimenopausia.",
-      content: "Los síntomas incluyen: ciclos menstruales irregulares, sofocos, sudores nocturnos, problemas de sueño, cambios de humor, sequedad vaginal, disminución de la libido, dificultad para concentrarse y cambios en el peso. La intensidad varía en cada mujer.",
+      title: t('resources.perimenopauseArticles.symptoms.title'),
+      description: t('resources.perimenopauseArticles.symptoms.desc'),
+      content: t('resources.perimenopauseArticles.symptoms.content'),
       icon: Activity,
     },
     {
-      title: "Duración y Etapas",
-      description: "Conoce cuánto puede durar esta fase de transición.",
-      content: "La perimenopausia puede durar desde unos meses hasta 10 años, con una duración promedio de 4 años. Termina oficialmente cuando una mujer no ha tenido menstruación durante 12 meses consecutivos, momento en el que se considera que ha llegado a la menopausia.",
+      title: t('resources.perimenopauseArticles.duration.title'),
+      description: t('resources.perimenopauseArticles.duration.desc'),
+      content: t('resources.perimenopauseArticles.duration.content'),
       icon: Heart,
     },
   ];
@@ -239,26 +241,25 @@ const Resources = () => {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Volver al inicio
+          {t('common.backToHome')}
         </Button>
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            Recursos Educativos
+            {t('resources.title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Información completa y confiable sobre perimenopausia, menopausia, síntomas y tratamientos
-            para ayudarte a navegar esta etapa con conocimiento y confianza.
+            {t('resources.description')}
           </p>
         </div>
 
         <Tabs defaultValue="perimenopausia" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
-            <TabsTrigger value="perimenopausia">Perimenopausia</TabsTrigger>
-            <TabsTrigger value="menopausia">Menopausia</TabsTrigger>
-            <TabsTrigger value="sintomas">Síntomas</TabsTrigger>
-            <TabsTrigger value="tratamientos">Tratamientos</TabsTrigger>
-            <TabsTrigger value="recursos">Recursos Online</TabsTrigger>
+            <TabsTrigger value="perimenopausia">{t('resources.perimenopause')}</TabsTrigger>
+            <TabsTrigger value="menopausia">{t('resources.menopause')}</TabsTrigger>
+            <TabsTrigger value="sintomas">{t('resources.symptoms')}</TabsTrigger>
+            <TabsTrigger value="tratamientos">{t('resources.treatments')}</TabsTrigger>
+            <TabsTrigger value="recursos">{t('resources.onlineResources')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="perimenopausia" className="space-y-4">
@@ -303,9 +304,9 @@ const Resources = () => {
 
           <TabsContent value="recursos" className="space-y-4">
             <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Recursos Online</h2>
+              <h2 className="text-2xl font-semibold mb-2">{t('resources.onlineResources')}</h2>
               <p className="text-muted-foreground">
-                Enlaces a organizaciones, videos educativos, documentos y comunidades de apoyo disponibles en internet.
+                {t('resources.onlineResourcesDesc')}
               </p>
             </div>
 
@@ -335,7 +336,7 @@ const Resources = () => {
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-1 text-sm text-primary hover:underline mt-2"
                                   >
-                                    Visitar recurso
+                                    {t('resources.visitResource')}
                                     <ExternalLink className="h-3 w-3" />
                                   </a>
                                 </div>
@@ -356,14 +357,12 @@ const Resources = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Heart className="h-5 w-5 text-primary" />
-              Nota Importante
+              {t('resources.importantNote')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Esta información tiene fines educativos y no reemplaza la consulta médica profesional.
-              Cada mujer es única y los síntomas, así como los tratamientos apropiados, varían.
-              Siempre consulta con tu profesional de la salud para obtener asesoramiento personalizado.
+              {t('resources.disclaimer')}
             </p>
           </CardContent>
         </Card>
