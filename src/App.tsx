@@ -15,6 +15,7 @@ import History from "./pages/History";
 import Resources from "./pages/Resources";
 import Contacts from "./pages/Contacts";
 import Assistant from "./pages/Assistant";
+import CycleComparison from "./pages/CycleComparison";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -90,6 +91,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Assistant />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cycle-comparison"
+              element={
+                <ProtectedRoute>
+                  <CycleComparison />
                 </ProtectedRoute>
               }
             />

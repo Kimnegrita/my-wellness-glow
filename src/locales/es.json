@@ -299,5 +299,29 @@
     "sentiment": "Sentimiento",
     "day": "Día",
     "score": "Puntuación"
+  },
+  "comparison": {
+    "title": "Comparación de Ciclos",
+    "subtitle": "Identifica patrones y tendencias entre tus ciclos menstruales",
+    "notEnoughData": "No hay suficientes datos",
+    "needTwoCycles": "Necesitas al menos 2 ciclos completos registrados para comparar patrones",
+    "startTracking": "Comenzar a registrar",
+    "cyclesAnalyzed": "Ciclos analizados",
+    "averageLength": "Duración promedio",
+    "days": "días",
+    "uniqueSymptoms": "Síntomas únicos",
+    "cycleLengthComparison": "Comparación de Duración",
+    "lengthVariation": "Variación en la duración de los ciclos",
+    "sentimentTrend": "Tendencia Emocional",
+    "emotionalProgress": "Progreso emocional entre ciclos",
+    "sentimentDistribution": "Distribución de Sentimientos",
+    "emotionalBalance": "Balance emocional por ciclo",
+    "topSymptoms": "Síntomas Más Frecuentes",
+    "symptomFrequency": "Frecuencia de síntomas principales",
+    "cycleDetails": "Detalles de Cada Ciclo",
+    "individualOverview": "Vista general de cada ciclo",
+    "mostCommonSymptoms": "Síntomas más comunes",
+    "emotionalState": "Estado emocional",
+    "averageSentiment": "Sentimiento promedio"
   }
 }

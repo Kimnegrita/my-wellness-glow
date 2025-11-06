@@ -10,7 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getCycleInfo } from "@/lib/cycleCalculations";
 import { getDailyTip } from "@/data/dailyTips";
-import { Calendar, Heart, Flame, LogOut, Settings, BarChart3, BookOpen, Phone, MessageSquare } from "lucide-react";
+import { Calendar, Heart, Flame, LogOut, Settings, BarChart3, BookOpen, Phone, MessageSquare, GitCompare } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -91,6 +91,9 @@ const Index = () => {
             </Button>
             <Button variant="ghost" size="sm" onClick={() => navigate('/history')}>
               <BarChart3 className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/cycle-comparison')}>
+              <GitCompare className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
               <Settings className="h-4 w-4" />

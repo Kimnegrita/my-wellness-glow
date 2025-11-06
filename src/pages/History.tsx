@@ -89,10 +89,21 @@ export default function History() {
 
         {/* Header */}
         <div className="space-y-2 animate-fade-in-up">
-          <h1 className="text-4xl font-bold text-gradient">Historial y Estadísticas</h1>
-          <p className="text-muted-foreground text-lg">
-            Visualiza tus patrones de bienestar de los últimos 3 meses
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-gradient">Historial y Estadísticas</h1>
+              <p className="text-muted-foreground text-lg">
+                Visualiza tus patrones de bienestar de los últimos 3 meses
+              </p>
+            </div>
+            <Button 
+              onClick={() => navigate('/cycle-comparison')}
+              className="bg-gradient-primary hover:opacity-90"
+            >
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Comparar Ciclos
+            </Button>
+          </div>
         </div>
 
         {/* Summary Cards */}
