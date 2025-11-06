@@ -17,6 +17,8 @@ import Profile from "./pages/Profile";
 import History from "./pages/History";
 import Resources from "./pages/Resources";
 import Contacts from "./pages/Contacts";
+import Assistant from "./pages/Assistant";
+import CycleComparison from "./pages/CycleComparison";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +43,8 @@ const App = () => (
               <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
               <Route path="/resources" element={<ProtectedRoute><Resources /></ProtectedRoute>} />
               <Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
+              <Route path="/assistant" element={<ProtectedRoute><Assistant /></ProtectedRoute>} />
+              <Route path="/cycle-comparison" element={<ProtectedRoute><CycleComparison /></ProtectedRoute>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
