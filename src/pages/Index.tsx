@@ -5,6 +5,7 @@ import { TipCard } from "@/components/TipCard";
 import { FAQSection } from "@/components/FAQSection";
 import { PhaseIndicator } from "@/components/PhaseIndicator";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
+import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getCycleInfo } from "@/lib/cycleCalculations";
@@ -152,6 +153,9 @@ const Index = () => {
             description="Días consecutivos"
           />
         </div>
+
+        {/* Personalized Recommendations */}
+        <PersonalizedRecommendations />
 
         {/* Calendar and Tips Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -276,5 +276,16 @@
     "commonPatterns": "Patrones comunes",
     "dominantMood": "Estado de ánimo dominante",
     "days": "días"
+  },
+  "recommendations": {
+    "title": "Recomendaciones Personalizadas",
+    "description": "Basadas en tu fase del ciclo y síntomas recientes",
+    "loading": "Generando recomendaciones...",
+    "error": "Error al generar recomendaciones",
+    "refresh": "Actualizar",
+    "exercise": "Ejercicio",
+    "nutrition": "Nutrición",
+    "selfcare": "Autocuidado",
+    "basedOn": "Basado en tus síntomas recientes"
   }
 }
