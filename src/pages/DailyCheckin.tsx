@@ -68,7 +68,7 @@ export default function DailyCheckin() {
 
   const [periodStatus, setPeriodStatus] = useState<'started' | 'ended' | 'none'>('none');
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
-  const [selectedMood, setSelectedMood] = useState<string>('');
+  const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [journalEntry, setJournalEntry] = useState('');
   const [sentimentAnalysis, setSentimentAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -98,10 +98,9 @@ export default function DailyCheckin() {
 
       const today = format(new Date(), 'yyyy-MM-dd');
       
-      // Add mood to symptoms if selected
-      const allSymptoms = selectedMood 
-        ? [...selectedSymptoms, `Ánimo: ${selectedMood}`]
-        : selectedSymptoms;
+      // Add moods to symptoms if selected
+      const moodSymptoms = selectedMoods.map(mood => `Ánimo: ${mood}`);
+      const allSymptoms = [...selectedSymptoms, ...moodSymptoms];
 
       // Save daily log
       const { data: savedLog, error } = await supabase
@@ -200,6 +199,14 @@ export default function DailyCheckin() {
     },
   });
 
+  const handleMoodToggle = (mood: string) => {
+    setSelectedMoods(prev =>
+      prev.includes(mood)
+        ? prev.filter(m => m !== mood)
+        : [...prev, mood]
+    );
+  };
+
   const handleSymptomToggle = (symptom: string) => {
     setSelectedSymptoms(prev =>
       prev.includes(symptom)
@@ -209,7 +216,7 @@ export default function DailyCheckin() {
   };
 
   const handleSave = () => {
-    if (!selectedMood && selectedSymptoms.length === 0 && !journalEntry) {
+    if (selectedMoods.length === 0 && selectedSymptoms.length === 0 && !journalEntry) {
       toast.error('Por favor, selecciona al menos un estado de ánimo, síntoma o escribe algo en el diario');
       return;
     }
@@ -282,10 +289,10 @@ export default function DailyCheckin() {
                 {MOODS.map((mood) => (
                   <button
                     key={mood.value}
-                    onClick={() => setSelectedMood(selectedMood === mood.value ? '' : mood.value)}
+                    onClick={() => handleMoodToggle(mood.value)}
                     className={`
                       flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all
-                      ${selectedMood === mood.value 
+                      ${selectedMoods.includes(mood.value)
                         ? 'border-primary bg-primary/10 scale-105 shadow-lg' 
                         : 'border-border hover:border-primary/50 hover:bg-muted/50'
                       }
