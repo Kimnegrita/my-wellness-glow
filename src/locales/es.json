@@ -260,5 +260,21 @@
     "suggestion4": "¿Qué alimentos son buenos para la fase lútea?",
     "quickAccessTitle": "Fale com Luna",
     "quickAccessDescription": "Tire suas dúvidas sobre saúde menstrual"
+  },
+  "sentiment": {
+    "analysis": "Análisis Emocional",
+    "description": "Insights basados en tus emociones",
+    "positive": "Positivo",
+    "neutral": "Neutral",
+    "negative": "Negativo",
+    "patterns": "Patrones Detectados"
+  },
+  "insights": {
+    "emotional": "Insights Emocionales",
+    "last30days": "Últimos 30 días",
+    "averageMood": "Estado de ánimo promedio",
+    "commonPatterns": "Patrones comunes",
+    "dominantMood": "Estado de ánimo dominante",
+    "days": "días"
   }
 }

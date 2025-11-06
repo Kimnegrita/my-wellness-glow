@@ -75,34 +75,46 @@ export type Database = {
       }
       daily_logs: {
         Row: {
+          ai_insights: string | null
           created_at: string | null
+          emotional_patterns: Json | null
           id: string
           journal_entry: string | null
           log_date: string
           period_ended: boolean | null
           period_started: boolean | null
+          sentiment_label: string | null
+          sentiment_score: number | null
           symptoms: string[] | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
+          ai_insights?: string | null
           created_at?: string | null
+          emotional_patterns?: Json | null
           id?: string
           journal_entry?: string | null
           log_date: string
           period_ended?: boolean | null
           period_started?: boolean | null
+          sentiment_label?: string | null
+          sentiment_score?: number | null
           symptoms?: string[] | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
+          ai_insights?: string | null
           created_at?: string | null
+          emotional_patterns?: Json | null
           id?: string
           journal_entry?: string | null
           log_date?: string
           period_ended?: boolean | null
           period_started?: boolean | null
+          sentiment_label?: string | null
+          sentiment_score?: number | null
           symptoms?: string[] | null
           updated_at?: string | null
           user_id?: string

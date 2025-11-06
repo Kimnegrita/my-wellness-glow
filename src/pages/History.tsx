@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval, subMonths } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import EmotionalInsights from '@/components/EmotionalInsights';
+import SentimentAnalysis from '@/components/SentimentAnalysis';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--destructive))', 'hsl(var(--muted))'];
 
@@ -146,6 +148,9 @@ export default function History() {
           </Card>
         </div>
 
+        {/* Emotional Insights */}
+        {user && <EmotionalInsights userId={user.id} />}
+
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Registros por Mes */}
@@ -265,6 +270,18 @@ export default function History() {
                       <p className="text-sm text-muted-foreground italic">
                         "{log.journal_entry.substring(0, 100)}{log.journal_entry.length > 100 ? '...' : ''}"
                       </p>
+                    )}
+
+                    {/* Sentiment Analysis for this log */}
+                    {log.sentiment_label && (
+                      <div className="mt-3">
+                        <SentimentAnalysis
+                          sentimentScore={typeof log.sentiment_score === 'number' ? log.sentiment_score : undefined}
+                          sentimentLabel={typeof log.sentiment_label === 'string' ? log.sentiment_label : undefined}
+                          emotionalPatterns={Array.isArray(log.emotional_patterns) ? log.emotional_patterns.filter((p): p is string => typeof p === 'string') : []}
+                          aiInsights={typeof log.ai_insights === 'string' ? log.ai_insights : undefined}
+                        />
+                      </div>
                     )}
                   </div>
                 </div>

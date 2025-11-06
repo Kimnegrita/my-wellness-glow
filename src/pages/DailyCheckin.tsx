@@ -11,6 +11,7 @@ import { ArrowLeft, Save } from 'lucide-react';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { format, differenceInDays } from 'date-fns';
+import SentimentAnalysis from '@/components/SentimentAnalysis';
 
 const SYMPTOMS = [
   'Energía Baja',
@@ -45,6 +46,8 @@ export default function DailyCheckin() {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [journalEntry, setJournalEntry] = useState('');
+  const [sentimentAnalysis, setSentimentAnalysis] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   // Fetch previous period start dates to calculate cycle length
   const { data: previousPeriods } = useQuery({
@@ -77,7 +80,7 @@ export default function DailyCheckin() {
         : selectedSymptoms;
 
       // Save daily log
-      const { error } = await supabase
+      const { data: savedLog, error } = await supabase
         .from('daily_logs')
         .upsert({
           user_id: user.id,
@@ -88,9 +91,35 @@ export default function DailyCheckin() {
           journal_entry: journalEntry || null,
         }, {
           onConflict: 'user_id,log_date'
-        });
+        })
+        .select()
+        .single();
 
       if (error) throw error;
+
+      // Analyze sentiment if there's a journal entry
+      if (journalEntry && journalEntry.trim().length > 0 && savedLog) {
+        setIsAnalyzing(true);
+        try {
+          const { data: analysisData, error: analysisError } = await supabase.functions.invoke('analyze-sentiment', {
+            body: { 
+              logId: savedLog.id,
+              journalEntry: journalEntry,
+              symptoms: allSymptoms
+            }
+          });
+
+          if (analysisError) {
+            console.error('Sentiment analysis error:', analysisError);
+          } else {
+            setSentimentAnalysis(analysisData);
+          }
+        } catch (err) {
+          console.error('Failed to analyze sentiment:', err);
+        } finally {
+          setIsAnalyzing(false);
+        }
+      }
 
       // If period started today, update profile automatically
       if (periodStatus === 'started') {
@@ -281,14 +310,33 @@ export default function DailyCheckin() {
               </p>
             </div>
 
+            {/* Sentiment Analysis Results */}
+            {(isAnalyzing || sentimentAnalysis) && (
+              <div className="animate-fade-in">
+                {isAnalyzing ? (
+                  <div className="flex items-center justify-center p-4 bg-primary/5 rounded-lg">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mr-3"></div>
+                    <span className="text-sm text-muted-foreground">Analizando tus emociones...</span>
+                  </div>
+                ) : (
+                  <SentimentAnalysis 
+                    sentimentScore={sentimentAnalysis?.sentiment_score}
+                    sentimentLabel={sentimentAnalysis?.sentiment_label}
+                    emotionalPatterns={sentimentAnalysis?.emotional_patterns}
+                    aiInsights={sentimentAnalysis?.ai_insights}
+                  />
+                )}
+              </div>
+            )}
+
             {/* Save Button */}
             <Button
               onClick={handleSave}
-              disabled={saveMutation.isPending}
+              disabled={saveMutation.isPending || isAnalyzing}
               className="w-full bg-gradient-primary hover:opacity-90 h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               size="lg"
             >
-              {saveMutation.isPending ? 'Guardando...' : 'Guardar Registro'}
+              {saveMutation.isPending ? 'Guardando...' : isAnalyzing ? 'Analizando...' : 'Guardar Registro'}
               <Save className="ml-2 h-5 w-5" />
             </Button>
           </CardContent>
