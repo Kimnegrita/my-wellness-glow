@@ -29,12 +29,36 @@ const SYMPTOMS = [
 ];
 
 const MOODS = [
+  // Estados positivos y de plenitud
   { emoji: '😊', label: 'Feliz', value: 'Feliz' },
+  { emoji: '🥰', label: 'Amorosa', value: 'Amorosa' },
   { emoji: '😌', label: 'Tranquila', value: 'Tranquila' },
-  { emoji: '😓', label: 'Estresada', value: 'Estresada' },
-  { emoji: '😢', label: 'Triste', value: 'Triste' },
-  { emoji: '😤', label: 'Irritable', value: 'Irritable' },
+  { emoji: '🤗', label: 'Plena', value: 'Plena' },
+  { emoji: '😄', label: 'Gozosa', value: 'Gozosa' },
+  { emoji: '✨', label: 'Radiante', value: 'Radiante' },
+  { emoji: '🌟', label: 'Empoderada', value: 'Empoderada' },
+  { emoji: '😇', label: 'En Paz', value: 'En Paz' },
+  
+  // Estados neutros o energéticos
+  { emoji: '😐', label: 'Neutral', value: 'Neutral' },
+  { emoji: '🤔', label: 'Pensativa', value: 'Pensativa' },
   { emoji: '😴', label: 'Cansada', value: 'Cansada' },
+  { emoji: '🥱', label: 'Somnolienta', value: 'Somnolienta' },
+  
+  // Estados de estrés y tensión
+  { emoji: '😓', label: 'Estresada', value: 'Estresada' },
+  { emoji: '😰', label: 'Ansiosa', value: 'Ansiosa' },
+  { emoji: '😤', label: 'Irritable', value: 'Irritable' },
+  { emoji: '😠', label: 'Frustrada', value: 'Frustrada' },
+  { emoji: '😖', label: 'Abrumada', value: 'Abrumada' },
+  
+  // Estados de tristeza y soledad
+  { emoji: '😢', label: 'Triste', value: 'Triste' },
+  { emoji: '😔', label: 'Melancólica', value: 'Melancólica' },
+  { emoji: '😞', label: 'Desanimada', value: 'Desanimada' },
+  { emoji: '🥺', label: 'Vulnerable', value: 'Vulnerable' },
+  { emoji: '😪', label: 'Solitaria', value: 'Solitaria' },
+  { emoji: '😭', label: 'Muy Triste', value: 'Muy Triste' },
 ];
 
 export default function DailyCheckin() {
@@ -254,7 +278,7 @@ export default function DailyCheckin() {
                 <span className="text-lg">💭</span>
                 Mi Estado de Ánimo
               </h3>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                 {MOODS.map((mood) => (
                   <button
                     key={mood.value}
