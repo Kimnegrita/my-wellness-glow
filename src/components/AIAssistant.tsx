@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sparkles, Send, Loader2, User, Bot } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -22,11 +23,13 @@ async function streamChat({
   onDelta,
   onDone,
   onError,
+  accessToken,
 }: {
   messages: Message[];
   onDelta: (deltaText: string) => void;
   onDone: () => void;
   onError: (error: string) => void;
+  accessToken: string;
 }) {
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
   
@@ -35,7 +38,7 @@ async function streamChat({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ messages }),
     });
@@ -131,7 +134,40 @@ export function AIAssistant({ conversationId }: AIAssistantProps) {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Verificar sesión y obtener token
+  useEffect(() => {
+    const getSession = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          toast.error('Error de autenticación');
+          setIsAuthenticating(false);
+          return;
+        }
+
+        if (!session) {
+          toast.error('Debes iniciar sesión para usar el asistente');
+          setIsAuthenticating(false);
+          return;
+        }
+
+        setAccessToken(session.access_token);
+        setIsAuthenticating(false);
+      } catch (error) {
+        console.error('Error in getSession:', error);
+        toast.error('Error de autenticación');
+        setIsAuthenticating(false);
+      }
+    };
+
+    getSession();
+  }, []);
 
   // Auto-scroll para última mensagem
   useEffect(() => {
@@ -141,7 +177,7 @@ export function AIAssistant({ conversationId }: AIAssistantProps) {
   }, [messages]);
 
   const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || !accessToken) return;
 
     const userMsg: Message = { role: 'user', content: input.trim() };
     setMessages(prev => [...prev, userMsg]);
@@ -171,6 +207,7 @@ export function AIAssistant({ conversationId }: AIAssistantProps) {
           toast.error(error);
           setIsLoading(false);
         },
+        accessToken,
       });
     } catch (error) {
       console.error('Error sending message:', error);
@@ -185,6 +222,29 @@ export function AIAssistant({ conversationId }: AIAssistantProps) {
       sendMessage();
     }
   };
+
+  // Mostrar loading mientras se autentica
+  if (isAuthenticating) {
+    return (
+      <Card className="flex flex-col h-[600px] max-w-4xl mx-auto shadow-xl items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <p className="text-muted-foreground mt-4">Verificando autenticación...</p>
+      </Card>
+    );
+  }
+
+  // Mostrar mensaje si no está autenticado
+  if (!accessToken) {
+    return (
+      <Card className="flex flex-col h-[600px] max-w-4xl mx-auto shadow-xl items-center justify-center">
+        <Sparkles className="w-12 h-12 text-muted-foreground mb-4" />
+        <h3 className="text-xl font-semibold mb-2">Autenticación Requerida</h3>
+        <p className="text-muted-foreground text-center max-w-md">
+          Debes iniciar sesión para usar el asistente de IA.
+        </p>
+      </Card>
+    );
+  }
 
   return (
     <Card className="flex flex-col h-[600px] max-w-4xl mx-auto shadow-xl">
