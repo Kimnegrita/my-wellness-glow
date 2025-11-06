@@ -287,5 +287,17 @@
     "nutrition": "Nutrición",
     "selfcare": "Autocuidado",
     "basedOn": "Basado en tus síntomas recientes"
+  },
+  "trends": {
+    "sentimentOverTime": "Sentimiento a lo Largo del Tiempo",
+    "sentimentByPhase": "Sentimiento Promedio por Fase",
+    "distributionByPhase": "Distribución de Sentimientos por Fase",
+    "last90days": "Últimos 90 días",
+    "averagePerPhase": "Promedio por fase del ciclo",
+    "positiveNeutralNegative": "Sentimientos positivos, neutrales y negativos",
+    "cycleDay": "Día del Ciclo",
+    "sentiment": "Sentimiento",
+    "day": "Día",
+    "score": "Puntuación"
   }
 }

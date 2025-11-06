@@ -11,6 +11,7 @@ import { es } from 'date-fns/locale';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import EmotionalInsights from '@/components/EmotionalInsights';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
+import EmotionalTrendsChart from '@/components/EmotionalTrendsChart';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--destructive))', 'hsl(var(--muted))'];
 
@@ -150,6 +151,9 @@ export default function History() {
 
         {/* Emotional Insights */}
         {user && <EmotionalInsights userId={user.id} />}
+
+        {/* Emotional Trends Charts */}
+        {user && <EmotionalTrendsChart userId={user.id} />}
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
