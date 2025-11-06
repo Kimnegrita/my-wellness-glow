@@ -244,21 +244,5 @@
       "selfcare_sleep": "Rotina de sono regular é fundamental",
       "selfcare_stress": "Gerenciamento do estresse: respiração profunda, mindfulness"
     }
-  },
-  "assistant": {
-    "title": "Assistente de IA",
-    "subtitle": "Sua companheira de saúde menstrual",
-    "pageTitle": "Assistente Luna",
-    "pageDescription": "Converse com Luna, sua assistente pessoal de saúde menstrual. Tire dúvidas, peça conselhos personalizados baseados na sua fase do ciclo, e aprenda mais sobre seu corpo.",
-    "greeting": "Olá! 👋 Sou a Luna, sua assistente de saúde menstrual. Como posso te ajudar hoje?",
-    "inputPlaceholder": "Escreva sua pergunta...",
-    "disclaimer": "Esta IA oferece informação geral e não substitui consulta médica.",
-    "suggestionsTitle": "Experimente perguntar:",
-    "suggestion1": "Quais exercícios são melhores na minha fase atual?",
-    "suggestion2": "Por que tenho mais energia durante a ovulação?",
-    "suggestion3": "Como posso aliviar cólicas naturalmente?",
-    "suggestion4": "Quais alimentos são bons para a fase lútea?",
-    "quickAccessTitle": "Fale com Luna",
-    "quickAccessDescription": "Tire suas dúvidas sobre saúde menstrual"
   }
 }

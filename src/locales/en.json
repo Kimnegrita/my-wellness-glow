@@ -244,21 +244,5 @@
       "selfcare_sleep": "Regular sleep routine is essential",
       "selfcare_stress": "Stress management: deep breathing, mindfulness"
     }
-  },
-  "assistant": {
-    "title": "AI Assistant",
-    "subtitle": "Your menstrual health companion",
-    "pageTitle": "Luna Assistant",
-    "pageDescription": "Chat with Luna, your personal menstrual health assistant. Ask questions, get personalized advice based on your cycle phase, and learn more about your body.",
-    "greeting": "Hi! 👋 I'm Luna, your menstrual health assistant. How can I help you today?",
-    "inputPlaceholder": "Type your question...",
-    "disclaimer": "This AI provides general information and does not replace medical consultation.",
-    "suggestionsTitle": "Try asking:",
-    "suggestion1": "What exercises are best for my current phase?",
-    "suggestion2": "Why do I have more energy during ovulation?",
-    "suggestion3": "How can I relieve cramps naturally?",
-    "suggestion4": "What foods are good for the luteal phase?",
-    "quickAccessTitle": "Talk to Luna",
-    "quickAccessDescription": "Ask your menstrual health questions"
   }
 }

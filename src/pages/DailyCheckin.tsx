@@ -11,183 +11,29 @@ import { ArrowLeft, Save } from 'lucide-react';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { format, differenceInDays } from 'date-fns';
-import SentimentAnalysis from '@/components/SentimentAnalysis';
-import { getCurrentPhase, getCurrentCycleDay } from '@/lib/cycleCalculations';
 
 const SYMPTOMS = [
-  // Síntomas Menstruales
-  'Cólicos',
-  'Dolor de Espalda Baja',
-  'Sangrado Abundante',
-  'Sangrado Leve',
-  'Coágulos',
-  'Náuseas',
-  
-  // Síntomas Generales/Energía
-  'Energía Alta',
   'Energía Baja',
-  'Fatiga',
-  'Cansancio Extremo',
-  'Motivación Alta',
-  'Letargo',
-  
-  // Síntomas Físicos Generales
-  'Hinchazón',
-  'Retención de Líquidos',
-  'Sensibilidad en Senos',
-  'Dolor en Senos',
-  'Dolor de Cabeza',
-  'Migraña',
-  'Dolor Articular',
-  'Dolor Muscular',
-  'Dolor Pélvico',
-  'Calambres Abdominales',
-  
-  // Temperatura y Síntomas Corporales
-  'Sofocos',
-  'Sudores Nocturnos',
-  'Escalofríos',
-  'Temperatura Elevada',
-  
-  // Digestivos
-  'Náuseas',
-  'Diarrea',
-  'Estreñimiento',
-  'Gases',
-  'Sensibilidad Digestiva',
-  'Antojos de Comida',
-  'Apetito Aumentado',
-  'Pérdida de Apetito',
-  
-  // Cognitivos y Mentales
-  'Niebla Mental',
-  'Claridad Mental',
-  'Concentración Difícil',
-  'Memoria Afectada',
-  'Creatividad Alta',
-  
-  // Estados de Ánimo/Emocionales (físicamente manifestados)
   'Estrés',
   'Ansiedad',
-  'Irritabilidad',
-  'Sensibilidad Emocional',
-  'Cambios de Humor',
-  
-  // Sueño
+  'Hinchazón',
+  'Sofocos',
   'Sueño Malo',
-  'Insomnio',
-  'Sueño Profundo',
-  'Somnolencia',
-  'Pesadillas',
-  
-  // Piel y Cabello
-  'Acné',
-  'Piel Seca',
-  'Piel Grasa',
-  'Piel Radiante',
-  'Cabello Graso',
-  'Cabello Seco',
-  
-  // Síntomas Sexuales
-  'Libido Alta',
-  'Libido Baja',
-  'Sequedad Vaginal',
-  'Flujo Vaginal Aumentado',
-  'Sensibilidad Aumentada',
-  
-  // Otros
-  'Mareos',
-  'Vértigo',
-  'Palpitaciones',
-  'Visión Borrosa',
-  'Sensibilidad a la Luz',
-  'Sensibilidad al Ruido',
+  'Buen Humor',
+  'Irritable',
+  'Niebla Mental',
+  'Dolor Articular',
+  'Dolor de Cabeza',
+  'Cólicos',
 ];
 
-// Síntomas sugeridos por fase del ciclo
-const SYMPTOMS_BY_PHASE = {
-  menstruation: [
-    'Cólicos',
-    'Dolor de Espalda Baja',
-    'Sangrado Abundante',
-    'Sangrado Leve',
-    'Fatiga',
-    'Dolor de Cabeza',
-    'Náuseas',
-    'Hinchazón',
-    'Cambios de Humor',
-    'Antojos de Comida',
-  ],
-  follicular: [
-    'Energía Alta',
-    'Motivación Alta',
-    'Claridad Mental',
-    'Creatividad Alta',
-    'Piel Radiante',
-    'Libido Alta',
-    'Sueño Profundo',
-    'Apetito Aumentado',
-  ],
-  ovulation: [
-    'Energía Alta',
-    'Libido Alta',
-    'Flujo Vaginal Aumentado',
-    'Sensibilidad Aumentada',
-    'Creatividad Alta',
-    'Piel Radiante',
-    'Temperatura Elevada',
-    'Dolor Pélvico',
-    'Sensibilidad en Senos',
-  ],
-  luteal: [
-    'Hinchazón',
-    'Retención de Líquidos',
-    'Sensibilidad en Senos',
-    'Acné',
-    'Irritabilidad',
-    'Ansiedad',
-    'Cambios de Humor',
-    'Antojos de Comida',
-    'Fatiga',
-    'Sueño Malo',
-    'Insomnio',
-    'Dolor de Cabeza',
-    'Estreñimiento',
-  ],
-  irregular: [],
-};
-
 const MOODS = [
-  // Estados positivos y de plenitud
   { emoji: '😊', label: 'Feliz', value: 'Feliz' },
-  { emoji: '🥰', label: 'Amorosa', value: 'Amorosa' },
   { emoji: '😌', label: 'Tranquila', value: 'Tranquila' },
-  { emoji: '🤗', label: 'Plena', value: 'Plena' },
-  { emoji: '😄', label: 'Gozosa', value: 'Gozosa' },
-  { emoji: '✨', label: 'Radiante', value: 'Radiante' },
-  { emoji: '🌟', label: 'Empoderada', value: 'Empoderada' },
-  { emoji: '😇', label: 'En Paz', value: 'En Paz' },
-  
-  // Estados neutros o energéticos
-  { emoji: '😐', label: 'Neutral', value: 'Neutral' },
-  { emoji: '🤔', label: 'Pensativa', value: 'Pensativa' },
-  { emoji: '😴', label: 'Cansada', value: 'Cansada' },
-  { emoji: '🥱', label: 'Somnolienta', value: 'Somnolienta' },
-  
-  // Estados de estrés y tensión
   { emoji: '😓', label: 'Estresada', value: 'Estresada' },
-  { emoji: '😰', label: 'Ansiosa', value: 'Ansiosa' },
-  { emoji: '😤', label: 'Irritable', value: 'Irritable' },
-  { emoji: '😠', label: 'Frustrada', value: 'Frustrada' },
-  { emoji: '😖', label: 'Abrumada', value: 'Abrumada' },
-  
-  // Estados de tristeza y soledad
   { emoji: '😢', label: 'Triste', value: 'Triste' },
-  { emoji: '😔', label: 'Melancólica', value: 'Melancólica' },
-  { emoji: '😞', label: 'Desanimada', value: 'Desanimada' },
-  { emoji: '🥺', label: 'Vulnerable', value: 'Vulnerable' },
-  { emoji: '😪', label: 'Solitaria', value: 'Solitaria' },
-  { emoji: '😭', label: 'Muy Triste', value: 'Muy Triste' },
+  { emoji: '😤', label: 'Irritable', value: 'Irritable' },
+  { emoji: '😴', label: 'Cansada', value: 'Cansada' },
 ];
 
 export default function DailyCheckin() {
@@ -197,25 +43,8 @@ export default function DailyCheckin() {
 
   const [periodStatus, setPeriodStatus] = useState<'started' | 'ended' | 'none'>('none');
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
-  const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
+  const [selectedMood, setSelectedMood] = useState<string>('');
   const [journalEntry, setJournalEntry] = useState('');
-  const [sentimentAnalysis, setSentimentAnalysis] = useState<any>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  // Calcular fase actual del ciclo
-  const currentCycleDay = profile?.last_period_date && profile?.avg_cycle_length
-    ? getCurrentCycleDay(new Date(profile.last_period_date), profile.avg_cycle_length)
-    : null;
-  
-  const currentPhase = getCurrentPhase(currentCycleDay, profile?.is_irregular);
-
-  // Obtener síntomas sugeridos según la fase
-  const suggestedSymptoms = currentPhase 
-    ? SYMPTOMS_BY_PHASE[currentPhase as keyof typeof SYMPTOMS_BY_PHASE] || []
-    : [];
-
-  // Separar síntomas en sugeridos y otros
-  const otherSymptoms = SYMPTOMS.filter(s => !suggestedSymptoms.includes(s));
 
   // Fetch previous period start dates to calculate cycle length
   const { data: previousPeriods } = useQuery({
@@ -242,12 +71,13 @@ export default function DailyCheckin() {
 
       const today = format(new Date(), 'yyyy-MM-dd');
       
-      // Add moods to symptoms if selected
-      const moodSymptoms = selectedMoods.map(mood => `Ánimo: ${mood}`);
-      const allSymptoms = [...selectedSymptoms, ...moodSymptoms];
+      // Add mood to symptoms if selected
+      const allSymptoms = selectedMood 
+        ? [...selectedSymptoms, `Ánimo: ${selectedMood}`]
+        : selectedSymptoms;
 
       // Save daily log
-      const { data: savedLog, error } = await supabase
+      const { error } = await supabase
         .from('daily_logs')
         .upsert({
           user_id: user.id,
@@ -258,35 +88,9 @@ export default function DailyCheckin() {
           journal_entry: journalEntry || null,
         }, {
           onConflict: 'user_id,log_date'
-        })
-        .select()
-        .single();
+        });
 
       if (error) throw error;
-
-      // Analyze sentiment if there's a journal entry
-      if (journalEntry && journalEntry.trim().length > 0 && savedLog) {
-        setIsAnalyzing(true);
-        try {
-          const { data: analysisData, error: analysisError } = await supabase.functions.invoke('analyze-sentiment', {
-            body: { 
-              logId: savedLog.id,
-              journalEntry: journalEntry,
-              symptoms: allSymptoms
-            }
-          });
-
-          if (analysisError) {
-            console.error('Sentiment analysis error:', analysisError);
-          } else {
-            setSentimentAnalysis(analysisData);
-          }
-        } catch (err) {
-          console.error('Failed to analyze sentiment:', err);
-        } finally {
-          setIsAnalyzing(false);
-        }
-      }
 
       // If period started today, update profile automatically
       if (periodStatus === 'started') {
@@ -343,14 +147,6 @@ export default function DailyCheckin() {
     },
   });
 
-  const handleMoodToggle = (mood: string) => {
-    setSelectedMoods(prev =>
-      prev.includes(mood)
-        ? prev.filter(m => m !== mood)
-        : [...prev, mood]
-    );
-  };
-
   const handleSymptomToggle = (symptom: string) => {
     setSelectedSymptoms(prev =>
       prev.includes(symptom)
@@ -360,7 +156,7 @@ export default function DailyCheckin() {
   };
 
   const handleSave = () => {
-    if (selectedMoods.length === 0 && selectedSymptoms.length === 0 && !journalEntry) {
+    if (!selectedMood && selectedSymptoms.length === 0 && !journalEntry) {
       toast.error('Por favor, selecciona al menos un estado de ánimo, síntoma o escribe algo en el diario');
       return;
     }
@@ -429,14 +225,14 @@ export default function DailyCheckin() {
                 <span className="text-lg">💭</span>
                 Mi Estado de Ánimo
               </h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                 {MOODS.map((mood) => (
                   <button
                     key={mood.value}
-                    onClick={() => handleMoodToggle(mood.value)}
+                    onClick={() => setSelectedMood(selectedMood === mood.value ? '' : mood.value)}
                     className={`
                       flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all
-                      ${selectedMoods.includes(mood.value)
+                      ${selectedMood === mood.value 
                         ? 'border-primary bg-primary/10 scale-105 shadow-lg' 
                         : 'border-border hover:border-primary/50 hover:bg-muted/50'
                       }
@@ -455,46 +251,15 @@ export default function DailyCheckin() {
                 <span className="text-lg">🌡️</span>
                 Síntomas Físicos
               </h3>
-              <p className="text-xs text-muted-foreground mb-2">
-                Selecciona todos los síntomas que estés experimentando hoy
-              </p>
-
-              {/* Síntomas sugeridos según fase */}
-              {suggestedSymptoms.length > 0 && (
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                      Comunes en fase {currentPhase === 'menstruation' ? 'menstrual' : 
-                                      currentPhase === 'follicular' ? 'folicular' : 
-                                      currentPhase === 'ovulation' ? 'de ovulación' : 'lútea'}
-                    </Badge>
-                  </div>
-                  <div className="flex flex-wrap gap-2 p-3 bg-primary/5 rounded-lg border border-primary/10">
-                    {suggestedSymptoms.map((symptom) => (
-                      <SymptomChip
-                        key={symptom}
-                        symptom={symptom}
-                        isSelected={selectedSymptoms.includes(symptom)}
-                        onToggle={() => handleSymptomToggle(symptom)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Todos los demás síntomas */}
-              <div>
-                <p className="text-xs text-muted-foreground mb-2">Otros síntomas</p>
-                <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto p-2 bg-muted/20 rounded-lg">
-                  {otherSymptoms.map((symptom) => (
-                    <SymptomChip
-                      key={symptom}
-                      symptom={symptom}
-                      isSelected={selectedSymptoms.includes(symptom)}
-                      onToggle={() => handleSymptomToggle(symptom)}
-                    />
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-2">
+                {SYMPTOMS.map((symptom) => (
+                  <SymptomChip
+                    key={symptom}
+                    symptom={symptom}
+                    isSelected={selectedSymptoms.includes(symptom)}
+                    onToggle={() => handleSymptomToggle(symptom)}
+                  />
+                ))}
               </div>
             </div>
 
@@ -516,33 +281,14 @@ export default function DailyCheckin() {
               </p>
             </div>
 
-            {/* Sentiment Analysis Results */}
-            {(isAnalyzing || sentimentAnalysis) && (
-              <div className="animate-fade-in">
-                {isAnalyzing ? (
-                  <div className="flex items-center justify-center p-4 bg-primary/5 rounded-lg">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mr-3"></div>
-                    <span className="text-sm text-muted-foreground">Analizando tus emociones...</span>
-                  </div>
-                ) : (
-                  <SentimentAnalysis 
-                    sentimentScore={sentimentAnalysis?.sentiment_score}
-                    sentimentLabel={sentimentAnalysis?.sentiment_label}
-                    emotionalPatterns={sentimentAnalysis?.emotional_patterns}
-                    aiInsights={sentimentAnalysis?.ai_insights}
-                  />
-                )}
-              </div>
-            )}
-
             {/* Save Button */}
             <Button
               onClick={handleSave}
-              disabled={saveMutation.isPending || isAnalyzing}
+              disabled={saveMutation.isPending}
               className="w-full bg-gradient-primary hover:opacity-90 h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               size="lg"
             >
-              {saveMutation.isPending ? 'Guardando...' : isAnalyzing ? 'Analizando...' : 'Guardar Registro'}
+              {saveMutation.isPending ? 'Guardando...' : 'Guardar Registro'}
               <Save className="ml-2 h-5 w-5" />
             </Button>
           </CardContent>
