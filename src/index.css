@@ -1,101 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 280 30% 98%;
-    --foreground: 280 15% 20%;
-
+    --background: 0 0% 100%;
+    --foreground: 280 10% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 280 15% 20%;
-
+    --card-foreground: 280 10% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 280 15% 20%;
-
-    --primary: 280 65% 55%;
+    --popover-foreground: 280 10% 15%;
+    
+    /* Vibrant purple/pink/gold palette from logo */
+    --primary: 280 75% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 75% 70%;
-
-    --secondary: 320 60% 65%;
+    --primary-glow: 280 85% 70%;
+    
+    --secondary: 320 70% 65%;
     --secondary-foreground: 0 0% 100%;
-
-    --muted: 280 20% 95%;
-    --muted-foreground: 280 10% 50%;
-
-    --accent: 340 70% 70%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
+    
+    --accent: 45 95% 65%;
+    --accent-foreground: 280 10% 15%;
+    
+    --muted: 280 10% 96%;
+    --muted-foreground: 280 5% 45%;
+    
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 280 15% 88%;
-    --input: 280 15% 90%;
-    --ring: 280 65% 55%;
-
-    --radius: 1rem;
-
-    --gradient-primary: linear-gradient(135deg, hsl(280 65% 55%), hsl(320 60% 65%));
-    --gradient-soft: linear-gradient(180deg, hsl(280 30% 98%), hsl(280 20% 96%));
-    --shadow-soft: 0 4px 20px -4px hsl(280 65% 55% / 0.15);
-    --shadow-card: 0 2px 12px -2px hsl(280 30% 40% / 0.08);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --border: 280 10% 88%;
+    --input: 280 10% 88%;
+    --ring: 280 75% 60%;
+    
+    --radius: 0.75rem;
+    
+    /* Custom shadows with glow effect */
+    --shadow-card: 0 4px 6px -1px rgba(168, 85, 247, 0.1), 0 2px 4px -1px rgba(168, 85, 247, 0.06);
+    --shadow-glow: 0 0 40px rgba(168, 85, 247, 0.4);
+    --shadow-elegant: 0 10px 30px -10px rgba(168, 85, 247, 0.3);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(280 75% 60%), hsl(320 70% 65%), hsl(45 95% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(280 75% 98%), hsl(320 70% 98%));
+    --gradient-card: linear-gradient(to bottom right, hsl(280 75% 60% / 0.1), hsl(320 70% 65% / 0.1));
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 280 25% 10%;
-    --foreground: 280 10% 95%;
-
-    --card: 280 20% 14%;
-    --card-foreground: 280 10% 95%;
-
-    --popover: 280 20% 14%;
-    --popover-foreground: 280 10% 95%;
-
-    --primary: 280 65% 60%;
+    --background: 280 15% 8%;
+    --foreground: 280 5% 95%;
+    --card: 280 12% 12%;
+    --card-foreground: 280 5% 95%;
+    --popover: 280 12% 12%;
+    --popover-foreground: 280 5% 95%;
+    
+    --primary: 280 75% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 75% 75%;
-
-    --secondary: 320 60% 70%;
+    --primary-glow: 280 85% 70%;
+    
+    --secondary: 320 70% 65%;
     --secondary-foreground: 0 0% 100%;
-
-    --muted: 280 15% 20%;
-    --muted-foreground: 280 10% 65%;
-
-    --accent: 340 70% 75%;
-    --accent-foreground: 280 25% 10%;
-
-    --destructive: 0 62.8% 50%;
+    
+    --accent: 45 95% 65%;
+    --accent-foreground: 280 5% 95%;
+    
+    --muted: 280 10% 20%;
+    --muted-foreground: 280 5% 65%;
+    
+    --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
+    
+    --border: 280 10% 20%;
+    --input: 280 10% 20%;
+    --ring: 280 75% 60%;
+    
+    --shadow-card: 0 4px 6px -1px rgba(168, 85, 247, 0.2), 0 2px 4px -1px rgba(168, 85, 247, 0.12);
+    --shadow-glow: 0 0 50px rgba(168, 85, 247, 0.5);
+    --shadow-elegant: 0 10px 40px -10px rgba(168, 85, 247, 0.4);
+    
+    --gradient-primary: linear-gradient(135deg, hsl(280 75% 60%), hsl(320 70% 65%), hsl(45 95% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(280 15% 10%), hsl(320 15% 12%));
+    --gradient-card: linear-gradient(to bottom right, hsl(280 75% 60% / 0.15), hsl(320 70% 65% / 0.15));
 
-    --border: 280 15% 22%;
-    --input: 280 15% 22%;
-    --ring: 280 65% 60%;
-
-    --gradient-primary: linear-gradient(135deg, hsl(280 65% 60%), hsl(320 60% 70%));
-    --gradient-soft: linear-gradient(180deg, hsl(280 25% 10%), hsl(280 20% 12%));
-    --shadow-soft: 0 4px 20px -4px hsl(280 65% 60% / 0.25);
-    --shadow-card: 0 2px 12px -2px hsl(280 65% 60% / 0.15);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -111,8 +107,54 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  .animate-glow-pulse {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% {
+      filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+    }
+    50% {
+      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+    }
   }
 }

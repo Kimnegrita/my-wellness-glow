@@ -14,36 +14,107 @@ export type Database = {
   }
   public: {
     Tables: {
+      chat_conversations: {
+        Row: {
+          context: Json | null
+          created_at: string | null
+          id: string
+          title: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          context?: Json | null
+          created_at?: string | null
+          id?: string
+          title?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          context?: Json | null
+          created_at?: string | null
+          id?: string
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string | null
+          id: string
+          role: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string | null
+          id?: string
+          role: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string | null
+          id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "chat_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       daily_logs: {
         Row: {
+          ai_insights: string | null
           created_at: string | null
+          emotional_patterns: Json | null
           id: string
           journal_entry: string | null
           log_date: string
           period_ended: boolean | null
           period_started: boolean | null
+          sentiment_label: string | null
+          sentiment_score: number | null
           symptoms: string[] | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
+          ai_insights?: string | null
           created_at?: string | null
+          emotional_patterns?: Json | null
           id?: string
           journal_entry?: string | null
           log_date: string
           period_ended?: boolean | null
           period_started?: boolean | null
+          sentiment_label?: string | null
+          sentiment_score?: number | null
           symptoms?: string[] | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
+          ai_insights?: string | null
           created_at?: string | null
+          emotional_patterns?: Json | null
           id?: string
           journal_entry?: string | null
           log_date?: string
           period_ended?: boolean | null
           period_started?: boolean | null
+          sentiment_label?: string | null
+          sentiment_score?: number | null
           symptoms?: string[] | null
           updated_at?: string | null
           user_id?: string
@@ -56,8 +127,9 @@ export type Database = {
           created_at: string | null
           id: string
           is_irregular: boolean | null
+          language: string | null
           last_period_date: string | null
-          name: string
+          name: string | null
           updated_at: string | null
         }
         Insert: {
@@ -65,8 +137,9 @@ export type Database = {
           created_at?: string | null
           id: string
           is_irregular?: boolean | null
+          language?: string | null
           last_period_date?: string | null
-          name: string
+          name?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -74,8 +147,9 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_irregular?: boolean | null
+          language?: string | null
           last_period_date?: string | null
-          name?: string
+          name?: string | null
           updated_at?: string | null
         }
         Relationships: []

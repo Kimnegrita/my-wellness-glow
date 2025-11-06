@@ -1,1 +1,10 @@
 project_id = "lcrfczktmrxbjfbcwetf"
+
+[functions.chat]
+verify_jwt = true
+
+[functions.analyze-sentiment]
+verify_jwt = true
+
+[functions.generate-recommendations]
+verify_jwt = true
