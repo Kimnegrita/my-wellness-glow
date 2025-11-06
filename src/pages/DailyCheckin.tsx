@@ -14,18 +14,93 @@ import { format, differenceInDays } from 'date-fns';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
 
 const SYMPTOMS = [
+  // Síntomas Menstruales
+  'Cólicos',
+  'Dolor de Espalda Baja',
+  'Sangrado Abundante',
+  'Sangrado Leve',
+  'Coágulos',
+  'Náuseas',
+  
+  // Síntomas Generales/Energía
+  'Energía Alta',
   'Energía Baja',
+  'Fatiga',
+  'Cansancio Extremo',
+  'Motivación Alta',
+  'Letargo',
+  
+  // Síntomas Físicos Generales
+  'Hinchazón',
+  'Retención de Líquidos',
+  'Sensibilidad en Senos',
+  'Dolor en Senos',
+  'Dolor de Cabeza',
+  'Migraña',
+  'Dolor Articular',
+  'Dolor Muscular',
+  'Dolor Pélvico',
+  'Calambres Abdominales',
+  
+  // Temperatura y Síntomas Corporales
+  'Sofocos',
+  'Sudores Nocturnos',
+  'Escalofríos',
+  'Temperatura Elevada',
+  
+  // Digestivos
+  'Náuseas',
+  'Diarrea',
+  'Estreñimiento',
+  'Gases',
+  'Sensibilidad Digestiva',
+  'Antojos de Comida',
+  'Apetito Aumentado',
+  'Pérdida de Apetito',
+  
+  // Cognitivos y Mentales
+  'Niebla Mental',
+  'Claridad Mental',
+  'Concentración Difícil',
+  'Memoria Afectada',
+  'Creatividad Alta',
+  
+  // Estados de Ánimo/Emocionales (físicamente manifestados)
   'Estrés',
   'Ansiedad',
-  'Hinchazón',
-  'Sofocos',
+  'Irritabilidad',
+  'Sensibilidad Emocional',
+  'Cambios de Humor',
+  
+  // Sueño
   'Sueño Malo',
-  'Buen Humor',
-  'Irritable',
-  'Niebla Mental',
-  'Dolor Articular',
-  'Dolor de Cabeza',
-  'Cólicos',
+  'Insomnio',
+  'Sueño Profundo',
+  'Somnolencia',
+  'Pesadillas',
+  
+  // Piel y Cabello
+  'Acné',
+  'Piel Seca',
+  'Piel Grasa',
+  'Piel Radiante',
+  'Cabello Graso',
+  'Cabello Seco',
+  
+  // Síntomas Sexuales
+  'Libido Alta',
+  'Libido Baja',
+  'Sequedad Vaginal',
+  'Flujo Vaginal Aumentado',
+  'Sensibilidad Aumentada',
+  
+  // Otros
+  'Mareos',
+  'Vértigo',
+  'Palpitaciones',
+  'Visión Borrosa',
+  'Sensibilidad a la Luz',
+  'Sensibilidad al Ruido',
 ];
 
 const MOODS = [
@@ -311,7 +386,10 @@ export default function DailyCheckin() {
                 <span className="text-lg">🌡️</span>
                 Síntomas Físicos
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-xs text-muted-foreground mb-2">
+                Selecciona todos los síntomas que estés experimentando hoy
+              </p>
+              <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto p-2 bg-muted/20 rounded-lg">
                 {SYMPTOMS.map((symptom) => (
                   <SymptomChip
                     key={symptom}
