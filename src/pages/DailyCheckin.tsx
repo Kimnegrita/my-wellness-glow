@@ -12,6 +12,7 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { format, differenceInDays } from 'date-fns';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
+import { getCurrentPhase, getCurrentCycleDay } from '@/lib/cycleCalculations';
 
 const SYMPTOMS = [
   // Síntomas Menstruales
@@ -103,6 +104,59 @@ const SYMPTOMS = [
   'Sensibilidad al Ruido',
 ];
 
+// Síntomas sugeridos por fase del ciclo
+const SYMPTOMS_BY_PHASE = {
+  menstruation: [
+    'Cólicos',
+    'Dolor de Espalda Baja',
+    'Sangrado Abundante',
+    'Sangrado Leve',
+    'Fatiga',
+    'Dolor de Cabeza',
+    'Náuseas',
+    'Hinchazón',
+    'Cambios de Humor',
+    'Antojos de Comida',
+  ],
+  follicular: [
+    'Energía Alta',
+    'Motivación Alta',
+    'Claridad Mental',
+    'Creatividad Alta',
+    'Piel Radiante',
+    'Libido Alta',
+    'Sueño Profundo',
+    'Apetito Aumentado',
+  ],
+  ovulation: [
+    'Energía Alta',
+    'Libido Alta',
+    'Flujo Vaginal Aumentado',
+    'Sensibilidad Aumentada',
+    'Creatividad Alta',
+    'Piel Radiante',
+    'Temperatura Elevada',
+    'Dolor Pélvico',
+    'Sensibilidad en Senos',
+  ],
+  luteal: [
+    'Hinchazón',
+    'Retención de Líquidos',
+    'Sensibilidad en Senos',
+    'Acné',
+    'Irritabilidad',
+    'Ansiedad',
+    'Cambios de Humor',
+    'Antojos de Comida',
+    'Fatiga',
+    'Sueño Malo',
+    'Insomnio',
+    'Dolor de Cabeza',
+    'Estreñimiento',
+  ],
+  irregular: [],
+};
+
 const MOODS = [
   // Estados positivos y de plenitud
   { emoji: '😊', label: 'Feliz', value: 'Feliz' },
@@ -147,6 +201,21 @@ export default function DailyCheckin() {
   const [journalEntry, setJournalEntry] = useState('');
   const [sentimentAnalysis, setSentimentAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  // Calcular fase actual del ciclo
+  const currentCycleDay = profile?.last_period_date && profile?.avg_cycle_length
+    ? getCurrentCycleDay(new Date(profile.last_period_date), profile.avg_cycle_length)
+    : null;
+  
+  const currentPhase = getCurrentPhase(currentCycleDay, profile?.is_irregular);
+
+  // Obtener síntomas sugeridos según la fase
+  const suggestedSymptoms = currentPhase 
+    ? SYMPTOMS_BY_PHASE[currentPhase as keyof typeof SYMPTOMS_BY_PHASE] || []
+    : [];
+
+  // Separar síntomas en sugeridos y otros
+  const otherSymptoms = SYMPTOMS.filter(s => !suggestedSymptoms.includes(s));
 
   // Fetch previous period start dates to calculate cycle length
   const { data: previousPeriods } = useQuery({
@@ -389,15 +458,43 @@ export default function DailyCheckin() {
               <p className="text-xs text-muted-foreground mb-2">
                 Selecciona todos los síntomas que estés experimentando hoy
               </p>
-              <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto p-2 bg-muted/20 rounded-lg">
-                {SYMPTOMS.map((symptom) => (
-                  <SymptomChip
-                    key={symptom}
-                    symptom={symptom}
-                    isSelected={selectedSymptoms.includes(symptom)}
-                    onToggle={() => handleSymptomToggle(symptom)}
-                  />
-                ))}
+
+              {/* Síntomas sugeridos según fase */}
+              {suggestedSymptoms.length > 0 && (
+                <div className="mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                      Comunes en fase {currentPhase === 'menstruation' ? 'menstrual' : 
+                                      currentPhase === 'follicular' ? 'folicular' : 
+                                      currentPhase === 'ovulation' ? 'de ovulación' : 'lútea'}
+                    </Badge>
+                  </div>
+                  <div className="flex flex-wrap gap-2 p-3 bg-primary/5 rounded-lg border border-primary/10">
+                    {suggestedSymptoms.map((symptom) => (
+                      <SymptomChip
+                        key={symptom}
+                        symptom={symptom}
+                        isSelected={selectedSymptoms.includes(symptom)}
+                        onToggle={() => handleSymptomToggle(symptom)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Todos los demás síntomas */}
+              <div>
+                <p className="text-xs text-muted-foreground mb-2">Otros síntomas</p>
+                <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto p-2 bg-muted/20 rounded-lg">
+                  {otherSymptoms.map((symptom) => (
+                    <SymptomChip
+                      key={symptom}
+                      symptom={symptom}
+                      isSelected={selectedSymptoms.includes(symptom)}
+                      onToggle={() => handleSymptomToggle(symptom)}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
