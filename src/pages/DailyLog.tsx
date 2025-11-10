@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const symptoms = [
   { name: "Dolor de cabeza", icon: "sick" },
@@ -27,7 +29,14 @@ const DailyLog = () => {
   const [selectedSymptoms, setSelectedSymptoms] = useState(["Dolor de cabeza"]);
   const [selectedMood, setSelectedMood] = useState("Ansiosa");
   const [intensity, setIntensity] = useState(32);
+  const [selectedFlow, setSelectedFlow] = useState<string | null>(null);
+  const navigate = useNavigate();
 
+  const toggleSymptom = (name: string) => {
+    setSelectedSymptoms((prev) =>
+      prev.includes(name) ? prev.filter((s) => s !== name) : [...prev, name]
+    );
+  };
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden pb-28">
       {/* Background gradient */}
@@ -45,9 +54,12 @@ const DailyLog = () => {
         <h1 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1">
           ¿Cómo te sientes hoy, Ana?
         </h1>
-        <div className="flex w-12 items-center justify-end">
-          <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-on-surface dark:text-on-surface-dark gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+        <div className="flex items-center justify-end gap-2">
+          <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-on-surface dark:text-on-surface-dark gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0" title="Calendario" aria-label="Abrir calendario">
             <span className="material-symbols-outlined text-2xl">calendar_today</span>
+          </button>
+          <button onClick={() => navigate('/assistant')} type="button" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-primary dark:text-primary-light gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0 hover:bg-primary/10 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" title="Asistente de IA" aria-label="Abrir asistente de IA">
+            <span className="material-symbols-outlined text-2xl">psychology</span>
           </button>
         </div>
       </header>
@@ -73,6 +85,28 @@ const DailyLog = () => {
         </div>
       </div>
 
+      {/* Accesos rápidos IA */}
+      <div className="px-4 -mt-2 z-[1]">
+        <div className="grid grid-cols-4 gap-2">
+          <button onClick={() => navigate('/assistant')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
+            <span className="material-symbols-outlined text-primary">psychology</span>
+            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Luna</span>
+          </button>
+          <button onClick={() => navigate('/predictions')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
+            <span className="material-symbols-outlined text-primary">event</span>
+            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Predicción</span>
+          </button>
+          <button onClick={() => navigate('/health-center')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
+            <span className="material-symbols-outlined text-primary">monitor_heart</span>
+            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Salud</span>
+          </button>
+          <button onClick={() => navigate('/insights')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
+            <span className="material-symbols-outlined text-primary">insights</span>
+            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Insights</span>
+          </button>
+        </div>
+      </div>
+
       <main className="flex flex-col gap-6 px-4 z-[1]">
         {/* Physical Symptoms */}
         <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
@@ -83,11 +117,14 @@ const DailyLog = () => {
             {symptoms.map((symptom) => (
               <label
                 key={symptom.name}
+                onClick={() => toggleSymptom(symptom.name)}
                 className={`flex cursor-pointer h-9 shrink-0 items-center justify-center gap-x-2 rounded-xl pl-3 pr-4 transition-all ${
                   selectedSymptoms.includes(symptom.name)
                     ? "bg-primary text-white chip-selected"
                     : "bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark"
                 }`}
+                role="button"
+                tabIndex={0}
               >
                 <span
                   className={`material-symbols-outlined text-xl ${
@@ -143,6 +180,8 @@ const DailyLog = () => {
             {moods.map((mood) => (
               <button
                 key={mood.label}
+                type="button"
+                onClick={() => setSelectedMood(mood.label)}
                 className={`flex flex-col items-center justify-center gap-2 rounded-xl p-2 transition-all ${
                   selectedMood === mood.label
                     ? "bg-primary text-white scale-110 shadow-lg shadow-primary/30"
@@ -173,12 +212,19 @@ const DailyLog = () => {
             {flowLevels.map((flow) => (
               <label
                 key={flow.name}
-                className="flex cursor-pointer h-9 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark pl-3 pr-4 transition-all has-[:checked]:bg-primary has-[:checked]:text-white has-[:checked]:ring-primary dark:has-[:checked]:ring-primary has-[:checked]:chip-selected"
+                onClick={() => setSelectedFlow(flow.name)}
+                className={`flex cursor-pointer h-9 shrink-0 items-center justify-center gap-x-2 rounded-xl pl-3 pr-4 transition-all ${
+                  selectedFlow === flow.name
+                    ? "bg-primary text-white ring-primary chip-selected"
+                    : "bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark"
+                }`}
+                role="button"
+                tabIndex={0}
               >
-                <span className="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant-dark text-xl">
+                <span className={`material-symbols-outlined text-xl ${selectedFlow === flow.name ? 'text-white' : 'text-on-surface-variant dark:text-on-surface-variant-dark'}`}>
                   {flow.icon}
                 </span>
-                <p className="text-on-surface dark:text-on-surface-dark text-sm font-medium leading-normal">
+                <p className={`text-sm font-medium leading-normal ${selectedFlow === flow.name ? 'text-white' : 'text-on-surface dark:text-on-surface-dark'}`}>
                   {flow.name}
                 </p>
                 <input className="sr-only" type="checkbox" />
@@ -201,7 +247,11 @@ const DailyLog = () => {
 
       {/* Footer Button */}
       <footer className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-light to-transparent dark:from-background-dark dark:to-transparent z-10">
-        <button className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-white gap-2 px-5 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-lg shadow-primary/40">
+        <button
+          type="button"
+          onClick={() => toast.success('Registro guardado correctamente')}
+          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-white gap-2 px-5 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-lg shadow-primary/40"
+        >
           Guardar Registro
         </button>
       </footer>
