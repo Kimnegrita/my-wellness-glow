@@ -6,6 +6,18 @@ import { useAuth } from "@/contexts/AuthContext";
 import type { Language } from "@/i18n/translations";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+
+const AVATAR_OPTIONS = [
+  "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1532635244-5c0565f92f67?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1515263487990-61b07816b324?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1501686637-b7aa9c48a882?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=200&h=200&fit=crop",
+];
 
 const Profile = () => {
   const { t, language, setLanguage } = useLanguage();
@@ -13,6 +25,8 @@ const Profile = () => {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [showLanguageModal, setShowLanguageModal] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(AVATAR_OPTIONS[0]);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
 
   const handleLanguageChange = (newLanguage: Language) => {
     setLanguage(newLanguage);
@@ -38,6 +52,12 @@ const Profile = () => {
     toast.success(t.profile.saveChanges + ' ✓');
   };
 
+  const handleAvatarSelect = (avatarUrl: string) => {
+    setSelectedAvatar(avatarUrl);
+    setShowAvatarModal(false);
+    toast.success('Foto de perfil actualizada ✓');
+  };
+
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark pb-24">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 p-4 backdrop-blur-sm">
@@ -54,18 +74,45 @@ const Profile = () => {
         {/* Profile Section */}
         <section className="flex p-4">
           <div className="flex w-full flex-col items-center gap-4">
-            <div className="relative">
-              <div
-                className="aspect-square w-32 rounded-full bg-cover bg-center bg-no-repeat ring-4 ring-white dark:ring-surface-dark"
-                style={{
-                  backgroundImage:
-                    'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5IrhZgk-W4inNEhY1a6s9_8_k2FuyJTT1LDX5VRYLCtggTDT81q2W9CDq6Zc8zuztjuAUAuMki7NoU09r04GX0rah67cJWNafN6JaW27STszN9f82m1BzWeMHPQkqnPzA-t6rpQe6JhM7TBsyJ1vGX2K5poYDltvEgml9Dch6khm_5_1nFAnz9uzIXBoyK3Kh5C5R58_iVj1k5q8HY6cC025SUDNY37W2DCPut_FCR-zs7ewk7xEtEMybcKYDvkFiDH9gcL0k3w4")',
-                }}
-              ></div>
-              <button className="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-primary text-white shadow-md">
-                <span className="material-symbols-outlined text-xl">{t.common.edit}</span>
-              </button>
-            </div>
+            <Dialog open={showAvatarModal} onOpenChange={setShowAvatarModal}>
+              <div className="relative">
+                <div
+                  className="aspect-square w-32 rounded-full bg-cover bg-center bg-no-repeat ring-4 ring-primary/20 shadow-glow transition-transform hover:scale-105"
+                  style={{
+                    backgroundImage: `url("${selectedAvatar}")`,
+                  }}
+                ></div>
+                <DialogTrigger asChild>
+                  <button className="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gradient-primary text-white shadow-glow animate-glow-pulse hover:scale-110 transition-transform">
+                    <span className="material-symbols-outlined text-xl">{t.common.edit}</span>
+                  </button>
+                </DialogTrigger>
+              </div>
+              
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-center text-xl font-bold text-foreground">
+                    Elige tu avatar
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-4 gap-3 p-4">
+                  {AVATAR_OPTIONS.map((avatarUrl, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleAvatarSelect(avatarUrl)}
+                      className={`aspect-square rounded-full bg-cover bg-center bg-no-repeat ring-2 transition-all hover:scale-110 hover:shadow-glow ${
+                        selectedAvatar === avatarUrl
+                          ? 'ring-primary shadow-glow scale-110'
+                          : 'ring-outline dark:ring-outline-dark'
+                      }`}
+                      style={{
+                        backgroundImage: `url("${avatarUrl}")`,
+                      }}
+                    />
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
             <div className="flex flex-col items-center justify-center">
               <p className="text-[22px] font-bold leading-tight tracking-[-0.015em] text-on-surface dark:text-on-surface-dark">
                 {profile?.name || "Usuario"}
