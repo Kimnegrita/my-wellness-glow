@@ -18,12 +18,20 @@ export const Header = () => {
       <div className="flex items-center justify-end gap-2">
         <button
           onClick={() => navigate('/assistant')}
-          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-primary dark:text-primary-light hover:bg-primary/10 transition-colors"
+          type="button"
+          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-primary dark:text-primary-light hover:bg-primary/10 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           title="AI Assistant"
+          aria-label="Abrir asistente de IA"
         >
           <span className="material-symbols-outlined">psychology</span>
         </button>
-        <button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-text-primary-light dark:text-text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+        <button 
+          onClick={() => navigate('/profile')}
+          type="button"
+          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-text-primary-light dark:text-text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          title="Notificaciones"
+          aria-label="Ver notificaciones"
+        >
           <span className="material-symbols-outlined">notifications</span>
         </button>
       </div>
