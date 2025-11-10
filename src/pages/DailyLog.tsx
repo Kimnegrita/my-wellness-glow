@@ -7,7 +7,14 @@ import { es } from 'date-fns/locale';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { BottomNavigation } from '@/components/BottomNavigation';
 
-const COLORS = ['#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#00BCD4', '#009688', '#4CAF50'];
+const COLORS = [
+  'hsl(320 85% 62%)', // Rosa
+  'hsl(280 70% 68%)', // Lila
+  'hsl(45 100% 70%)', // Dorado
+  'hsl(340 80% 65%)', // Rosa claro
+  'hsl(260 65% 72%)', // Lila claro
+  'hsl(40 95% 65%)',  // Oro suave
+];
 
 export default function DailyLog() {
   const navigate = useNavigate();
@@ -88,55 +95,65 @@ export default function DailyLog() {
       </header>
 
       <main className="flex flex-col gap-4 px-4 py-6 z-[1]">
-        {/* Summary Cards */}
+        {/* Summary Cards con gradientes */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="flex flex-col gap-2 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
-            <span className="material-symbols-outlined text-primary text-3xl">calendar_month</span>
-            <p className="text-2xl font-bold text-on-surface dark:text-on-surface-dark">{totalLogs}</p>
-            <p className="text-xs text-on-surface-variant dark:text-on-surface-variant-dark">Registros</p>
+          <div className="flex flex-col gap-2 rounded-xl bg-gradient-rose backdrop-blur-sm p-4 shadow-elegant border border-white/30 animate-fade-in-up">
+            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg">calendar_month</span>
+            <p className="text-2xl font-bold text-white drop-shadow-md">{totalLogs}</p>
+            <p className="text-xs text-white/90">Registros</p>
           </div>
           
-          <div className="flex flex-col gap-2 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
-            <span className="material-symbols-outlined text-red-500 text-3xl">water_drop</span>
-            <p className="text-2xl font-bold text-on-surface dark:text-on-surface-dark">{periodDays}</p>
-            <p className="text-xs text-on-surface-variant dark:text-on-surface-variant-dark">Días período</p>
+          <div className="flex flex-col gap-2 rounded-xl bg-gradient-lilac backdrop-blur-sm p-4 shadow-elegant border border-white/30 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg">water_drop</span>
+            <p className="text-2xl font-bold text-white drop-shadow-md">{periodDays}</p>
+            <p className="text-xs text-white/90">Días período</p>
           </div>
           
-          <div className="flex flex-col gap-2 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
-            <span className="material-symbols-outlined text-purple-500 text-3xl">monitor_heart</span>
-            <p className="text-2xl font-bold text-on-surface dark:text-on-surface-dark">{Object.keys(symptomCounts).length}</p>
-            <p className="text-xs text-on-surface-variant dark:text-on-surface-variant-dark">Síntomas</p>
+          <div className="flex flex-col gap-2 rounded-xl bg-gradient-gold backdrop-blur-sm p-4 shadow-elegant border border-white/30 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg">monitor_heart</span>
+            <p className="text-2xl font-bold text-white drop-shadow-md">{Object.keys(symptomCounts).length}</p>
+            <p className="text-xs text-white/90">Síntomas</p>
           </div>
         </div>
 
         {/* Registros por Mes */}
-        <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
-          <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            Registros por Mes
-          </h2>
+        <section className="flex flex-col gap-4 rounded-xl bg-surface/90 dark:bg-surface-dark/90 backdrop-blur-sm p-4 shadow-elegant border border-rose-light/50 dark:border-rose-dark/30 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-rose-medium">bar_chart</span>
+            <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
+              Registros por Mes
+            </h2>
+          </div>
           {monthlyData.length > 0 ? (
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={monthlyData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.1)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(320 30% 92%)" />
                 <XAxis 
                   dataKey="month" 
                   style={{ fontSize: '12px' }}
-                  stroke="currentColor"
+                  stroke="hsl(280 15% 20%)"
                 />
                 <YAxis 
                   style={{ fontSize: '12px' }}
-                  stroke="currentColor"
+                  stroke="hsl(280 15% 20%)"
                 />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: '1px solid rgba(0,0,0,0.1)',
-                    borderRadius: '8px',
+                    backgroundColor: 'hsl(0 0% 100%)',
+                    border: '1px solid hsl(320 30% 92%)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 12px rgba(236, 72, 153, 0.12)',
                   }}
                 />
+                <defs>
+                  <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(320 85% 62%)" />
+                    <stop offset="100%" stopColor="hsl(280 70% 68%)" />
+                  </linearGradient>
+                </defs>
                 <Bar 
                   dataKey="registros" 
-                  fill="#E91E63" 
+                  fill="url(#barGradient)" 
                   radius={[8, 8, 0, 0]}
                 />
               </BarChart>
@@ -149,10 +166,13 @@ export default function DailyLog() {
         </section>
 
         {/* Top Síntomas */}
-        <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
-          <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            Síntomas Más Frecuentes
-          </h2>
+        <section className="flex flex-col gap-4 rounded-xl bg-surface/90 dark:bg-surface-dark/90 backdrop-blur-sm p-4 shadow-elegant border border-lilac-light/50 dark:border-lilac-dark/30 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-lilac-medium">pie_chart</span>
+            <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
+              Síntomas Más Frecuentes
+            </h2>
+          </div>
           {topSymptoms.length > 0 ? (
             <ResponsiveContainer width="100%" height={200}>
               <PieChart>
@@ -172,9 +192,10 @@ export default function DailyLog() {
                 </Pie>
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: '1px solid rgba(0,0,0,0.1)',
-                    borderRadius: '8px',
+                    backgroundColor: 'hsl(0 0% 100%)',
+                    border: '1px solid hsl(320 30% 92%)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 12px rgba(236, 72, 153, 0.12)',
                   }}
                 />
               </PieChart>
@@ -187,22 +208,25 @@ export default function DailyLog() {
         </section>
 
         {/* Registros Recientes */}
-        <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
-          <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            Registros Recientes
-          </h2>
+        <section className="flex flex-col gap-4 rounded-xl bg-surface/90 dark:bg-surface-dark/90 backdrop-blur-sm p-4 shadow-elegant border border-gold-light/50 dark:border-gold-dark/30 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-gold-medium">history</span>
+            <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
+              Registros Recientes
+            </h2>
+          </div>
           <div className="space-y-3">
             {logs?.slice(-5).reverse().map((log) => (
               <div 
                 key={log.id}
-                className="p-3 rounded-lg bg-background-light dark:bg-background-dark border border-outline dark:border-outline-dark"
+                className="p-3 rounded-xl bg-gradient-to-br from-rose-light/30 to-lilac-light/30 dark:from-rose-dark/20 dark:to-lilac-dark/20 border border-rose-light/50 dark:border-rose-dark/30 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-semibold text-on-surface dark:text-on-surface-dark">
                     {format(parseISO(log.log_date), "d 'de' MMMM", { locale: es })}
                   </span>
                   {(log.period_started || log.period_ended) && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-red-500 text-white">
+                    <span className="text-xs px-2 py-1 rounded-full bg-gradient-rose text-white shadow-md">
                       {log.period_started ? '🩸 Inicio' : '✓ Fin'}
                     </span>
                   )}
@@ -213,7 +237,7 @@ export default function DailyLog() {
                     {log.symptoms.slice(0, 3).map((symptom, idx) => (
                       <span 
                         key={idx} 
-                        className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light"
+                        className="text-xs px-2 py-1 rounded-full bg-gradient-lilac text-white shadow-sm"
                       >
                         {symptom}
                       </span>
@@ -236,12 +260,15 @@ export default function DailyLog() {
             
             {(!logs || logs.length === 0) && !isLoading && (
               <div className="text-center py-8">
-                <p className="text-on-surface-variant dark:text-on-surface-variant-dark mb-4">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-primary flex items-center justify-center shadow-glow">
+                  <span className="material-symbols-outlined text-4xl text-white">sentiment_satisfied</span>
+                </div>
+                <p className="text-on-surface-variant dark:text-on-surface-variant-dark mb-4 font-medium">
                   Aún no tienes registros
                 </p>
                 <button 
                   onClick={() => navigate('/checkin')}
-                  className="px-6 py-2 rounded-xl bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                  className="px-6 py-3 rounded-xl bg-gradient-primary text-white font-semibold hover:shadow-glow transition-all active:scale-95"
                 >
                   Crear Primer Registro
                 </button>
