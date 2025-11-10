@@ -441,7 +441,7 @@ export default function DailyCheckin() {
                       {currentPhase === 'luteal' && '🌙 Lútea'}
                     </Badge>
                   </div>
-                  <TooltipProvider>
+                  <TooltipProvider delayDuration={300}>
                     <div className="flex flex-wrap gap-2">
                       {suggestedSymptoms.map((symptom) => {
                         const explanation = SYMPTOM_EXPLANATIONS[symptom]?.[currentPhase || 'irregular'];
@@ -450,16 +450,16 @@ export default function DailyCheckin() {
                           return (
                             <Tooltip key={symptom}>
                               <TooltipTrigger asChild>
-                                <div className="relative">
+                                <div className="relative inline-block">
                                   <SymptomChip
                                     symptom={symptom}
                                     isSelected={selectedSymptoms.includes(symptom)}
                                     onToggle={() => handleSymptomToggle(symptom)}
                                   />
-                                  <Info className="absolute -top-1 -right-1 h-3 w-3 text-primary bg-background rounded-full" />
+                                  <Info className="absolute -top-1 -right-1 h-3 w-3 text-primary bg-background rounded-full pointer-events-none" />
                                 </div>
                               </TooltipTrigger>
-                              <TooltipContent className="max-w-xs">
+                              <TooltipContent className="max-w-xs z-[100]">
                                 <p className="text-sm">{explanation}</p>
                               </TooltipContent>
                             </Tooltip>
