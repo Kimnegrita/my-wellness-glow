@@ -8,3 +8,12 @@ verify_jwt = true
 
 [functions.generate-recommendations]
 verify_jwt = true
+
+[functions.predict-next-cycle]
+verify_jwt = true
+
+[functions.detect-health-anomalies]
+verify_jwt = true
+
+[functions.discover-correlations]
+verify_jwt = true
