@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const symptoms = [
   { name: "Dolor de cabeza", icon: "sick" },
@@ -8,21 +9,53 @@ const symptoms = [
   { name: "Calambres", icon: "local_fire_department" },
   { name: "Fatiga", icon: "battery_alert" },
   { name: "Sensibilidad", icon: "favorite" },
+  { name: "Náuseas", icon: "sentiment_very_dissatisfied" },
+  { name: "Dolor de espalda", icon: "airline_seat_recline_extra" },
+  { name: "Acné", icon: "face" },
+  { name: "Dolor de pecho", icon: "monitor_heart" },
+  { name: "Mareos", icon: "bedtime" },
+  { name: "Insomnio", icon: "hotel" },
+  { name: "Antojos", icon: "restaurant" },
 ];
 
 const moods = [
-  { emoji: "😊", label: "Feliz" },
-  { emoji: "😌", label: "Calmada" },
-  { emoji: "😟", label: "Ansiosa" },
-  { emoji: "😠", label: "Irritable" },
-  { emoji: "😢", label: "Triste" },
+  { emoji: "😊", label: "Feliz", description: "Me siento alegre y optimista" },
+  { emoji: "😌", label: "Calmada", description: "Me siento en paz y relajada" },
+  { emoji: "🥰", label: "Amorosa", description: "Me siento cariñosa y afectuosa" },
+  { emoji: "😟", label: "Ansiosa", description: "Me siento preocupada o nerviosa" },
+  { emoji: "😠", label: "Irritable", description: "Me siento fácilmente molesta" },
+  { emoji: "😢", label: "Triste", description: "Me siento melancólica o deprimida" },
+  { emoji: "😴", label: "Cansada", description: "Me siento agotada o somnolienta" },
+  { emoji: "😰", label: "Estresada", description: "Me siento abrumada o bajo presión" },
+  { emoji: "🤗", label: "Sensible", description: "Me siento emocionalmente vulnerable" },
+  { emoji: "💪", label: "Energética", description: "Me siento llena de energía y motivada" },
 ];
 
-const flowLevels = [
-  { name: "Manchado", icon: "water_drop" },
-  { name: "Ligero", icon: "invert_colors" },
-  { name: "Medio", icon: "invert_colors" },
-  { name: "Abundante", icon: "invert_colors" },
+const cyclePhases = [
+  {
+    name: "Menstruación",
+    icon: "water_drop",
+    description: "Días 1-5: Periodo menstrual. Es normal sentir fatiga, calambres y cambios de humor. Descansa y cuídate extra.",
+    color: "text-red-500"
+  },
+  {
+    name: "Folicular",
+    icon: "energy_savings_leaf",
+    description: "Días 6-13: Fase de crecimiento. Energía en aumento, mejor estado de ánimo. Ideal para iniciar proyectos.",
+    color: "text-green-500"
+  },
+  {
+    name: "Ovulación",
+    icon: "favorite",
+    description: "Días 14-16: Pico de fertilidad. Máxima energía, confianza y claridad mental. Aprovecha esta fase.",
+    color: "text-pink-500"
+  },
+  {
+    name: "Lútea",
+    icon: "bedtime",
+    description: "Días 17-28: Preparación para la menstruación. Pueden aparecer síntomas de SPM. Prioriza el autocuidado.",
+    color: "text-purple-500"
+  },
 ];
 
 const DailyLog = () => {
@@ -30,12 +63,19 @@ const DailyLog = () => {
   const [selectedMood, setSelectedMood] = useState("Ansiosa");
   const [intensity, setIntensity] = useState(32);
   const [selectedFlow, setSelectedFlow] = useState<string | null>(null);
+  const [phaseDialogOpen, setPhaseDialogOpen] = useState(false);
+  const [selectedPhase, setSelectedPhase] = useState<typeof cyclePhases[0] | null>(null);
   const navigate = useNavigate();
 
   const toggleSymptom = (name: string) => {
     setSelectedSymptoms((prev) =>
       prev.includes(name) ? prev.filter((s) => s !== name) : [...prev, name]
     );
+  };
+
+  const openPhaseInfo = (phase: typeof cyclePhases[0]) => {
+    setSelectedPhase(phase);
+    setPhaseDialogOpen(true);
   };
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden pb-28">
@@ -203,32 +243,26 @@ const DailyLog = () => {
           </div>
         </section>
 
-        {/* Cycle Tracker */}
+        {/* Cycle Phases Info */}
         <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
           <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            Ciclo
+            Fases del Ciclo
           </h2>
-          <div className="flex gap-2 flex-wrap">
-            {flowLevels.map((flow) => (
-              <label
-                key={flow.name}
-                onClick={() => setSelectedFlow(flow.name)}
-                className={`flex cursor-pointer h-9 shrink-0 items-center justify-center gap-x-2 rounded-xl pl-3 pr-4 transition-all ${
-                  selectedFlow === flow.name
-                    ? "bg-primary text-white ring-primary chip-selected"
-                    : "bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark"
-                }`}
-                role="button"
-                tabIndex={0}
+          <div className="grid grid-cols-2 gap-2">
+            {cyclePhases.map((phase) => (
+              <button
+                key={phase.name}
+                type="button"
+                onClick={() => openPhaseInfo(phase)}
+                className="flex flex-col items-center justify-center rounded-xl p-3 bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark active:scale-95 transition-all"
               >
-                <span className={`material-symbols-outlined text-xl ${selectedFlow === flow.name ? 'text-white' : 'text-on-surface-variant dark:text-on-surface-variant-dark'}`}>
-                  {flow.icon}
+                <span className={`material-symbols-outlined text-3xl ${phase.color}`}>
+                  {phase.icon}
                 </span>
-                <p className={`text-sm font-medium leading-normal ${selectedFlow === flow.name ? 'text-white' : 'text-on-surface dark:text-on-surface-dark'}`}>
-                  {flow.name}
+                <p className="text-xs font-medium text-on-surface dark:text-on-surface-dark mt-1">
+                  {phase.name}
                 </p>
-                <input className="sr-only" type="checkbox" />
-              </label>
+              </button>
             ))}
           </div>
         </section>
@@ -255,6 +289,27 @@ const DailyLog = () => {
           Guardar Registro
         </button>
       </footer>
+
+      {/* Phase Info Dialog */}
+      <Dialog open={phaseDialogOpen} onOpenChange={setPhaseDialogOpen}>
+        <DialogContent className="bg-surface-light dark:bg-surface-dark">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              {selectedPhase && (
+                <>
+                  <span className={`material-symbols-outlined text-3xl ${selectedPhase.color}`}>
+                    {selectedPhase.icon}
+                  </span>
+                  <span className="text-on-surface dark:text-on-surface-dark">{selectedPhase.name}</span>
+                </>
+              )}
+            </DialogTitle>
+            <DialogDescription className="text-on-surface-variant dark:text-on-surface-variant-dark text-base pt-2">
+              {selectedPhase?.description}
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
