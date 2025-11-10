@@ -42,10 +42,32 @@ const SYMPTOMS = [
 const MOODS = [
   { emoji: '😊', label: 'Feliz', value: 'Feliz' },
   { emoji: '😌', label: 'Tranquila', value: 'Tranquila' },
+  { emoji: '😍', label: 'Enamorada', value: 'Enamorada' },
+  { emoji: '😁', label: 'Radiante', value: 'Radiante' },
+  { emoji: '🥰', label: 'Amorosa', value: 'Amorosa' },
+  { emoji: '😎', label: 'Confiada', value: 'Confiada' },
+  { emoji: '🤗', label: 'Cariñosa', value: 'Cariñosa' },
+  { emoji: '😇', label: 'Pacífica', value: 'Pacífica' },
   { emoji: '😓', label: 'Estresada', value: 'Estresada' },
   { emoji: '😢', label: 'Triste', value: 'Triste' },
+  { emoji: '😭', label: 'Llorosa', value: 'Llorosa' },
   { emoji: '😤', label: 'Irritable', value: 'Irritable' },
+  { emoji: '😠', label: 'Enojada', value: 'Enojada' },
+  { emoji: '😰', label: 'Ansiosa', value: 'Ansiosa' },
+  { emoji: '😔', label: 'Melancólica', value: 'Melancólica' },
+  { emoji: '😖', label: 'Frustrada', value: 'Frustrada' },
+  { emoji: '😫', label: 'Agotada', value: 'Agotada' },
   { emoji: '😴', label: 'Cansada', value: 'Cansada' },
+  { emoji: '🥱', label: 'Somnolienta', value: 'Somnolienta' },
+  { emoji: '😐', label: 'Neutral', value: 'Neutral' },
+  { emoji: '😕', label: 'Confundida', value: 'Confundida' },
+  { emoji: '😒', label: 'Aburrida', value: 'Aburrida' },
+  { emoji: '🤒', label: 'Enferma', value: 'Enferma' },
+  { emoji: '😵', label: 'Abrumada', value: 'Abrumada' },
+  { emoji: '💪', label: 'Fuerte', value: 'Fuerte' },
+  { emoji: '✨', label: 'Motivada', value: 'Motivada' },
+  { emoji: '🔥', label: 'Energética', value: 'Energética' },
+  { emoji: '🌸', label: 'Sensible', value: 'Sensible' },
 ];
 
 const SYMPTOMS_BY_PHASE = {
@@ -380,21 +402,21 @@ export default function DailyCheckin() {
                 <span className="text-lg">💭</span>
                 Mi Estado de Ánimo
               </h3>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+              <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
                 {MOODS.map((mood) => (
                   <button
                     key={mood.value}
                     onClick={() => handleMoodToggle(mood.value)}
                     className={`
-                      flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all
+                      flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all
                       ${selectedMoods.includes(mood.value)
                         ? 'border-primary bg-primary/10 scale-105 shadow-lg' 
                         : 'border-border hover:border-primary/50 hover:bg-muted/50'
                       }
                     `}
                   >
-                    <span className="text-3xl mb-1">{mood.emoji}</span>
-                    <span className="text-xs font-medium">{mood.label}</span>
+                    <span className="text-2xl mb-1">{mood.emoji}</span>
+                    <span className="text-[10px] font-medium text-center leading-tight">{mood.label}</span>
                   </button>
                 ))}
               </div>
