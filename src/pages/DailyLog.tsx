@@ -1,82 +1,67 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useAuth } from '@/contexts/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
+import { format, parseISO, subMonths } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BottomNavigation } from '@/components/BottomNavigation';
 
-const symptoms = [
-  { name: "Dolor de cabeza", icon: "sick" },
-  { name: "Hinchazón", icon: "airwave" },
-  { name: "Calambres", icon: "local_fire_department" },
-  { name: "Fatiga", icon: "battery_alert" },
-  { name: "Sensibilidad", icon: "favorite" },
-  { name: "Náuseas", icon: "sentiment_very_dissatisfied" },
-  { name: "Dolor de espalda", icon: "airline_seat_recline_extra" },
-  { name: "Acné", icon: "face" },
-  { name: "Dolor de pecho", icon: "monitor_heart" },
-  { name: "Mareos", icon: "bedtime" },
-  { name: "Insomnio", icon: "hotel" },
-  { name: "Antojos", icon: "restaurant" },
-];
+const COLORS = ['#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#00BCD4', '#009688', '#4CAF50'];
 
-const moods = [
-  { emoji: "😊", label: "Feliz", description: "Me siento alegre y optimista" },
-  { emoji: "😌", label: "Calmada", description: "Me siento en paz y relajada" },
-  { emoji: "🥰", label: "Amorosa", description: "Me siento cariñosa y afectuosa" },
-  { emoji: "😟", label: "Ansiosa", description: "Me siento preocupada o nerviosa" },
-  { emoji: "😠", label: "Irritable", description: "Me siento fácilmente molesta" },
-  { emoji: "😢", label: "Triste", description: "Me siento melancólica o deprimida" },
-  { emoji: "😴", label: "Cansada", description: "Me siento agotada o somnolienta" },
-  { emoji: "😰", label: "Estresada", description: "Me siento abrumada o bajo presión" },
-  { emoji: "🤗", label: "Sensible", description: "Me siento emocionalmente vulnerable" },
-  { emoji: "💪", label: "Energética", description: "Me siento llena de energía y motivada" },
-];
-
-const cyclePhases = [
-  {
-    name: "Menstruación",
-    icon: "water_drop",
-    description: "Días 1-5: Periodo menstrual. Es normal sentir fatiga, calambres y cambios de humor. Descansa y cuídate extra.",
-    color: "text-red-500"
-  },
-  {
-    name: "Folicular",
-    icon: "energy_savings_leaf",
-    description: "Días 6-13: Fase de crecimiento. Energía en aumento, mejor estado de ánimo. Ideal para iniciar proyectos.",
-    color: "text-green-500"
-  },
-  {
-    name: "Ovulación",
-    icon: "favorite",
-    description: "Días 14-16: Pico de fertilidad. Máxima energía, confianza y claridad mental. Aprovecha esta fase.",
-    color: "text-pink-500"
-  },
-  {
-    name: "Lútea",
-    icon: "bedtime",
-    description: "Días 17-28: Preparación para la menstruación. Pueden aparecer síntomas de SPM. Prioriza el autocuidado.",
-    color: "text-purple-500"
-  },
-];
-
-const DailyLog = () => {
-  const [selectedSymptoms, setSelectedSymptoms] = useState(["Dolor de cabeza"]);
-  const [selectedMood, setSelectedMood] = useState("Ansiosa");
-  const [intensity, setIntensity] = useState(32);
-  const [selectedFlow, setSelectedFlow] = useState<string | null>(null);
-  const [phaseDialogOpen, setPhaseDialogOpen] = useState(false);
-  const [selectedPhase, setSelectedPhase] = useState<typeof cyclePhases[0] | null>(null);
+export default function DailyLog() {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  const toggleSymptom = (name: string) => {
-    setSelectedSymptoms((prev) =>
-      prev.includes(name) ? prev.filter((s) => s !== name) : [...prev, name]
-    );
-  };
+  // Fetch logs for last 3 months
+  const { data: logs, isLoading } = useQuery({
+    queryKey: ['stats_logs', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      
+      const start = subMonths(new Date(), 3);
+      
+      const { data, error } = await supabase
+        .from('daily_logs')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('log_date', format(start, 'yyyy-MM-dd'))
+        .order('log_date', { ascending: true });
+      
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!user,
+  });
 
-  const openPhaseInfo = (phase: typeof cyclePhases[0]) => {
-    setSelectedPhase(phase);
-    setPhaseDialogOpen(true);
-  };
+  // Calculate statistics
+  const totalLogs = logs?.length || 0;
+  const periodDays = logs?.filter(log => log.period_started || log.period_ended).length || 0;
+  
+  // Symptom frequency
+  const allSymptoms = logs?.flatMap(log => log.symptoms || []) || [];
+  const symptomCounts = allSymptoms.reduce((acc, symptom) => {
+    acc[symptom] = (acc[symptom] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  
+  const topSymptoms = Object.entries(symptomCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([name, value]) => ({ name, value }));
+
+  // Daily logs per month
+  const logsPerMonth = logs?.reduce((acc, log) => {
+    const month = format(parseISO(log.log_date), 'MMM', { locale: es });
+    acc[month] = (acc[month] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>) || {};
+  
+  const monthlyData = Object.entries(logsPerMonth).map(([month, count]) => ({
+    month,
+    registros: count,
+  }));
+
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden pb-28">
       {/* Background gradient */}
@@ -84,234 +69,195 @@ const DailyLog = () => {
 
       {/* Header */}
       <header className="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-4 pb-2 justify-between">
-        <div className="flex size-12 shrink-0 items-center">
-          <img
-            className="rounded-full size-10"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjtpgMP2CKPE_B3w125EgH6iAiKQsk0uac7brJgm4QUXs1xxjXwFiR1NO1LIbK6pYxQKbk6NcF6pxheJMOfOZ-rPoDvjRaquT1fBDKznB9CEBA5IkEeaFDHKdCnOCfNc6r3XpSD7G-JqqjUyeQeHYytCxc4yBInGNcm_PCKlqYF5cP245w4zYn1yKb6G1hfFDvJaEg1SX_cpFsK9vQ4FPJRynD5QV_I_nHq_HZR9s63oTcNxKGbvl5zH2VSY5brhXNyh8Q1eMbtU4"
-            alt="User profile"
-          />
-        </div>
-        <h1 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1">
-          ¿Cómo te sientes hoy, Ana?
-        </h1>
-        <div className="flex items-center justify-end gap-2">
-          <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-on-surface dark:text-on-surface-dark gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0" title="Calendario" aria-label="Abrir calendario">
-            <span className="material-symbols-outlined text-2xl">calendar_today</span>
+        <div className="flex items-center gap-3 flex-1">
+          <button
+            onClick={() => navigate('/')}
+            type="button"
+            className="flex items-center justify-center rounded-xl h-10 w-10 bg-transparent text-on-surface dark:text-on-surface-dark hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition-all"
+            aria-label="Volver"
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <button onClick={() => navigate('/assistant')} type="button" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-primary dark:text-primary-light gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0 hover:bg-primary/10 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" title="Asistente de IA" aria-label="Abrir asistente de IA">
-            <span className="material-symbols-outlined text-2xl">psychology</span>
-          </button>
+          <h1 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
+            Estadísticas y Progreso
+          </h1>
         </div>
+        <button onClick={() => navigate('/assistant')} type="button" className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-primary dark:text-primary-light hover:bg-primary/10 active:scale-95 transition-all">
+          <span className="material-symbols-outlined">psychology</span>
+        </button>
       </header>
 
-      {/* Date Selector */}
-      <div className="flex px-4 py-3 z-[1]">
-        <div className="flex h-10 flex-1 items-center justify-center rounded-xl bg-primary-container/60 dark:bg-primary-container-dark/60 backdrop-blur-sm p-1">
-          {["Ayer", "Hoy", "Mañana"].map((day) => (
-            <label
-              key={day}
-              className="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-on-surface-variant dark:text-on-surface-variant-dark has-[:checked]:bg-surface dark:has-[:checked]:bg-surface-dark has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-on-surface dark:has-[:checked]:text-on-surface-dark text-sm font-medium leading-normal transition-colors"
-            >
-              <span className="truncate">{day}</span>
-              <input
-                className="invisible w-0"
-                name="date-selector"
-                type="radio"
-                value={day}
-                defaultChecked={day === "Hoy"}
-              />
-            </label>
-          ))}
+      <main className="flex flex-col gap-4 px-4 py-6 z-[1]">
+        {/* Summary Cards */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="flex flex-col gap-2 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
+            <span className="material-symbols-outlined text-primary text-3xl">calendar_month</span>
+            <p className="text-2xl font-bold text-on-surface dark:text-on-surface-dark">{totalLogs}</p>
+            <p className="text-xs text-on-surface-variant dark:text-on-surface-variant-dark">Registros</p>
+          </div>
+          
+          <div className="flex flex-col gap-2 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
+            <span className="material-symbols-outlined text-red-500 text-3xl">water_drop</span>
+            <p className="text-2xl font-bold text-on-surface dark:text-on-surface-dark">{periodDays}</p>
+            <p className="text-xs text-on-surface-variant dark:text-on-surface-variant-dark">Días período</p>
+          </div>
+          
+          <div className="flex flex-col gap-2 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
+            <span className="material-symbols-outlined text-purple-500 text-3xl">monitor_heart</span>
+            <p className="text-2xl font-bold text-on-surface dark:text-on-surface-dark">{Object.keys(symptomCounts).length}</p>
+            <p className="text-xs text-on-surface-variant dark:text-on-surface-variant-dark">Síntomas</p>
+          </div>
         </div>
-      </div>
 
-      {/* Accesos rápidos IA */}
-      <div className="px-4 -mt-2 z-[1]">
-        <div className="grid grid-cols-4 gap-2">
-          <button onClick={() => navigate('/assistant')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
-            <span className="material-symbols-outlined text-primary">psychology</span>
-            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Luna</span>
-          </button>
-          <button onClick={() => navigate('/predictions')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
-            <span className="material-symbols-outlined text-primary">event</span>
-            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Predicción</span>
-          </button>
-          <button onClick={() => navigate('/health-center')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
-            <span className="material-symbols-outlined text-primary">monitor_heart</span>
-            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Salud</span>
-          </button>
-          <button onClick={() => navigate('/insights')} type="button" className="flex flex-col items-center justify-center rounded-xl p-2 bg-surface/80 dark:bg-surface-dark/80 border border-white/50 dark:border-white/10 hover:bg-primary/10 active:scale-95 transition-all">
-            <span className="material-symbols-outlined text-primary">insights</span>
-            <span className="text-[10px] text-on-surface-variant dark:text-on-surface-variant-dark">Insights</span>
-          </button>
-        </div>
-      </div>
-
-      <main className="flex flex-col gap-6 px-4 z-[1]">
-        {/* Physical Symptoms */}
+        {/* Registros por Mes */}
         <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
           <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            Síntomas Físicos
+            Registros por Mes
           </h2>
-          <div className="flex gap-2 flex-wrap">
-            {symptoms.map((symptom) => (
-              <label
-                key={symptom.name}
-                onClick={() => toggleSymptom(symptom.name)}
-                className={`flex cursor-pointer h-9 shrink-0 items-center justify-center gap-x-2 rounded-xl pl-3 pr-4 transition-all ${
-                  selectedSymptoms.includes(symptom.name)
-                    ? "bg-primary text-white chip-selected"
-                    : "bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark"
-                }`}
-                role="button"
-                tabIndex={0}
-              >
-                <span
-                  className={`material-symbols-outlined text-xl ${
-                    selectedSymptoms.includes(symptom.name)
-                      ? "text-white"
-                      : "text-on-surface-variant dark:text-on-surface-variant-dark"
-                  }`}
-                >
-                  {symptom.icon}
-                </span>
-                <p
-                  className={`text-sm font-medium leading-normal ${
-                    selectedSymptoms.includes(symptom.name)
-                      ? "text-white"
-                      : "text-on-surface dark:text-on-surface-dark"
-                  }`}
-                >
-                  {symptom.name}
-                </p>
-                <input className="sr-only" type="checkbox" />
-              </label>
-            ))}
-          </div>
-
-          {/* Intensity Slider */}
-          <div className="pt-2">
-            <div className="flex w-full flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <p className="text-on-surface dark:text-on-surface-dark text-base font-medium leading-normal">
-                  Intensidad
-                </p>
-                <p className="text-on-surface-variant dark:text-on-surface-variant-dark text-sm font-normal leading-normal">
-                  Leve
-                </p>
-              </div>
-              <div className="flex h-4 w-full items-center gap-4">
-                <div className="flex h-1.5 flex-1 rounded-full bg-outline dark:bg-outline-dark">
-                  <div className="h-full rounded-full bg-primary relative" style={{ width: `${intensity}%` }}>
-                    <div className="absolute -right-2 -top-1.5 size-5 rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark"></div>
-                  </div>
-                </div>
-              </div>
+          {monthlyData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={monthlyData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.1)" />
+                <XAxis 
+                  dataKey="month" 
+                  style={{ fontSize: '12px' }}
+                  stroke="currentColor"
+                />
+                <YAxis 
+                  style={{ fontSize: '12px' }}
+                  stroke="currentColor"
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderRadius: '8px',
+                  }}
+                />
+                <Bar 
+                  dataKey="registros" 
+                  fill="#E91E63" 
+                  radius={[8, 8, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-[200px] text-on-surface-variant dark:text-on-surface-variant-dark">
+              <p className="text-sm">No hay datos para mostrar</p>
             </div>
-          </div>
+          )}
         </section>
 
-        {/* Mood Selector */}
+        {/* Top Síntomas */}
         <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
           <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            Mi Estado de Ánimo
+            Síntomas Más Frecuentes
           </h2>
-          <div className="grid grid-cols-5 gap-4">
-            {moods.map((mood) => (
-              <button
-                key={mood.label}
-                type="button"
-                onClick={() => setSelectedMood(mood.label)}
-                className={`flex flex-col items-center justify-center gap-2 rounded-xl p-2 transition-all ${
-                  selectedMood === mood.label
-                    ? "bg-primary text-white scale-110 shadow-lg shadow-primary/30"
-                    : "bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark scale-100 hover:scale-105 active:scale-95"
-                }`}
-              >
-                <span className="text-4xl">{mood.emoji}</span>
-                <p
-                  className={`text-xs font-medium ${
-                    selectedMood === mood.label
-                      ? "text-white"
-                      : "text-on-surface dark:text-on-surface-dark"
-                  }`}
+          {topSymptoms.length > 0 ? (
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart>
+                <Pie
+                  data={topSymptoms}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name.split(':')[0].substring(0, 15)} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={70}
+                  fill="#8884d8"
+                  dataKey="value"
                 >
-                  {mood.label}
-                </p>
-              </button>
-            ))}
-          </div>
+                  {topSymptoms.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderRadius: '8px',
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-[200px] text-on-surface-variant dark:text-on-surface-variant-dark">
+              <p className="text-sm">No hay síntomas registrados</p>
+            </div>
+          )}
         </section>
 
-        {/* Cycle Phases Info */}
+        {/* Registros Recientes */}
         <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
           <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            Fases del Ciclo
+            Registros Recientes
           </h2>
-          <div className="grid grid-cols-2 gap-2">
-            {cyclePhases.map((phase) => (
-              <button
-                key={phase.name}
-                type="button"
-                onClick={() => openPhaseInfo(phase)}
-                className="flex flex-col items-center justify-center rounded-xl p-3 bg-background-light dark:bg-background-dark ring-1 ring-outline dark:ring-outline-dark hover:bg-primary-container dark:hover:bg-primary-container-dark active:scale-95 transition-all"
+          <div className="space-y-3">
+            {logs?.slice(-5).reverse().map((log) => (
+              <div 
+                key={log.id}
+                className="p-3 rounded-lg bg-background-light dark:bg-background-dark border border-outline dark:border-outline-dark"
               >
-                <span className={`material-symbols-outlined text-3xl ${phase.color}`}>
-                  {phase.icon}
-                </span>
-                <p className="text-xs font-medium text-on-surface dark:text-on-surface-dark mt-1">
-                  {phase.name}
-                </p>
-              </button>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold text-on-surface dark:text-on-surface-dark">
+                    {format(parseISO(log.log_date), "d 'de' MMMM", { locale: es })}
+                  </span>
+                  {(log.period_started || log.period_ended) && (
+                    <span className="text-xs px-2 py-1 rounded-full bg-red-500 text-white">
+                      {log.period_started ? '🩸 Inicio' : '✓ Fin'}
+                    </span>
+                  )}
+                </div>
+                
+                {log.symptoms && log.symptoms.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {log.symptoms.slice(0, 3).map((symptom, idx) => (
+                      <span 
+                        key={idx} 
+                        className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light"
+                      >
+                        {symptom}
+                      </span>
+                    ))}
+                    {log.symptoms.length > 3 && (
+                      <span className="text-xs px-2 py-1 text-on-surface-variant dark:text-on-surface-variant-dark">
+                        +{log.symptoms.length - 3}
+                      </span>
+                    )}
+                  </div>
+                )}
+                
+                {log.journal_entry && (
+                  <p className="text-xs text-on-surface-variant dark:text-on-surface-variant-dark italic">
+                    "{log.journal_entry.substring(0, 80)}{log.journal_entry.length > 80 ? '...' : ''}"
+                  </p>
+                )}
+              </div>
             ))}
-          </div>
-        </section>
+            
+            {(!logs || logs.length === 0) && !isLoading && (
+              <div className="text-center py-8">
+                <p className="text-on-surface-variant dark:text-on-surface-variant-dark mb-4">
+                  Aún no tienes registros
+                </p>
+                <button 
+                  onClick={() => navigate('/checkin')}
+                  className="px-6 py-2 rounded-xl bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                >
+                  Crear Primer Registro
+                </button>
+              </div>
+            )}
 
-        {/* Notes Section */}
-        <section className="flex flex-col gap-4 rounded-xl bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm p-4 shadow-sm border border-white/50 dark:border-white/10">
-          <h2 className="text-on-surface dark:text-on-surface-dark text-lg font-bold leading-tight tracking-[-0.015em]">
-            ¿Algo más que quieras añadir?
-          </h2>
-          <textarea
-            className="w-full min-h-[100px] rounded-lg border-none bg-background-light dark:bg-background-dark p-3 text-sm font-normal text-on-surface dark:text-on-surface-dark placeholder:text-on-surface-variant dark:placeholder:text-on-surface-variant-dark focus:ring-2 focus:ring-primary/50 transition"
-            placeholder="Escribe sobre tu día, antojos, o cualquier otro detalle relevante..."
-          />
+            {isLoading && (
+              <div className="flex items-center justify-center py-8">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+          </div>
         </section>
       </main>
 
-      {/* Footer Button */}
-      <footer className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-light to-transparent dark:from-background-dark dark:to-transparent z-10">
-        <button
-          type="button"
-          onClick={() => toast.success('Registro guardado correctamente')}
-          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-white gap-2 px-5 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-lg shadow-primary/40"
-        >
-          Guardar Registro
-        </button>
-      </footer>
-
-      {/* Phase Info Dialog */}
-      <Dialog open={phaseDialogOpen} onOpenChange={setPhaseDialogOpen}>
-        <DialogContent className="bg-surface-light dark:bg-surface-dark">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              {selectedPhase && (
-                <>
-                  <span className={`material-symbols-outlined text-3xl ${selectedPhase.color}`}>
-                    {selectedPhase.icon}
-                  </span>
-                  <span className="text-on-surface dark:text-on-surface-dark">{selectedPhase.name}</span>
-                </>
-              )}
-            </DialogTitle>
-            <DialogDescription className="text-on-surface-variant dark:text-on-surface-variant-dark text-base pt-2">
-              {selectedPhase?.description}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <BottomNavigation />
     </div>
   );
-};
-
-export default DailyLog;
+}
