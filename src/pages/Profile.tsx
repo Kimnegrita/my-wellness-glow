@@ -1,13 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "@/contexts/AuthContext";
 import type { Language } from "@/i18n/translations";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const Profile = () => {
   const { t, language, setLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
+  const navigate = useNavigate();
   const [showLanguageModal, setShowLanguageModal] = useState(false);
 
   const handleLanguageChange = (newLanguage: Language) => {
@@ -18,6 +22,20 @@ const Profile = () => {
         ? `Idioma cambiado a ${newLanguage === "es" ? "Español" : "English"}`
         : `Language changed to ${newLanguage === "es" ? "Español" : "English"}`
     );
+  };
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate('/auth');
+      toast.success(t.profile.logout);
+    } catch (error) {
+      toast.error('Error al cerrar sesión');
+    }
+  };
+
+  const handleSaveChanges = () => {
+    toast.success(t.profile.saveChanges + ' ✓');
   };
 
   return (
@@ -50,10 +68,10 @@ const Profile = () => {
             </div>
             <div className="flex flex-col items-center justify-center">
               <p className="text-[22px] font-bold leading-tight tracking-[-0.015em] text-on-surface dark:text-on-surface-dark">
-                Amelia Gómez
+                {profile?.name || "Usuario"}
               </p>
               <p className="text-base font-normal leading-normal text-on-surface-variant dark:text-on-surface-variant-dark">
-                amelia.gomez@email.com
+                {user?.email || "usuario@email.com"}
               </p>
             </div>
           </div>
@@ -72,7 +90,8 @@ const Profile = () => {
                 </p>
                 <input
                   className="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-outline bg-background-light p-3 text-base font-normal leading-normal text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:outline-0 focus:ring-2 focus:ring-primary/30 dark:border-outline-dark dark:bg-background-dark dark:text-on-surface-dark dark:placeholder:text-on-surface-variant-dark"
-                  defaultValue="Amelia Gómez"
+                  defaultValue={profile?.name || ""}
+                  placeholder="Tu nombre completo"
                 />
               </label>
               <label className="flex flex-col">
@@ -171,10 +190,16 @@ const Profile = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col gap-4 pt-6">
-            <button className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-primary px-4 text-base font-bold leading-normal text-white shadow-lg shadow-primary/30 transition-transform active:scale-95">
+            <button 
+              onClick={handleSaveChanges}
+              className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-primary px-4 text-base font-bold leading-normal text-white shadow-lg shadow-primary/30 transition-transform active:scale-95"
+            >
               <span className="truncate">{t.profile.saveChanges}</span>
             </button>
-            <button className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl px-4 text-base font-bold leading-normal text-red-500 transition-colors hover:bg-red-500/10 active:bg-red-500/20">
+            <button 
+              onClick={handleLogout}
+              className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl px-4 text-base font-bold leading-normal text-red-500 transition-colors hover:bg-red-500/10 active:bg-red-500/20"
+            >
               <span className="truncate">{t.profile.logout}</span>
             </button>
           </div>
