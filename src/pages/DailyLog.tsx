@@ -8,12 +8,12 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { BottomNavigation } from '@/components/BottomNavigation';
 
 const COLORS = [
-  'hsl(320 85% 62%)', // Rosa
-  'hsl(280 70% 68%)', // Lila
-  'hsl(45 100% 70%)', // Dorado
-  'hsl(340 80% 65%)', // Rosa claro
-  'hsl(260 65% 72%)', // Lila claro
-  'hsl(40 95% 65%)',  // Oro suave
+  'hsl(280 80% 65%)', // Púrpura principal
+  'hsl(270 75% 70%)', // Púrpura claro
+  'hsl(260 70% 72%)', // Lavanda
+  'hsl(320 75% 68%)', // Rosa púrpura
+  'hsl(290 72% 68%)', // Violeta
+  'hsl(310 70% 70%)', // Rosa lavanda
 ];
 
 export default function DailyLog() {
@@ -95,22 +95,22 @@ export default function DailyLog() {
       </header>
 
       <main className="flex flex-col gap-4 px-4 py-6 z-[1]">
-        {/* Summary Cards con gradientes */}
+        {/* Summary Cards con gradientes púrpura */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="flex flex-col gap-2 rounded-xl bg-gradient-rose backdrop-blur-sm p-4 shadow-elegant border border-white/30 animate-fade-in-up">
-            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg">calendar_month</span>
+          <div className="flex flex-col gap-2 rounded-xl bg-gradient-purple backdrop-blur-sm p-4 shadow-glow border border-white/30 animate-fade-in-up">
+            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg animate-glow-pulse">calendar_month</span>
             <p className="text-2xl font-bold text-white drop-shadow-md">{totalLogs}</p>
             <p className="text-xs text-white/90">Registros</p>
           </div>
           
-          <div className="flex flex-col gap-2 rounded-xl bg-gradient-lilac backdrop-blur-sm p-4 shadow-elegant border border-white/30 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg">water_drop</span>
+          <div className="flex flex-col gap-2 rounded-xl bg-gradient-rose-purple backdrop-blur-sm p-4 shadow-glow border border-white/30 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg animate-glow-pulse">water_drop</span>
             <p className="text-2xl font-bold text-white drop-shadow-md">{periodDays}</p>
             <p className="text-xs text-white/90">Días período</p>
           </div>
           
-          <div className="flex flex-col gap-2 rounded-xl bg-gradient-gold backdrop-blur-sm p-4 shadow-elegant border border-white/30 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg">monitor_heart</span>
+          <div className="flex flex-col gap-2 rounded-xl bg-gradient-glow backdrop-blur-sm p-4 shadow-glow border border-white/30 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <span className="material-symbols-outlined text-white text-3xl drop-shadow-lg animate-glow-pulse">monitor_heart</span>
             <p className="text-2xl font-bold text-white drop-shadow-md">{Object.keys(symptomCounts).length}</p>
             <p className="text-xs text-white/90">Síntomas</p>
           </div>
@@ -147,8 +147,8 @@ export default function DailyLog() {
                 />
                 <defs>
                   <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(320 85% 62%)" />
-                    <stop offset="100%" stopColor="hsl(280 70% 68%)" />
+                    <stop offset="0%" stopColor="hsl(280 80% 65%)" />
+                    <stop offset="100%" stopColor="hsl(270 75% 70%)" />
                   </linearGradient>
                 </defs>
                 <Bar 
@@ -226,7 +226,7 @@ export default function DailyLog() {
                     {format(parseISO(log.log_date), "d 'de' MMMM", { locale: es })}
                   </span>
                   {(log.period_started || log.period_ended) && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-gradient-rose text-white shadow-md">
+                    <span className="text-xs px-2 py-1 rounded-full bg-gradient-rose-purple text-white shadow-glow">
                       {log.period_started ? '🩸 Inicio' : '✓ Fin'}
                     </span>
                   )}
@@ -237,7 +237,7 @@ export default function DailyLog() {
                     {log.symptoms.slice(0, 3).map((symptom, idx) => (
                       <span 
                         key={idx} 
-                        className="text-xs px-2 py-1 rounded-full bg-gradient-lilac text-white shadow-sm"
+                        className="text-xs px-2 py-1 rounded-full bg-gradient-purple text-white shadow-sm"
                       >
                         {symptom}
                       </span>

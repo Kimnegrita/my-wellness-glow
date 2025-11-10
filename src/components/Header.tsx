@@ -1,5 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Header = () => {
   const { profile } = useAuth();
@@ -16,10 +17,11 @@ export const Header = () => {
         Hola, {profile?.name || "Usuario"}
       </h1>
       <div className="flex items-center justify-end gap-2">
+        <ThemeToggle />
         <button
           onClick={() => navigate('/assistant')}
           type="button"
-          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-primary dark:text-primary-light hover:bg-primary/10 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-primary dark:text-primary-light hover:bg-primary/10 hover:shadow-glow active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 animate-glow-pulse"
           title="AI Assistant"
           aria-label="Abrir asistente de IA"
         >
