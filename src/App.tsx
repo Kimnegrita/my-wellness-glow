@@ -20,6 +20,9 @@ import Resources from "./pages/Resources";
 import Contacts from "./pages/Contacts";
 import Assistant from "./pages/Assistant";
 import CycleComparison from "./pages/CycleComparison";
+import Predictions from "./pages/Predictions";
+import HealthCenter from "./pages/HealthCenter";
+import Insights from "./pages/Insights";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +50,9 @@ const App = () => (
                 <Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
                 <Route path="/assistant" element={<ProtectedRoute><Assistant /></ProtectedRoute>} />
                 <Route path="/cycle-comparison" element={<ProtectedRoute><CycleComparison /></ProtectedRoute>} />
+                <Route path="/predictions" element={<ProtectedRoute><Predictions /></ProtectedRoute>} />
+                <Route path="/health-center" element={<ProtectedRoute><HealthCenter /></ProtectedRoute>} />
+                <Route path="/insights" element={<ProtectedRoute><Insights /></ProtectedRoute>} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
