@@ -1,9 +1,4 @@
-interface CycleInfo {
-  currentDay: number;
-  phase: string;
-  daysUntilNext: number;
-  cycleLength: number;
-}
+import { CycleInfo } from '@/lib/cycleCalculations';
 
 interface CycleProgressCardProps {
   cycleInfo: CycleInfo | null;
@@ -34,7 +29,9 @@ export const CycleProgressCard = ({ cycleInfo }: CycleProgressCardProps) => {
     );
   }
 
-  const progress = (cycleInfo.currentDay / cycleInfo.cycleLength) * 100;
+  // Use daysUntilNext for progress calculation (approximation)
+  const estimatedCycleLength = 28; // Default cycle length for visualization
+  const progress = ((cycleInfo.currentDay % estimatedCycleLength) / estimatedCycleLength) * 100;
 
   return (
     <section className="px-4 pt-5">

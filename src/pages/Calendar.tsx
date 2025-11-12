@@ -1,17 +1,58 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { toast } from "sonner";
+import { BottomNavigation } from "@/components/BottomNavigation";
 
 const Calendar = () => {
+  const navigate = useNavigate();
+  const [currentMonth, setCurrentMonth] = useState(new Date(2024, 8)); // September 2024
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
+  const monthNames = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+
+  const handlePreviousMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+  };
+
+  const handleDayClick = (day: number) => {
+    setSelectedDay(day);
+    toast.info(`Día ${day} seleccionado`);
+  };
+
+  const handleAddNote = () => {
+    if (selectedDay) {
+      navigate('/checkin');
+    } else {
+      toast.info("Selecciona un día para añadir una nota");
+    }
+  };
+
+  const handleSettings = () => {
+    navigate('/profile');
+  };
+
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark">
+    <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark pb-24">
       <header className="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200 dark:border-gray-800">
-        <Link to="/" className="flex size-12 shrink-0 items-center justify-start">
+        <Link to="/" className="flex size-12 shrink-0 items-center justify-start hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-colors">
           <span className="material-symbols-outlined text-gray-800 dark:text-gray-200">arrow_back</span>
         </Link>
         <h1 className="text-gray-900 dark:text-gray-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
           Mi Calendario
         </h1>
         <div className="flex size-12 items-center justify-end">
-          <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-gray-800 dark:text-gray-200 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+          <button 
+            onClick={handleSettings}
+            type="button"
+            className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-gray-800 dark:text-gray-200 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          >
             <span className="material-symbols-outlined">settings</span>
           </button>
         </div>
@@ -22,16 +63,24 @@ const Calendar = () => {
           <div className="flex min-w-72 flex-1 flex-col gap-0.5">
             {/* Month selector */}
             <div className="flex items-center p-1 justify-between">
-              <button>
-                <div className="text-gray-800 dark:text-gray-200 flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+              <button
+                onClick={handlePreviousMonth}
+                type="button"
+                className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full"
+              >
+                <div className="text-gray-800 dark:text-gray-200 flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                   <span className="material-symbols-outlined text-lg">chevron_left</span>
                 </div>
               </button>
               <p className="text-gray-900 dark:text-gray-100 text-base font-bold leading-tight flex-1 text-center">
-                Septiembre 2024
+                {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
               </p>
-              <button>
-                <div className="text-gray-800 dark:text-gray-200 flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+              <button
+                onClick={handleNextMonth}
+                type="button"
+                className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full"
+              >
+                <div className="text-gray-800 dark:text-gray-200 flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                   <span className="material-symbols-outlined text-lg">chevron_right</span>
                 </div>
               </button>
@@ -48,11 +97,17 @@ const Calendar = () => {
                 </p>
               ))}
 
-              {/* Calendar days - simplified for demonstration */}
+              {/* Calendar days */}
               {Array.from({ length: 35 }, (_, i) => i + 1).map((day) => (
                 <button
                   key={day}
-                  className="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"
+                  onClick={() => handleDayClick(day)}
+                  type="button"
+                  className={`h-12 w-full text-sm font-medium leading-normal transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded-full ${
+                    selectedDay === day
+                      ? 'bg-primary text-white'
+                      : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
                 >
                   <div className="flex size-full items-center justify-center rounded-full">{day}</div>
                 </button>
@@ -106,12 +161,18 @@ const Calendar = () => {
       </main>
 
       {/* FAB */}
-      <div className="sticky bottom-0 right-0 p-5 flex justify-end">
-        <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] min-w-0 gap-3 shadow-lg pl-4 pr-6">
+      <div className="fixed bottom-24 right-4 z-20">
+        <button 
+          onClick={handleAddNote}
+          type="button"
+          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] gap-3 shadow-lg pl-4 pr-6 hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        >
           <span className="material-symbols-outlined">add</span>
           <span className="truncate">Añadir nota</span>
         </button>
       </div>
+
+      <BottomNavigation />
     </div>
   );
 };

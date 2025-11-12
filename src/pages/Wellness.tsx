@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { BottomNavigation } from "@/components/BottomNavigation";
+import { toast } from "sonner";
+
 const articles = [
   {
     category: "Alimentación",
@@ -27,6 +31,32 @@ const articles = [
 ];
 
 const Wellness = () => {
+  const [savedArticles, setSavedArticles] = useState<Set<string>>(new Set());
+
+  const handleSearch = () => {
+    toast.info("Función de búsqueda próximamente disponible");
+  };
+
+  const handleBookmark = (title: string) => {
+    const newSaved = new Set(savedArticles);
+    if (newSaved.has(title)) {
+      newSaved.delete(title);
+      toast.success("Artículo eliminado de guardados");
+    } else {
+      newSaved.add(title);
+      toast.success("Artículo guardado para después");
+    }
+    setSavedArticles(newSaved);
+  };
+
+  const handleArticleClick = (title: string) => {
+    toast.info(`Abriendo: ${title}`);
+  };
+
+  const handleViewAll = (category: string) => {
+    toast.info(`Ver todos los artículos de ${category}`);
+  };
+
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden pb-24">
       <header className="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 p-4 pb-3 justify-between backdrop-blur-sm">
@@ -41,7 +71,11 @@ const Wellness = () => {
           Bienestar para ti
         </h1>
         <div className="flex w-10 items-center justify-end">
-          <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-[#181114] dark:text-gray-200 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+          <button 
+            onClick={handleSearch}
+            type="button"
+            className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-[#181114] dark:text-gray-200 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          >
             <span className="material-symbols-outlined text-2xl">search</span>
           </button>
         </div>
@@ -69,23 +103,40 @@ const Wellness = () => {
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white">{section.category}</h3>
                 </div>
-                <a className="text-sm font-medium text-primary hover:underline" href="#">
+                <button 
+                  onClick={() => handleViewAll(section.category)}
+                  type="button"
+                  className="text-sm font-medium text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+                >
                   Ver todo
-                </a>
+                </button>
               </div>
 
               <div className="flex gap-4 pl-4 overflow-x-auto pb-2 -mb-2">
                 {section.items.map((item, idx) => (
                   <div key={idx} className="flex flex-col w-64 shrink-0 gap-2 pr-4">
-                    <div className="relative">
+                    <button
+                      onClick={() => handleArticleClick(item.title)}
+                      type="button"
+                      className="relative focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl"
+                    >
                       <div
                         className="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover rounded-xl"
                         style={{ backgroundImage: `url('${item.image}')` }}
                       ></div>
-                      <button className="absolute top-2 right-2 flex items-center justify-center size-8 rounded-full bg-black/30 text-white backdrop-blur-sm">
-                        <span className="material-symbols-outlined text-lg">bookmark_border</span>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBookmark(item.title);
+                        }}
+                        type="button"
+                        className="absolute top-2 right-2 flex items-center justify-center size-8 rounded-full bg-black/30 text-white backdrop-blur-sm hover:bg-black/50 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+                      >
+                        <span className={`material-symbols-outlined text-lg ${savedArticles.has(item.title) ? 'material-symbols-filled' : ''}`}>
+                          {savedArticles.has(item.title) ? 'bookmark' : 'bookmark_border'}
+                        </span>
                       </button>
-                    </div>
+                    </button>
                     <div>
                       <p className="text-[#181114] dark:text-gray-200 text-base font-medium leading-normal">
                         {item.title}
@@ -99,6 +150,8 @@ const Wellness = () => {
           ))}
         </div>
       </main>
+
+      <BottomNavigation />
     </div>
   );
 };

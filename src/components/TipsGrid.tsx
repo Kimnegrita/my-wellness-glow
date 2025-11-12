@@ -7,9 +7,8 @@ interface TipCategory {
 }
 
 interface DailyTip {
-  tip: string;
+  text: string;
   icon: string;
-  category: string;
 }
 
 interface TipsGridProps {
@@ -35,15 +34,15 @@ export const TipsGrid = ({ dailyTip }: TipsGridProps) => {
             <div className="absolute -bottom-10 -left-10 size-32 bg-secondary/10 rounded-full"></div>
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-3">
-                <span className="material-symbols-outlined text-primary text-3xl">
+                <span className="text-3xl">
                   {dailyTip.icon}
                 </span>
                 <h3 className="text-sm font-bold text-primary uppercase tracking-wider">
-                  {dailyTip.category}
+                  Consejo del Día
                 </h3>
               </div>
               <p className="text-text-primary-light dark:text-text-primary-dark text-base leading-relaxed">
-                {dailyTip.tip}
+                {dailyTip.text}
               </p>
             </div>
           </div>
