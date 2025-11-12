@@ -197,6 +197,17 @@
     "ovulationDesc": "Fase de ovulación (día 14): El óvulo es liberado. Los niveles de estrógeno están en su punto máximo. Puede haber más energía, confianza y libido.",
     "lutealDesc": "Fase lútea (días 15-28): Después de la ovulación, aumenta la progesterona. Algunas experimentan síntomas premenstruales como cambios de humor, hinchazón o sensibilidad en los senos."
   },
+  "recommendations": {
+    "title": "Recomendaciones Personalizadas",
+    "description": "Sugerencias basadas en tu fase actual del ciclo y síntomas",
+    "refresh": "Actualizar",
+    "loading": "Generando recomendaciones...",
+    "error": "Error al generar recomendaciones. Mostrando sugerencias generales.",
+    "exercise": "Ejercicio",
+    "nutrition": "Nutrición",
+    "selfcare": "Autocuidado",
+    "basedOn": "Basado en tus síntomas recientes"
+  },
   "tips": {
     "personalizedRecommendations": "Recomendaciones personalizadas",
     "categories": {
