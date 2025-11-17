@@ -162,14 +162,43 @@ const Index = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <div className="group bg-gradient-to-br from-card via-card to-primary/5 backdrop-blur-xl rounded-3xl p-6 border-2 border-primary/30 shadow-primary hover:shadow-glow transition-all duration-500 hover:scale-105 hover:-translate-y-2 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative z-10 flex items-start gap-4">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary via-primary-glow to-secondary flex items-center justify-center shadow-primary animate-glow-pulse">
-                <Calendar className="h-7 w-7 text-primary-foreground drop-shadow-lg" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary via-primary-glow to-secondary flex items-center justify-center shadow-primary animate-glow-pulse">
+                  <Calendar className="h-7 w-7 text-primary-foreground drop-shadow-lg" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground mb-1 font-semibold">Día del Ciclo</p>
+                  <p className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-sm">{cycleInfo?.currentDay || '—'}</p>
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="text-sm text-muted-foreground mb-1 font-semibold">Día del Ciclo</p>
-                <p className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-sm mb-1">{cycleInfo?.currentDay || '—'}</p>
-                <p className="text-xs text-primary font-bold uppercase tracking-wide">{cycleInfo?.phase || 'Desconocida'}</p>
+              <div className="space-y-2 pt-3 border-t border-primary/20">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground font-medium">Fase Actual:</span>
+                  <span className="text-xs text-primary font-bold uppercase tracking-wide px-2 py-1 bg-primary/10 rounded-full">
+                    {cycleInfo?.phase || 'Desconocida'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground font-medium">Duración del Ciclo:</span>
+                  <span className="text-xs text-foreground font-semibold">{profile?.avg_cycle_length || 28} días</span>
+                </div>
+                {cycleInfo?.currentDay && profile?.avg_cycle_length && (
+                  <div className="mt-3">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-xs text-muted-foreground">Progreso</span>
+                      <span className="text-xs text-primary font-bold">
+                        {Math.min(100, Math.round((cycleInfo.currentDay / profile.avg_cycle_length) * 100))}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-500"
+                        style={{ width: `${Math.min(100, (cycleInfo.currentDay / profile.avg_cycle_length) * 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
