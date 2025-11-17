@@ -35,7 +35,7 @@ export const CycleProgressCard = ({ cycleInfo }: CycleProgressCardProps) => {
 
   return (
     <section className="px-4 pt-5">
-      <div className="relative flex flex-col items-center justify-center gap-4 rounded-xl bg-gradient-primary p-6 text-white overflow-hidden shadow-elegant">
+      <div className="relative flex flex-col items-center justify-center gap-4 rounded-xl bg-gradient-to-br from-primary to-primary-darker p-6 text-white overflow-hidden shadow-lg shadow-primary/20">
         <div className="absolute -top-10 -right-10 size-32 bg-white/10 rounded-full"></div>
         <div className="absolute -bottom-16 -left-8 size-40 bg-white/10 rounded-full"></div>
 
@@ -52,7 +52,7 @@ export const CycleProgressCard = ({ cycleInfo }: CycleProgressCardProps) => {
           <div className="rounded-full bg-white/20 h-2 w-full relative">
             <div className="h-2 rounded-full bg-white" style={{ width: `${Math.min(progress, 100)}%` }}></div>
             <div
-              className="absolute top-1/2 -translate-y-1/2 size-4 bg-white rounded-full border-2 border-white/50 shadow-soft"
+              className="absolute top-1/2 -translate-y-1/2 size-4 bg-white rounded-full border-2 border-primary-darker"
               style={{ left: `${Math.min(progress, 100)}%`, transform: 'translate(-50%, -50%)' }}
             ></div>
           </div>

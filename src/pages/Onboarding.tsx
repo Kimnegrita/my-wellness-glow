@@ -43,13 +43,13 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-subtle">
-      <Card className="w-full max-w-lg shadow-elegant bg-card border-border">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+      <Card className="w-full max-w-lg shadow-elegant">
         <CardHeader className="text-center space-y-2">
           <div className="flex justify-center mb-2">
             <img src="/logo.png" alt="My Wellness Glow" className="h-16 w-16" />
           </div>
-          <CardTitle className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+          <CardTitle className="text-2xl font-bold text-gradient">
             ¡Bienvenida!
           </CardTitle>
           <CardDescription className="flex items-center justify-center gap-2">
@@ -95,7 +95,7 @@ export default function Onboarding() {
             <Button
               onClick={handleComplete}
               disabled={loading || !name.trim()}
-              className="w-full bg-gradient-primary hover:opacity-90 h-12 shadow-soft"
+              className="w-full bg-gradient-primary hover:opacity-90 h-12"
             >
               {loading ? 'Guardando...' : 'Comenzar mi viaje'}
               <ArrowRight className="ml-2 h-4 w-4" />
