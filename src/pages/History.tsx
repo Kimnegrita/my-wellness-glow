@@ -246,67 +246,86 @@ export default function History() {
               <CardHeader>
                 <CardTitle className="text-2xl flex items-center gap-2">
                   <Activity className="h-6 w-6 text-primary" />
-                  Sentimientos por Fase del Ciclo
+                  ¿Cómo te sientes en cada fase?
                 </CardTitle>
-                <CardDescription>Cómo te sientes en cada etapa de tu ciclo menstrual</CardDescription>
+                <CardDescription className="text-base">Tu estado emocional según la etapa de tu ciclo menstrual</CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
-                  <RadarChart data={phaseEmotions}>
-                    <PolarGrid 
-                      stroke="hsl(var(--border))" 
-                      strokeWidth={1}
+                <div className="mb-6 p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl border border-primary/20">
+                  <p className="text-sm text-foreground leading-relaxed">
+                    Este gráfico muestra <span className="font-bold text-primary">cómo varía tu estado de ánimo</span> durante las 
+                    <span className="font-bold"> 4 fases de tu ciclo menstrual</span>. Cada punto representa tu promedio emocional 
+                    en esa fase específica.
+                  </p>
+                </div>
+                
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart data={phaseEmotions} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" horizontal={false} />
+                    <XAxis 
+                      type="number"
+                      domain={[-1, 1]}
+                      stroke="hsl(var(--foreground))"
+                      tick={{ fontSize: 14, fontWeight: 500 }}
+                      label={{ 
+                        value: 'Nivel de Ánimo', 
+                        position: 'bottom', 
+                        style: { fontSize: 14, fontWeight: 600, fill: 'hsl(var(--foreground))' } 
+                      }}
                     />
-                    <PolarAngleAxis 
+                    <YAxis 
+                      type="category"
                       dataKey="fase" 
                       stroke="hsl(var(--foreground))"
-                      tick={{ fill: 'hsl(var(--foreground))', fontSize: 14, fontWeight: 600 }}
-                    />
-                    <PolarRadiusAxis 
-                      angle={90} 
-                      domain={[-1, 1] as [number, number]}
-                      stroke="hsl(var(--muted-foreground))"
-                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                    />
-                    <Radar
-                      name="Sentimiento Promedio"
-                      dataKey="sentimiento"
-                      stroke="hsl(var(--primary))"
-                      fill="hsl(var(--primary))"
-                      fillOpacity={0.6}
-                      strokeWidth={2}
+                      tick={{ fontSize: 15, fontWeight: 600 }}
+                      width={120}
                     />
                     <Tooltip 
                       contentStyle={{ 
                         backgroundColor: 'hsl(var(--card))',
                         border: '2px solid hsl(var(--primary))',
                         borderRadius: '12px',
-                        padding: '12px'
+                        padding: '16px'
                       }}
                       formatter={(value: number) => {
-                        const label = value > 0.3 ? 'Positivo' : value < -0.3 ? 'Negativo' : 'Neutral';
-                        return [`${label} (${value.toFixed(2)})`, 'Sentimiento'];
+                        if (value > 0.5) return ['😊 Muy Positivo', 'Estado de Ánimo'];
+                        if (value > 0) return ['🙂 Positivo', 'Estado de Ánimo'];
+                        if (value === 0) return ['😐 Neutral', 'Estado de Ánimo'];
+                        if (value > -0.5) return ['😕 Algo Negativo', 'Estado de Ánimo'];
+                        return ['😔 Negativo', 'Estado de Ánimo'];
                       }}
-                      labelStyle={{ fontWeight: 'bold', marginBottom: '4px' }}
+                      labelFormatter={(label) => `Fase ${label}`}
+                      labelStyle={{ fontWeight: 'bold', fontSize: 16, marginBottom: '8px' }}
                     />
-                  </RadarChart>
+                    <Bar 
+                      dataKey="sentimiento" 
+                      fill="hsl(var(--primary))"
+                      radius={[0, 8, 8, 0]}
+                    >
+                      {phaseEmotions.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={entry.sentimiento > 0 ? 'hsl(var(--primary))' : 'hsl(var(--destructive))'}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
                 </ResponsiveContainer>
-                <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-primary/10 border border-primary/20">
-                    <div className="w-3 h-3 rounded-full bg-primary"></div>
-                    <span className="font-medium">Positivo (+1)</span>
+                
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <div className="p-4 rounded-xl bg-primary/10 border-2 border-primary/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-4 h-4 rounded bg-primary"></div>
+                      <span className="text-sm font-bold text-primary">ÁNIMO POSITIVO</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Valores por encima de 0 = Te sientes bien</p>
                   </div>
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-border">
-                    <div className="w-3 h-3 rounded-full bg-muted-foreground"></div>
-                    <span className="font-medium">Neutral (0)</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20">
-                    <div className="w-3 h-3 rounded-full bg-destructive"></div>
-                    <span className="font-medium">Negativo (-1)</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-accent/10 border border-accent/20">
-                    <div className="w-3 h-3 rounded-full bg-accent"></div>
-                    <span className="text-xs text-muted-foreground">Valores entre -1 y +1</span>
+                  <div className="p-4 rounded-xl bg-destructive/10 border-2 border-destructive/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-4 h-4 rounded bg-destructive"></div>
+                      <span className="text-sm font-bold text-destructive">ÁNIMO BAJO</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Valores por debajo de 0 = Te sientes mal</p>
                   </div>
                 </div>
               </CardContent>
@@ -390,33 +409,62 @@ export default function History() {
           {/* Registros por Mes */}
           <Card className="shadow-elegant border-primary/20 bg-card/95 backdrop-blur animate-fade-in-up">
             <CardHeader>
-              <CardTitle className="text-2xl">Registros por Mes</CardTitle>
-              <CardDescription>Frecuencia de tus registros diarios</CardDescription>
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <Calendar className="h-6 w-6 text-primary" />
+                ¿Cuándo registraste más?
+              </CardTitle>
+              <CardDescription className="text-base">Tus registros mes a mes</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <div className="mb-6 p-4 bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl border border-primary/20">
+                <p className="text-sm text-foreground leading-relaxed">
+                  Este gráfico muestra <span className="font-bold text-primary">cuántos días registraste información</span> en cada mes. 
+                  <span className="font-bold"> Más registros = mejor seguimiento de tu salud</span>.
+                </p>
+              </div>
+
+              <ResponsiveContainer width="100%" height={320}>
                 <BarChart data={monthlyData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis 
                     dataKey="month" 
-                    stroke="hsl(var(--muted-foreground))"
-                    style={{ fontSize: '12px' }}
+                    stroke="hsl(var(--foreground))"
+                    style={{ fontSize: '14px', fontWeight: 600 }}
+                    label={{ 
+                      value: 'Mes', 
+                      position: 'bottom', 
+                      style: { fontSize: 14, fontWeight: 600, fill: 'hsl(var(--foreground))' } 
+                    }}
                   />
                   <YAxis 
-                    stroke="hsl(var(--muted-foreground))"
-                    style={{ fontSize: '12px' }}
+                    stroke="hsl(var(--foreground))"
+                    style={{ fontSize: '14px', fontWeight: 500 }}
+                    label={{ 
+                      value: 'Número de Registros', 
+                      angle: -90, 
+                      position: 'insideLeft', 
+                      style: { fontSize: 14, fontWeight: 600, textAnchor: 'middle', fill: 'hsl(var(--foreground))' } 
+                    }}
                   />
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px',
+                      border: '3px solid hsl(var(--primary))',
+                      borderRadius: '12px',
+                      padding: '16px'
                     }}
+                    formatter={(value: number) => [`${value} días registrados`, 'Total']}
+                    labelFormatter={(label) => `Mes de ${label}`}
+                    labelStyle={{ fontWeight: 'bold', fontSize: 16, marginBottom: '8px' }}
                   />
                   <Bar 
                     dataKey="registros" 
                     fill="url(#colorGradient)" 
-                    radius={[8, 8, 0, 0]}
+                    radius={[12, 12, 0, 0]}
+                    label={{ 
+                      position: 'top', 
+                      style: { fontSize: 14, fontWeight: 'bold', fill: 'hsl(var(--foreground))' } 
+                    }}
                   />
                   <defs>
                     <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
@@ -426,79 +474,103 @@ export default function History() {
                   </defs>
                 </BarChart>
               </ResponsiveContainer>
+
+              <div className="mt-6 p-4 bg-accent/10 border border-accent/30 rounded-xl">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-accent mb-1">
+                    {Math.max(...monthlyData.map(m => m.registros), 0)} días
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Tu mejor mes de registro
+                  </p>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
+          {/* Top Síntomas */}
           {/* Top Síntomas */}
           <Card className="shadow-elegant border-secondary/20 bg-card/95 backdrop-blur animate-fade-in-up">
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-2">
                 <Activity className="h-6 w-6 text-secondary" />
-                Síntomas Más Frecuentes
+                Tus Síntomas Más Comunes
               </CardTitle>
-              <CardDescription>Los 5 síntomas que más has experimentado</CardDescription>
+              <CardDescription className="text-base">Los 5 síntomas que más experimentas</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
-                <PieChart>
-                  <Pie
-                    data={topSymptoms}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={{
-                      stroke: 'hsl(var(--foreground))',
-                      strokeWidth: 2
-                    }}
-                    label={({ name, percent, value }) => (
-                      `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
-                    )}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                    paddingAngle={3}
-                  >
-                    {topSymptoms.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={COLORS[index % COLORS.length]}
-                        stroke="hsl(var(--card))"
-                        strokeWidth={2}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '2px solid hsl(var(--primary))',
-                      borderRadius: '12px',
-                      padding: '12px'
-                    }}
-                    formatter={(value: number, name: string) => [`${value} veces`, name]}
-                    labelStyle={{ fontWeight: 'bold', marginBottom: '8px' }}
-                  />
-                  <Legend
-                    verticalAlign="bottom"
-                    height={50}
-                    formatter={(value) => (
-                      <span style={{ fontSize: '14px', fontWeight: 500 }}>{value}</span>
-                    )}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="mt-4 grid grid-cols-1 gap-2">
-                {topSymptoms.map((symptom, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-2 rounded-lg bg-muted/30 border border-border">
-                    <div className="flex items-center gap-3">
-                      <div 
-                        className="w-4 h-4 rounded-full" 
-                        style={{ backgroundColor: COLORS[idx % COLORS.length] }}
-                      ></div>
-                      <span className="font-semibold text-foreground">{symptom.name}</span>
-                    </div>
-                    <Badge variant="secondary">{symptom.value} registros</Badge>
-                  </div>
-                ))}
+              <div className="mb-6 p-4 bg-gradient-to-r from-secondary/10 to-primary/10 rounded-xl border border-secondary/20">
+                <p className="text-sm text-foreground leading-relaxed">
+                  Estos son <span className="font-bold text-secondary">los síntomas que más has registrado</span>. 
+                  El número muestra <span className="font-bold">cuántas veces lo experimentaste</span>.
+                </p>
               </div>
+
+              {topSymptoms.length > 0 ? (
+                <div className="space-y-4">
+                  {topSymptoms.map((symptom, idx) => (
+                    <div key={idx} className="group hover:scale-102 transition-transform">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary text-white font-bold text-sm">
+                            {idx + 1}
+                          </div>
+                          <span className="font-bold text-lg text-foreground">{symptom.name}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl font-bold text-primary">{symptom.value}</span>
+                          <span className="text-sm text-muted-foreground">veces</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+                        <div 
+                          className="h-full rounded-full transition-all duration-500"
+                          style={{ 
+                            width: `${(symptom.value / topSymptoms[0].value) * 100}%`,
+                            background: `linear-gradient(90deg, ${COLORS[idx % COLORS.length]}, ${COLORS[(idx + 1) % COLORS.length]})`
+                          }}
+                        ></div>
+                      </div>
+                      <div className="mt-1 text-right">
+                        <span className="text-xs text-muted-foreground">
+                          {((symptom.value / topSymptoms[0].value) * 100).toFixed(0)}% del síntoma más frecuente
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="mt-8 grid grid-cols-1 gap-3">
+                    {topSymptoms.map((symptom, idx) => (
+                      <div 
+                        key={`legend-${idx}`} 
+                        className="flex items-center justify-between p-3 rounded-lg border-2"
+                        style={{ 
+                          borderColor: COLORS[idx % COLORS.length],
+                          backgroundColor: `${COLORS[idx % COLORS.length]}15`
+                        }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div 
+                            className="w-5 h-5 rounded" 
+                            style={{ backgroundColor: COLORS[idx % COLORS.length] }}
+                          ></div>
+                          <span className="font-semibold text-foreground text-base">{symptom.name}</span>
+                        </div>
+                        <Badge 
+                          variant="secondary" 
+                          className="text-base px-3 py-1"
+                        >
+                          {symptom.value} registros
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No hay síntomas registrados aún</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
