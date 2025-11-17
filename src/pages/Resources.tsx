@@ -5,6 +5,7 @@ import { ArrowLeft, BookOpen, Heart, Pill, Activity, ExternalLink, Video, FileTe
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from "react";
 
 const Resources = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Resources = () => {
     },
   ];
 
-  const menopauseArticles = [
+  const allMenopauseArticles = [
     {
       title: "Entendiendo la Menopausia",
       description: "Todo lo que necesitas saber sobre esta etapa natural de la vida.",
@@ -50,9 +51,15 @@ const Resources = () => {
       content: "La disminución de estrógeno aumenta el riesgo de osteoporosis. Es crucial consumir suficiente calcio (1200mg/día) y vitamina D, realizar ejercicio de resistencia, evitar el tabaco y el exceso de alcohol, y consultar sobre densitometría ósea.",
       icon: Heart,
     },
+    {
+      title: "Salud Cardiovascular",
+      description: "Protegiendo tu corazón durante la menopausia.",
+      content: "El riesgo cardiovascular aumenta después de la menopausia. Mantén una dieta saludable baja en grasas saturadas, realiza ejercicio regular, controla la presión arterial y el colesterol, y mantén un peso saludable.",
+      icon: Heart,
+    },
   ];
 
-  const symptomsArticles = [
+  const allSymptomsArticles = [
     {
       title: "Sofocos y Sudores Nocturnos",
       description: "Manejo de los síntomas vasomotores más comunes.",
@@ -71,9 +78,15 @@ const Resources = () => {
       content: "Mantén un horario regular de sueño, crea un ambiente fresco y oscuro, evita pantallas antes de dormir, limita la cafeína por la tarde, practica técnicas de relajación y considera la melatonina bajo supervisión médica.",
       icon: BookOpen,
     },
+    {
+      title: "Cambios en la Piel y Cabello",
+      description: "Cuidando tu piel durante los cambios hormonales.",
+      content: "La disminución de estrógeno puede causar sequedad en la piel y adelgazamiento del cabello. Usa humectantes, protector solar, mantente hidratada, y considera suplementos de biotina y omega-3 bajo supervisión médica.",
+      icon: Activity,
+    },
   ];
 
-  const treatmentsArticles = [
+  const allTreatmentsArticles = [
     {
       title: "Terapia Hormonal",
       description: "Opciones de tratamiento hormonal y sus consideraciones.",
@@ -92,7 +105,26 @@ const Resources = () => {
       content: "Dieta balanceada rica en calcio y vitamina D, ejercicio regular (150 min/semana), mantener peso saludable, no fumar, limitar alcohol, técnicas de manejo del estrés (yoga, meditación), y mantener vida social activa son fundamentales.",
       icon: Heart,
     },
+    {
+      title: "Medicina Alternativa",
+      description: "Terapias complementarias para síntomas menopáusicos.",
+      content: "Acupuntura, yoga, meditación mindfulness, aromaterapia y suplementos herbales pueden ayudar. Siempre informa a tu médico sobre cualquier suplemento que tomes para evitar interacciones.",
+      icon: Heart,
+    },
   ];
+
+  // Randomize articles on mount
+  const [menopauseArticles, setMenopauseArticles] = useState<typeof allMenopauseArticles>([]);
+  const [symptomsArticles, setSymptomsArticles] = useState<typeof allSymptomsArticles>([]);
+  const [treatmentsArticles, setTreatmentsArticles] = useState<typeof allTreatmentsArticles>([]);
+
+  useEffect(() => {
+    const shuffleArray = <T,>(array: T[]) => [...array].sort(() => Math.random() - 0.5);
+    
+    setMenopauseArticles(shuffleArray(allMenopauseArticles).slice(0, 3));
+    setSymptomsArticles(shuffleArray(allSymptomsArticles).slice(0, 3));
+    setTreatmentsArticles(shuffleArray(allTreatmentsArticles).slice(0, 3));
+  }, []);
 
   const externalResources = [
     {
@@ -138,232 +170,189 @@ const Resources = () => {
           url: "https://www.youtube.com/c/JohnsHopkinsMedicine",
           description: "Videos educativos de expertos médicos sobre menopausia",
           type: "video"
-        },
-        {
-          name: "The Menopause Society YouTube Channel",
-          url: "https://www.youtube.com/@TheMenopauseSociety",
-          description: "Canal oficial con webinars y contenido educativo",
-          type: "video"
         }
       ]
     },
     {
-      title: "Guías y Documentos",
+      title: "Aplicaciones y Herramientas",
       resources: [
         {
-          name: "Guía de Práctica Clínica sobre la Menopausia",
-          url: "https://portal.guiasalud.es",
-          description: "Guías clínicas basadas en evidencia para profesionales y pacientes",
-          type: "document"
+          name: "Menopause Symptom Tracker",
+          url: "https://www.menopause.org/for-women/menopause-symptom-tracker",
+          description: "Herramienta gratuita de NAMS para seguir síntomas",
+          type: "app"
         },
         {
-          name: "Manual de Menopausia - OMS",
-          url: "https://www.who.int/health-topics/menopause",
-          description: "Recursos de la Organización Mundial de la Salud",
-          type: "document"
-        },
-        {
-          name: "Menopause Matters",
-          url: "https://www.menopausematters.co.uk",
-          description: "Información práctica y recursos descargables",
-          type: "document"
-        }
-      ]
-    },
-    {
-      title: "Comunidades y Apoyo",
-      resources: [
-        {
-          name: "HealthUnlocked - Menopause Community",
-          url: "https://healthunlocked.com/menopausematters",
-          description: "Comunidad en línea para compartir experiencias y apoyo",
-          type: "web"
-        },
-        {
-          name: "Reddit - r/Menopause",
-          url: "https://www.reddit.com/r/Menopause",
-          description: "Foro activo con miles de mujeres compartiendo experiencias",
-          type: "web"
-        },
-        {
-          name: "Menopause Support Facebook Groups",
-          url: "https://www.facebook.com/search/groups/?q=menopause%20support",
-          description: "Grupos de apoyo en Facebook en diferentes idiomas",
-          type: "web"
+          name: "Headspace - Meditación y Mindfulness",
+          url: "https://www.headspace.com",
+          description: "App de meditación con programas específicos para manejo del estrés",
+          type: "app"
         }
       ]
     }
   ];
 
-  const renderArticles = (articles: typeof perimenopauseArticles) => (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {articles.map((article, index) => {
-        const Icon = article.icon;
-        return (
-          <Card key={index} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Icon className="h-5 w-5 text-primary" />
-                </div>
-              </div>
-              <CardTitle className="text-xl">{article.title}</CardTitle>
-              <CardDescription>{article.description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {article.content}
-              </p>
-            </CardContent>
-          </Card>
-        );
-      })}
-    </div>
-  );
-
-  const getResourceIcon = (type: string) => {
-    switch (type) {
-      case 'video':
-        return Video;
-      case 'document':
-        return FileText;
-      default:
-        return ExternalLink;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {t('common.backToHome')}
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 p-4">
+      <div className="max-w-7xl mx-auto space-y-6 py-8">
+        <Button variant="ghost" onClick={() => navigate('/')}>
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          {t('common.back')}
         </Button>
 
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            {t('resources.title')}
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            {t('resources.description')}
-          </p>
-        </div>
-
-        <Tabs defaultValue="perimenopausia" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
-            <TabsTrigger value="perimenopausia">{t('resources.perimenopause')}</TabsTrigger>
-            <TabsTrigger value="menopausia">{t('resources.menopause')}</TabsTrigger>
-            <TabsTrigger value="sintomas">{t('resources.symptoms')}</TabsTrigger>
-            <TabsTrigger value="tratamientos">{t('resources.treatments')}</TabsTrigger>
-            <TabsTrigger value="recursos">{t('resources.onlineResources')}</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="perimenopausia" className="space-y-4">
-            <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Perimenopausia</h2>
-              <p className="text-muted-foreground">
-                La fase de transición hacia la menopausia y todo lo que necesitas saber.
-              </p>
-            </div>
-            {renderArticles(perimenopauseArticles)}
-          </TabsContent>
-
-          <TabsContent value="menopausia" className="space-y-4">
-            <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Menopausia</h2>
-              <p className="text-muted-foreground">
-                Comprende esta etapa natural y cómo cuidar tu salud.
-              </p>
-            </div>
-            {renderArticles(menopauseArticles)}
-          </TabsContent>
-
-          <TabsContent value="sintomas" className="space-y-4">
-            <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Síntomas Comunes</h2>
-              <p className="text-muted-foreground">
-                Identifica y maneja los síntomas más frecuentes de forma efectiva.
-              </p>
-            </div>
-            {renderArticles(symptomsArticles)}
-          </TabsContent>
-
-          <TabsContent value="tratamientos" className="space-y-4">
-            <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Opciones de Tratamiento</h2>
-              <p className="text-muted-foreground">
-                Explora las diferentes alternativas disponibles para aliviar los síntomas.
-              </p>
-            </div>
-            {renderArticles(treatmentsArticles)}
-          </TabsContent>
-
-          <TabsContent value="recursos" className="space-y-4">
-            <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">{t('resources.onlineResources')}</h2>
-              <p className="text-muted-foreground">
-                {t('resources.onlineResourcesDesc')}
-              </p>
-            </div>
-
-            <Accordion type="single" collapsible className="space-y-4">
-              {externalResources.map((category, catIndex) => (
-                <AccordionItem key={catIndex} value={`item-${catIndex}`} className="border rounded-lg px-6 bg-card">
-                  <AccordionTrigger className="text-lg font-semibold hover:no-underline">
-                    {category.title}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-4 pt-2">
-                      {category.resources.map((resource, resIndex) => {
-                        const Icon = getResourceIcon(resource.type);
-                        return (
-                          <Card key={resIndex} className="hover:shadow-md transition-shadow">
-                            <CardContent className="p-4">
-                              <div className="flex items-start gap-3">
-                                <div className="p-2 rounded-lg bg-primary/10 mt-1">
-                                  <Icon className="h-4 w-4 text-primary" />
-                                </div>
-                                <div className="flex-1 space-y-1">
-                                  <h4 className="font-semibold text-base">{resource.name}</h4>
-                                  <p className="text-sm text-muted-foreground">{resource.description}</p>
-                                  <a
-                                    href={resource.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1 text-sm text-primary hover:underline mt-2"
-                                  >
-                                    {t('resources.visitResource')}
-                                    <ExternalLink className="h-3 w-3" />
-                                  </a>
-                                </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        );
-                      })}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </TabsContent>
-        </Tabs>
-
-        <Card className="mt-8 bg-primary/5 border-primary/20">
+        <Card className="shadow-elegant border-primary/20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Heart className="h-5 w-5 text-primary" />
-              {t('resources.importantNote')}
+            <CardTitle className="text-3xl flex items-center gap-2">
+              <BookOpen className="h-8 w-8 text-primary" />
+              {t('resources.title')}
             </CardTitle>
+            <CardDescription>{t('resources.subtitle')}</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {t('resources.disclaimer')}
-            </p>
+            <Tabs defaultValue="perimenopause" className="w-full">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="perimenopause">{t('resources.tabs.perimenopause')}</TabsTrigger>
+                <TabsTrigger value="menopause">{t('resources.tabs.menopause')}</TabsTrigger>
+                <TabsTrigger value="symptoms">{t('resources.tabs.symptoms')}</TabsTrigger>
+                <TabsTrigger value="treatments">{t('resources.tabs.treatments')}</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="perimenopause" className="mt-6 space-y-4 animate-fade-in">
+                <Accordion type="single" collapsible className="w-full">
+                  {perimenopauseArticles.map((article, index) => (
+                    <AccordionItem key={index} value={`item-${index}`}>
+                      <AccordionTrigger className="hover:text-primary">
+                        <div className="flex items-center gap-3">
+                          <article.icon className="h-5 w-5 text-primary" />
+                          <div className="text-left">
+                            <div className="font-semibold">{article.title}</div>
+                            <div className="text-sm text-muted-foreground">{article.description}</div>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="pl-8 pr-4 py-4 text-foreground leading-relaxed">
+                          {article.content}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </TabsContent>
+
+              <TabsContent value="menopause" className="mt-6 space-y-4 animate-fade-in">
+                <Accordion type="single" collapsible className="w-full">
+                  {menopauseArticles.map((article, index) => (
+                    <AccordionItem key={index} value={`item-${index}`}>
+                      <AccordionTrigger className="hover:text-primary">
+                        <div className="flex items-center gap-3">
+                          <article.icon className="h-5 w-5 text-primary" />
+                          <div className="text-left">
+                            <div className="font-semibold">{article.title}</div>
+                            <div className="text-sm text-muted-foreground">{article.description}</div>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="pl-8 pr-4 py-4 text-foreground leading-relaxed">
+                          {article.content}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </TabsContent>
+
+              <TabsContent value="symptoms" className="mt-6 space-y-4 animate-fade-in">
+                <Accordion type="single" collapsible className="w-full">
+                  {symptomsArticles.map((article, index) => (
+                    <AccordionItem key={index} value={`item-${index}`}>
+                      <AccordionTrigger className="hover:text-primary">
+                        <div className="flex items-center gap-3">
+                          <article.icon className="h-5 w-5 text-primary" />
+                          <div className="text-left">
+                            <div className="font-semibold">{article.title}</div>
+                            <div className="text-sm text-muted-foreground">{article.description}</div>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="pl-8 pr-4 py-4 text-foreground leading-relaxed">
+                          {article.content}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </TabsContent>
+
+              <TabsContent value="treatments" className="mt-6 space-y-4 animate-fade-in">
+                <Accordion type="single" collapsible className="w-full">
+                  {treatmentsArticles.map((article, index) => (
+                    <AccordionItem key={index} value={`item-${index}`}>
+                      <AccordionTrigger className="hover:text-primary">
+                        <div className="flex items-center gap-3">
+                          <article.icon className="h-5 w-5 text-primary" />
+                          <div className="text-left">
+                            <div className="font-semibold">{article.title}</div>
+                            <div className="text-sm text-muted-foreground">{article.description}</div>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="pl-8 pr-4 py-4 text-foreground leading-relaxed">
+                          {article.content}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+
+        {/* External Resources */}
+        <Card className="shadow-elegant border-accent/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ExternalLink className="h-6 w-6 text-accent" />
+              {t('resources.externalResources.title')}
+            </CardTitle>
+            <CardDescription>{t('resources.externalResources.subtitle')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {externalResources.map((category, catIndex) => (
+              <div key={catIndex} className="space-y-3">
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  {category.title === "Videos Educativos" && <Video className="h-5 w-5 text-accent" />}
+                  {category.title === "Aplicaciones y Herramientas" && <FileText className="h-5 w-5 text-accent" />}
+                  {category.title === "Organizaciones y Sitios Web Oficiales" && <BookOpen className="h-5 w-5 text-accent" />}
+                  {category.title}
+                </h3>
+                <div className="grid gap-3">
+                  {category.resources.map((resource, resIndex) => (
+                    <a
+                      key={resIndex}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors group"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
+                            {resource.name}
+                          </h4>
+                          <p className="text-sm text-muted-foreground mt-1">{resource.description}</p>
+                        </div>
+                        <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 mt-1" />
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
       </div>
