@@ -27,27 +27,9 @@ const PersonalizedRecommendations = () => {
   const [recommendations, setRecommendations] = useState<Recommendations | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getFallbackRecommendations = (): Recommendations => {
-    return {
-      exercise: [
-        'Camina 20-30 minutos al aire libre para mejorar tu energía',
-        'Practica yoga suave o estiramientos para reducir tensión'
-      ],
-      nutrition: [
-        'Incluye alimentos ricos en hierro en tu dieta diaria',
-        'Mantente hidratada con agua e infusiones naturales'
-      ],
-      selfcare: [
-        'Dedica 10 minutos a la meditación o respiración profunda',
-        'Asegúrate de dormir 7-8 horas por noche'
-      ],
-      highlights: 'Cuida de ti misma, escucha a tu cuerpo y date el descanso que necesitas.'
-    };
-  };
-
   const fetchRecommendations = async () => {
     if (!user) return;
-
+    
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('generate-recommendations', {
@@ -57,8 +39,6 @@ const PersonalizedRecommendations = () => {
       if (error) {
         console.error('Error fetching recommendations:', error);
         toast.error(t('recommendations.error'));
-        // Use fallback recommendations instead of failing completely
-        setRecommendations(getFallbackRecommendations());
         return;
       }
 
@@ -66,8 +46,6 @@ const PersonalizedRecommendations = () => {
     } catch (err) {
       console.error('Failed to fetch recommendations:', err);
       toast.error(t('recommendations.error'));
-      // Use fallback recommendations instead of failing completely
-      setRecommendations(getFallbackRecommendations());
     } finally {
       setIsLoading(false);
     }

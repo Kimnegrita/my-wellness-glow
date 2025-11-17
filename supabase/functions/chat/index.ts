@@ -16,32 +16,39 @@ serve(async (req) => {
   try {
     const { messages } = await req.json();
     
-    // Obter token de autenticação
+    // Read Authorization header (JWT is already validated by verify_jwt)
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       throw new Error('Missing authorization header');
     }
 
-    // Criar cliente Supabase autenticado
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      { global: { headers: { Authorization: authHeader } } }
-    );
-
-    // Verificar autenticação
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
-    if (userError || !user) {
+    // Extract userId from JWT payload
+    const token = authHeader.replace('Bearer ', '');
+    let userId = '';
+    try {
+      const base64 = token.split('.')[1];
+      const json = new TextDecoder().decode(Uint8Array.from(atob(base64), c => c.charCodeAt(0)));
+      const payload = JSON.parse(json);
+      userId = payload.sub as string;
+      if (!userId) throw new Error('Missing sub in token');
+    } catch (e) {
+      console.error('JWT parse error:', e);
       throw new Error('Unauthorized');
     }
 
-    console.log('Chat request from user:', user.id);
+    // Create admin client for backend reads (safe because JWT is verified by platform)
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    console.log('Chat request from user:', userId);
 
     // Buscar perfil da usuária para contexto
     const { data: profile, error: profileError } = await supabaseClient
       .from('profiles')
       .select('*')
-      .eq('id', user.id)
+      .eq('id', userId)
       .single();
 
     if (profileError) {
@@ -55,7 +62,7 @@ serve(async (req) => {
     const { data: recentLogs, error: logsError } = await supabaseClient
       .from('daily_logs')
       .select('symptoms, journal_entry, log_date, period_started')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .gte('log_date', sevenDaysAgo.toISOString().split('T')[0])
       .order('log_date', { ascending: false })
       .limit(7);
