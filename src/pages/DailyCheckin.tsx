@@ -311,7 +311,7 @@ export default function DailyCheckin() {
       toast.success('¡Registro guardado exitosamente! ✨');
       navigate('/');
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       toast.error(error.message);
     },
   });

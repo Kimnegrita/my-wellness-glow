@@ -12,12 +12,30 @@ import { toast } from "sonner";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { useNavigate } from "react-router-dom";
 
+interface Correlation {
+  strength: string;
+  type: string;
+  [key: string]: unknown;
+}
+
+interface Insight {
+  category: string;
+  title: string;
+  [key: string]: unknown;
+}
+
+interface InsightsData {
+  correlations?: Correlation[];
+  insights?: Insight[];
+  [key: string]: unknown;
+}
+
 export default function Insights() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const { data: insights, isLoading, refetch } = useQuery({
+  const { data: insights, isLoading, refetch } = useQuery<InsightsData>({
     queryKey: ['correlations', user?.id],
     queryFn: async () => {
       if (!user) throw new Error('No user');
@@ -146,7 +164,7 @@ export default function Insights() {
           {/* Correlations Tab */}
           <TabsContent value="correlations" className="space-y-4 mt-6">
             {hasCorrelations ? (
-              insights.correlations.map((correlation: any, index: number) => (
+              insights.correlations.map((correlation: Correlation, index: number) => (
                 <Card key={index} className="hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <div className="flex items-start justify-between gap-4">
@@ -203,7 +221,7 @@ export default function Insights() {
           {/* Insights Tab */}
           <TabsContent value="insights" className="space-y-4 mt-6">
             {hasInsights ? (
-              insights.insights.map((insight: any, index: number) => (
+              insights.insights.map((insight: Insight, index: number) => (
                 <Card key={index}>
                   <CardHeader>
                     <div className="flex items-center gap-3">

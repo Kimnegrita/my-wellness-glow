@@ -35,8 +35,8 @@ export default function Onboarding() {
 
       toast.success('¡Bienvenida! Tu información del ciclo se actualizará automáticamente cuando hagas tu primer registro ✨');
       navigate('/', { replace: true });
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Error al guardar');
     } finally {
       setLoading(false);
     }

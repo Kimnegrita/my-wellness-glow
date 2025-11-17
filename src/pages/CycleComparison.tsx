@@ -194,7 +194,7 @@ export default function CycleComparison() {
     .map(([symptom]) => symptom);
 
   const symptomComparisonData = cyclesData.map(cycle => {
-    const data: any = { cycle: `Ciclo ${cycle.cycleNumber}` };
+    const data: Record<string, string | number> = { cycle: `Ciclo ${cycle.cycleNumber}` };
     topSymptoms.forEach(symptom => {
       data[symptom] = cycle.symptoms[symptom] || 0;
     });

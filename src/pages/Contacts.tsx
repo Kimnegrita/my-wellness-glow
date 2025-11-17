@@ -1,14 +1,24 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Phone, MapPin, Globe, Hospital, Heart, Users } from "lucide-react";
+import { ArrowLeft, Phone, MapPin, Globe, Hospital, Heart, Users, LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+
+interface ContactInfo {
+  name: string;
+  description: string;
+  location?: string;
+  phone?: string;
+  contact?: string;
+  website: string;
+  icon: LucideIcon;
+}
 
 const Contacts = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const hospitals = [
+  const hospitals: ContactInfo[] = [
     {
       name: "Hospital CUF Lisboa",
       description: "Red de hospitales privados con consultas especializadas en ginecología y menopausia",
@@ -35,7 +45,7 @@ const Contacts = () => {
     },
   ];
 
-  const clinics = [
+  const clinics: ContactInfo[] = [
     {
       name: "Multicare - Consulta da Menopausa",
       description: "Consulta especializada en menopausa con atención online y presencial",
@@ -54,7 +64,7 @@ const Contacts = () => {
     },
   ];
 
-  const supportLines = [
+  const supportLines: ContactInfo[] = [
     {
       name: "Linha Médis - Saúde da Mulher",
       description: "Línea de apoyo telefónico con enfermeras especializadas en salud de la mujer. Apoyo en todas las fases de la vida, incluyendo menopausia.",
@@ -71,7 +81,7 @@ const Contacts = () => {
     },
   ];
 
-  const associations = [
+  const associations: ContactInfo[] = [
     {
       name: "A Menopausa - Portal Informativo",
       description: "Portal portugués con información sobre menopausia, podcast y recursos educativos",
@@ -88,7 +98,7 @@ const Contacts = () => {
     },
   ];
 
-  const renderContacts = (contacts: any[], category: string) => (
+  const renderContacts = (contacts: ContactInfo[], category: string) => (
     <div className="space-y-4">
       <h2 className="text-2xl font-semibold mb-4">{category}</h2>
       <div className="grid gap-4 md:grid-cols-2">

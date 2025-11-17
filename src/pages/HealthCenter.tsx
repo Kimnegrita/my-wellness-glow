@@ -12,12 +12,25 @@ import { toast } from "sonner";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { useNavigate } from "react-router-dom";
 
+interface HealthAnomaly {
+  severity: string;
+  description: string;
+  requires_medical_attention?: boolean;
+  [key: string]: unknown;
+}
+
+interface HealthData {
+  anomalies?: HealthAnomaly[];
+  status?: string;
+  [key: string]: unknown;
+}
+
 export default function HealthCenter() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const { data: healthData, isLoading, refetch } = useQuery({
+  const { data: healthData, isLoading, refetch } = useQuery<HealthData>({
     queryKey: ['health-anomalies', user?.id],
     queryFn: async () => {
       if (!user) throw new Error('No user');
@@ -84,7 +97,7 @@ export default function HealthCenter() {
   }
 
   const hasAnomalies = healthData?.anomalies && healthData.anomalies.length > 0;
-  const criticalAnomalies = healthData?.anomalies?.filter((a: any) => 
+  const criticalAnomalies = healthData?.anomalies?.filter((a: HealthAnomaly) =>
     a.severity === 'critical' || a.severity === 'high'
   ) || [];
 
@@ -178,7 +191,7 @@ export default function HealthCenter() {
         {hasAnomalies ? (
           <div className="space-y-4">
             <h2 className="text-xl font-bold">Anomalías Detectadas</h2>
-            {healthData.anomalies.map((anomaly: any, index: number) => (
+            {healthData.anomalies.map((anomaly: HealthAnomaly, index: number) => (
               <Card key={index} className={
                 anomaly.requires_medical_attention 
                   ? 'border-orange-200 dark:border-orange-900' 
