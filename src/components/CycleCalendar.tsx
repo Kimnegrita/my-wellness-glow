@@ -1,10 +1,10 @@
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { useAuth } from "@/contexts/AuthContext";
-import { addDays } from "date-fns";
+import { addDays, parseISO, startOfMonth, endOfMonth, format } from "date-fns";
+import { getCycleInfo } from "@/lib/cycleCalculations";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { startOfMonth, endOfMonth, format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -35,6 +35,24 @@ export const CycleCalendar = () => {
         .gte('log_date', format(start, 'yyyy-MM-dd'))
         .lte('log_date', format(end, 'yyyy-MM-dd'))
         .order('log_date', { ascending: true });
+      
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!user,
+  });
+
+  // Fetch ALL logs para cálculos precisos
+  const { data: allLogs } = useQuery({
+    queryKey: ['all_logs_calendar', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      
+      const { data, error } = await supabase
+        .from('daily_logs')
+        .select('log_date, period_started, period_ended')
+        .eq('user_id', user.id)
+        .order('log_date', { ascending: false });
       
       if (error) throw error;
       return data || [];
@@ -136,6 +154,37 @@ export const CycleCalendar = () => {
   const periodDates = logs?.filter(log => log.period_started || log.period_ended).map(log => parseISO(log.log_date)) || [];
   const loggedDates = logs?.map(log => parseISO(log.log_date)) || [];
   
+  // Calcular fechas predichas
+  const cycleInfo = profile?.last_period_date 
+    ? getCycleInfo(
+        new Date(profile.last_period_date),
+        profile.avg_cycle_length,
+        profile.is_irregular,
+        allLogs || [],
+        profile.avg_period_duration
+      )
+    : null;
+
+  // Fechas del próximo periodo esperado
+  const predictedPeriodDates: Date[] = [];
+  if (cycleInfo?.nextPeriodDate && profile?.avg_period_duration) {
+    for (let i = 0; i < profile.avg_period_duration; i++) {
+      predictedPeriodDates.push(addDays(cycleInfo.nextPeriodDate, i));
+    }
+  }
+
+  // Fechas de ventana fértil
+  const fertileDates: Date[] = [];
+  if (cycleInfo?.fertileWindowStart && cycleInfo?.fertileWindowEnd) {
+    let currentDate = new Date(cycleInfo.fertileWindowStart);
+    const endDate = new Date(cycleInfo.fertileWindowEnd);
+    
+    while (currentDate <= endDate) {
+      fertileDates.push(new Date(currentDate));
+      currentDate = addDays(currentDate, 1);
+    }
+  }
+  
   const isSelectedDatePeriod = selectedDate 
     ? periodDates.some(date => format(date, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd'))
     : false;
@@ -170,13 +219,28 @@ export const CycleCalendar = () => {
             modifiers={{
               period: periodDates,
               logged: loggedDates,
+              predictedPeriod: predictedPeriodDates,
+              fertile: fertileDates,
             }}
             modifiersStyles={{
               period: {
-                backgroundColor: 'hsl(var(--destructive) / 0.2)',
+                backgroundColor: 'hsl(var(--destructive) / 0.3)',
                 borderRadius: '50%',
                 color: 'hsl(var(--destructive))',
                 fontWeight: 'bold',
+                border: '2px solid hsl(var(--destructive))',
+              },
+              predictedPeriod: {
+                backgroundColor: 'hsl(var(--destructive) / 0.1)',
+                borderRadius: '50%',
+                border: '2px dashed hsl(var(--destructive) / 0.5)',
+                color: 'hsl(var(--destructive) / 0.7)',
+              },
+              fertile: {
+                backgroundColor: 'hsl(var(--primary) / 0.15)',
+                borderRadius: '50%',
+                border: '2px solid hsl(var(--primary) / 0.4)',
+                color: 'hsl(var(--primary))',
               },
               logged: {
                 position: 'relative',
@@ -185,14 +249,22 @@ export const CycleCalendar = () => {
           />
           
           {/* Legend */}
-          <div className="mt-6 flex flex-wrap gap-4 md:gap-6 text-sm justify-center">
+          <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-destructive/20 border-2 border-destructive"></div>
-              <span className="text-muted-foreground">Menstruación</span>
+              <div className="w-4 h-4 rounded-full bg-destructive/30 border-2 border-destructive"></div>
+              <span className="text-muted-foreground text-xs">Periodo registrado</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-destructive/10 border-2 border-dashed border-destructive/50"></div>
+              <span className="text-muted-foreground text-xs">Periodo esperado</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-primary/15 border-2 border-primary/40"></div>
+              <span className="text-muted-foreground text-xs">Ventana fértil</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded-full bg-primary/20 border-2 border-primary"></div>
-              <span className="text-muted-foreground">Con registro</span>
+              <span className="text-muted-foreground text-xs">Con registro</span>
             </div>
           </div>
         </div>
