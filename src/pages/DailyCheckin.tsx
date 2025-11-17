@@ -526,8 +526,6 @@ export default function DailyCheckin() {
                   </div>
                 ) : (
                   <SentimentAnalysis 
-                    sentimentScore={sentimentAnalysis?.sentiment_score}
-                    sentimentLabel={sentimentAnalysis?.sentiment_label}
                     emotionalPatterns={sentimentAnalysis?.emotional_patterns}
                     aiInsights={sentimentAnalysis?.ai_insights}
                   />
