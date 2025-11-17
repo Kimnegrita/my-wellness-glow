@@ -288,11 +288,9 @@ export default function History() {
                     )}
 
                     {/* Sentiment Analysis for this log */}
-                    {log.sentiment_label && (
+                    {((Array.isArray(log.emotional_patterns) && log.emotional_patterns.length > 0) || log.ai_insights) && (
                       <div className="mt-3">
                         <SentimentAnalysis
-                          sentimentScore={typeof log.sentiment_score === 'number' ? log.sentiment_score : undefined}
-                          sentimentLabel={typeof log.sentiment_label === 'string' ? log.sentiment_label : undefined}
                           emotionalPatterns={Array.isArray(log.emotional_patterns) ? log.emotional_patterns.filter((p): p is string => typeof p === 'string') : []}
                           aiInsights={typeof log.ai_insights === 'string' ? log.ai_insights : undefined}
                         />
