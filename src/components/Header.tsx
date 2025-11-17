@@ -7,13 +7,13 @@ export const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="flex items-center bg-surface-light dark:bg-surface-dark p-4 pb-2 justify-between sticky top-0 z-10 shadow-sm shadow-black/[0.02] dark:shadow-black/20">
+    <header className="flex items-center bg-card p-4 pb-2 justify-between sticky top-0 z-10 shadow-soft border-b border-border backdrop-blur-sm">
       <div className="flex size-12 shrink-0 items-center">
-        <div className="rounded-full size-10 bg-gradient-to-br from-primary to-primary-darker flex items-center justify-center text-white font-bold text-lg">
+        <div className="rounded-full size-10 bg-gradient-primary flex items-center justify-center text-white font-bold text-lg shadow-soft">
           {profile?.name?.charAt(0).toUpperCase() || "U"}
         </div>
       </div>
-      <h1 className="text-text-primary-light dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1">
+      <h1 className="text-foreground text-lg font-bold leading-tight tracking-[-0.015em] flex-1">
         Hola, {profile?.name || "Usuario"}
       </h1>
       <div className="flex items-center justify-end gap-2">
@@ -21,7 +21,7 @@ export const Header = () => {
         <button
           onClick={() => navigate('/assistant')}
           type="button"
-          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-primary dark:text-primary-light hover:bg-primary/10 hover:shadow-glow active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 animate-glow-pulse"
+          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-primary hover:bg-primary/10 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           title="AI Assistant"
           aria-label="Abrir asistente de IA"
         >
@@ -30,7 +30,7 @@ export const Header = () => {
         <button 
           onClick={() => navigate('/profile')}
           type="button"
-          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-text-primary-light dark:text-text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 w-10 bg-transparent text-foreground hover:bg-muted active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           title="Notificaciones"
           aria-label="Ver notificaciones"
         >
