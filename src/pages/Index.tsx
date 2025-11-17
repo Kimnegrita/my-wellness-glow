@@ -271,12 +271,13 @@ const Index = () => {
 
             <Card className="bg-gradient-to-br from-card/95 via-card/90 to-accent/5 backdrop-blur-xl border-2 border-accent/20 shadow-accent" style={{ boxShadow: 'var(--shadow-card)' }}>
               <CardHeader>
-                <CardTitle className="text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  💡 Consejo del Día
+                <CardTitle className="flex items-center gap-2 text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  <span className="text-3xl">{dailyTip.icon}</span>
+                  Consejo del Día
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-foreground leading-relaxed">{String(dailyTip)}</p>
+                <p className="text-foreground leading-relaxed">{dailyTip.text}</p>
               </CardContent>
             </Card>
           </div>
