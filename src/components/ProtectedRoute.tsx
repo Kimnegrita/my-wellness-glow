@@ -21,9 +21,7 @@ export function ProtectedRoute({ children, requiresOnboarding = true }: Protecte
     return <Navigate to="/auth" replace />;
   }
 
-  // Only redirect to onboarding if profile exists but name is missing
-  // This prevents unnecessary redirects when profile is still loading
-  if (requiresOnboarding && profile && !profile.name?.trim()) {
+  if (requiresOnboarding && profile && !profile.name) {
     return <Navigate to="/onboarding" replace />;
   }
 

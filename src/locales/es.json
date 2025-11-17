@@ -197,17 +197,6 @@
     "ovulationDesc": "Fase de ovulación (día 14): El óvulo es liberado. Los niveles de estrógeno están en su punto máximo. Puede haber más energía, confianza y libido.",
     "lutealDesc": "Fase lútea (días 15-28): Después de la ovulación, aumenta la progesterona. Algunas experimentan síntomas premenstruales como cambios de humor, hinchazón o sensibilidad en los senos."
   },
-  "recommendations": {
-    "title": "Recomendaciones Personalizadas",
-    "description": "Sugerencias basadas en tu fase actual del ciclo y síntomas",
-    "refresh": "Actualizar",
-    "loading": "Generando recomendaciones...",
-    "error": "Error al generar recomendaciones. Mostrando sugerencias generales.",
-    "exercise": "Ejercicio",
-    "nutrition": "Nutrición",
-    "selfcare": "Autocuidado",
-    "basedOn": "Basado en tus síntomas recientes"
-  },
   "tips": {
     "personalizedRecommendations": "Recomendaciones personalizadas",
     "categories": {
@@ -255,5 +244,84 @@
       "selfcare_sleep": "Rutina de sueño regular es fundamental",
       "selfcare_stress": "Manejo del estrés: respiración profunda, mindfulness"
     }
+  },
+  "assistant": {
+    "title": "Asistente de IA",
+    "subtitle": "Tu compañera de salud menstrual",
+    "pageTitle": "Asistente Luna",
+    "pageDescription": "Conversa con Luna, tu asistente personal de salud menstrual. Resuelve dudas, pide consejos personalizados basados en tu fase del ciclo, y aprende más sobre tu cuerpo.",
+    "greeting": "¡Hola! 👋 Soy Luna, tu asistente de salud menstrual. ¿En qué puedo ayudarte hoy?",
+    "inputPlaceholder": "Escribe tu pregunta...",
+    "disclaimer": "Esta IA ofrece información general y no sustituye consulta médica.",
+    "suggestionsTitle": "Prueba preguntar:",
+    "suggestion1": "¿Qué ejercicios son mejores en mi fase actual?",
+    "suggestion2": "¿Por qué tengo más energía durante la ovulación?",
+    "suggestion3": "¿Cómo puedo aliviar los cólicos naturalmente?",
+    "suggestion4": "¿Qué alimentos son buenos para la fase lútea?",
+    "quickAccessTitle": "Fale com Luna",
+    "quickAccessDescription": "Tire suas dúvidas sobre saúde menstrual"
+  },
+  "sentiment": {
+    "analysis": "Análisis Emocional",
+    "description": "Insights basados en tus emociones",
+    "positive": "Positivo",
+    "neutral": "Neutral",
+    "negative": "Negativo",
+    "patterns": "Patrones Detectados"
+  },
+  "insights": {
+    "emotional": "Insights Emocionales",
+    "last30days": "Últimos 30 días",
+    "averageMood": "Estado de ánimo promedio",
+    "commonPatterns": "Patrones comunes",
+    "dominantMood": "Estado de ánimo dominante",
+    "days": "días"
+  },
+  "recommendations": {
+    "title": "Recomendaciones Personalizadas",
+    "description": "Basadas en tu fase del ciclo y síntomas recientes",
+    "loading": "Generando recomendaciones...",
+    "error": "Error al generar recomendaciones",
+    "refresh": "Actualizar",
+    "exercise": "Ejercicio",
+    "nutrition": "Nutrición",
+    "selfcare": "Autocuidado",
+    "basedOn": "Basado en tus síntomas recientes"
+  },
+  "trends": {
+    "sentimentOverTime": "Sentimiento a lo Largo del Tiempo",
+    "sentimentByPhase": "Sentimiento Promedio por Fase",
+    "distributionByPhase": "Distribución de Sentimientos por Fase",
+    "last90days": "Últimos 90 días",
+    "averagePerPhase": "Promedio por fase del ciclo",
+    "positiveNeutralNegative": "Sentimientos positivos, neutrales y negativos",
+    "cycleDay": "Día del Ciclo",
+    "sentiment": "Sentimiento",
+    "day": "Día",
+    "score": "Puntuación"
+  },
+  "comparison": {
+    "title": "Comparación de Ciclos",
+    "subtitle": "Identifica patrones y tendencias entre tus ciclos menstruales",
+    "notEnoughData": "No hay suficientes datos",
+    "needTwoCycles": "Necesitas al menos 2 ciclos completos registrados para comparar patrones",
+    "startTracking": "Comenzar a registrar",
+    "cyclesAnalyzed": "Ciclos analizados",
+    "averageLength": "Duración promedio",
+    "days": "días",
+    "uniqueSymptoms": "Síntomas únicos",
+    "cycleLengthComparison": "Comparación de Duración",
+    "lengthVariation": "Variación en la duración de los ciclos",
+    "sentimentTrend": "Tendencia Emocional",
+    "emotionalProgress": "Progreso emocional entre ciclos",
+    "sentimentDistribution": "Distribución de Sentimientos",
+    "emotionalBalance": "Balance emocional por ciclo",
+    "topSymptoms": "Síntomas Más Frecuentes",
+    "symptomFrequency": "Frecuencia de síntomas principales",
+    "cycleDetails": "Detalles de Cada Ciclo",
+    "individualOverview": "Vista general de cada ciclo",
+    "mostCommonSymptoms": "Síntomas más comunes",
+    "emotionalState": "Estado emocional",
+    "averageSentiment": "Sentimiento promedio"
   }
 }
