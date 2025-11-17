@@ -29,6 +29,7 @@ export default function Profile() {
   );
   const [cycleLength, setCycleLength] = useState<number>(profile?.avg_cycle_length || 28);
   const [isIrregular, setIsIrregular] = useState(profile?.is_irregular || false);
+  const [periodDuration, setPeriodDuration] = useState<number>(profile?.avg_period_duration || 5);
 
   const handleSave = async () => {
     setLoading(true);
@@ -44,6 +45,7 @@ export default function Profile() {
           : null,
         avg_cycle_length: isIrregular ? null : cycleLength,
         is_irregular: isIrregular,
+        avg_period_duration: periodDuration,
       });
 
       console.log('Profile saved, changing i18n language to:', language);
@@ -189,6 +191,24 @@ export default function Profile() {
                 />
                 <p className="text-xs text-muted-foreground">
                   {t('profile.irregularCycleDesc')}
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="period-duration" className="text-base font-semibold">
+                  Duración del Periodo
+                </Label>
+                <Input
+                  id="period-duration"
+                  type="number"
+                  min={2}
+                  max={10}
+                  value={periodDuration}
+                  onChange={(e) => setPeriodDuration(parseInt(e.target.value))}
+                  className="text-center text-lg font-semibold border-2"
+                />
+                <p className="text-xs text-muted-foreground">
+                  ¿Cuántos días dura tu menstruación? (Promedio: 3-7 días)
                 </p>
               </div>
 

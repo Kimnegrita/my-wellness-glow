@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { useAuth } from "@/contexts/AuthContext";
+import { addDays } from "date-fns";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { startOfMonth, endOfMonth, format, parseISO } from "date-fns";
@@ -12,7 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Droplet, Edit2 } from "lucide-react";
 
 export const CycleCalendar = () => {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const queryClient = useQueryClient();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -45,33 +46,61 @@ export const CycleCalendar = () => {
     mutationFn: async ({ date, isPeriod }: { date: Date; isPeriod: boolean }) => {
       if (!user) throw new Error("No user");
 
+      const periodDuration = profile?.avg_period_duration || 5;
       const dateStr = format(date, 'yyyy-MM-dd');
-      const existingLog = logs?.find(log => log.log_date === dateStr);
-
-      if (existingLog) {
-        // Update existing log
-        const { error } = await supabase
-          .from('daily_logs')
-          .update({
-            period_started: isPeriod,
-            period_ended: isPeriod,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', existingLog.id);
-
-        if (error) throw error;
+      
+      if (isPeriod) {
+        // Marcar múltiples días como periodo
+        const periodDates = [];
+        for (let i = 0; i < periodDuration; i++) {
+          const currentDate = addDays(date, i);
+          const currentDateStr = format(currentDate, 'yyyy-MM-dd');
+          const existingLog = logs?.find(log => log.log_date === currentDateStr);
+          
+          if (existingLog) {
+            periodDates.push(
+              supabase
+                .from('daily_logs')
+                .update({
+                  period_started: i === 0, // Solo el primer día es inicio
+                  period_ended: i === periodDuration - 1, // Solo el último día es fin
+                  updated_at: new Date().toISOString(),
+                })
+                .eq('id', existingLog.id)
+            );
+          } else {
+            periodDates.push(
+              supabase
+                .from('daily_logs')
+                .insert({
+                  user_id: user.id,
+                  log_date: currentDateStr,
+                  period_started: i === 0,
+                  period_ended: i === periodDuration - 1,
+                })
+            );
+          }
+        }
+        
+        const results = await Promise.all(periodDates);
+        const errors = results.filter(r => r.error);
+        if (errors.length > 0) throw errors[0].error;
       } else {
-        // Create new log
-        const { error } = await supabase
-          .from('daily_logs')
-          .insert({
-            user_id: user.id,
-            log_date: dateStr,
-            period_started: isPeriod,
-            period_ended: isPeriod,
-          });
+        // Desmarcar solo el día seleccionado
+        const existingLog = logs?.find(log => log.log_date === dateStr);
+        
+        if (existingLog) {
+          const { error } = await supabase
+            .from('daily_logs')
+            .update({
+              period_started: false,
+              period_ended: false,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', existingLog.id);
 
-        if (error) throw error;
+          if (error) throw error;
+        }
       }
     },
     onSuccess: () => {
