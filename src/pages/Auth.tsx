@@ -72,21 +72,23 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
-      <Card className="w-full max-w-md shadow-elegant border-primary/20 bg-card/95 backdrop-blur">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/20 via-accent/15 to-secondary/20 animate-fade-in">
+      <Card className="w-full max-w-md shadow-glow border-primary/30 bg-gradient-card backdrop-blur-xl">
         <CardHeader className="text-center space-y-4 pb-8">
           <div className="flex justify-center mb-4">
             <div className="relative">
-              <img src="/logo.png" alt="My Wellness Glow" className="h-20 w-20 animate-glow-pulse" />
-              <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full -z-10"></div>
+              <img src="/logo.png" alt="My Wellness Glow" className="h-24 w-24 animate-glow-pulse drop-shadow-2xl" />
+              <div className="absolute inset-0 bg-gradient-glow blur-3xl rounded-full -z-10 opacity-60"></div>
             </div>
           </div>
           <div className="space-y-2">
-            <h1 className="text-4xl font-bold text-gradient">
+            <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent drop-shadow-lg">
               Conecta con tu bienestar
             </h1>
-            <p className="text-muted-foreground text-sm">
-              Registrarte para iniciar tu viaje de autoconocimiento y cuidado personal
+            <p className="text-muted-foreground text-sm flex items-center justify-center gap-2">
+              <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+              Inicia tu viaje de autoconocimiento
+              <Sparkles className="h-4 w-4 text-primary animate-pulse" />
             </p>
           </div>
         </CardHeader>
