@@ -1,20 +1,16 @@
-import { DashboardCard } from "@/components/DashboardCard";
 import { CycleCalendar } from "@/components/CycleCalendar";
-import { WellnessTips } from "@/components/WellnessTips";
-import { TipCard } from "@/components/TipCard";
 import { FAQSection } from "@/components/FAQSection";
 import { PhaseIndicator } from "@/components/PhaseIndicator";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
-import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
 import { FertilityTracker } from "@/components/FertilityTracker";
-import { DataExport } from "@/components/DataExport";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getCycleInfo } from "@/lib/cycleCalculations";
 import { getDailyTip } from "@/data/dailyTips";
-import { Calendar, Heart, Flame, LogOut, Settings, BarChart3, BookOpen, Phone, MessageSquare, GitCompare } from "lucide-react";
+import { Calendar, Heart, Flame, LogOut, Settings, BarChart3, BookOpen, Phone, MessageSquare } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format, startOfWeek, endOfWeek } from "date-fns";
@@ -112,47 +108,40 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Header with enhanced styling */}
-      <header className="bg-card/90 backdrop-blur-xl border-b border-primary/20 sticky top-0 z-40 shadow-primary">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-primary rounded-full blur-md opacity-60"></div>
-              <img src="/logo.png" alt="My Wellness Glow" className="h-10 w-10 relative z-10" />
+      {/* Main Header with Action Buttons */}
+      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-primary/20 shadow-lg">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <img src="/logo.png" alt="FlowCare Logo" className="w-10 h-10 rounded-full shadow-lg" />
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  ¡Hola, {profile?.name || 'Amiga'}!
+                </h1>
+                <p className="text-sm text-muted-foreground">Bienvenida a tu espacio de bienestar</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gradient drop-shadow-md">
-                My Wellness Glow
-              </h1>
-              <p className="text-xs text-primary font-semibold">
-                ¡Hola, {profile?.name}! ✨
-              </p>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Button variant="ghost" size="icon" onClick={() => navigate('/assistant')}>
+                <MessageSquare className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={() => navigate('/history')}>
+                <BarChart3 className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={() => navigate('/resources')}>
+                <BookOpen className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={() => navigate('/contacts')}>
+                <Phone className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}>
+                <Settings className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={signOut}>
+                <LogOut className="h-5 w-5" />
+              </Button>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <DataExport />
-            <ThemeToggle />
-            <Button variant="ghost" size="sm" onClick={() => navigate('/assistant')}>
-              <MessageSquare className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/contacts')}>
-              <Phone className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/resources')}>
-              <BookOpen className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/history')}>
-              <BarChart3 className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/cycle-comparison')}>
-              <GitCompare className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
-              <Settings className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={signOut}>
-              <LogOut className="h-4 w-4" />
-            </Button>
           </div>
         </div>
       </header>
@@ -254,50 +243,70 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Phase Indicator & Cycle Calendar - Magical styling */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <div className="bg-gradient-to-br from-card/95 via-card/90 to-primary/5 backdrop-blur-xl rounded-3xl border-2 border-primary/20 shadow-primary hover:shadow-glow transition-all duration-500 overflow-hidden">
-            <PhaseIndicator phase={cycleInfo?.phase || 'irregular'} />
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          {/* Left Column - Calendar & Fertility */}
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-gradient-to-br from-card/95 via-card/90 to-secondary/5 backdrop-blur-xl rounded-3xl border-2 border-secondary/20 shadow-secondary hover:shadow-glow transition-all duration-500 overflow-hidden">
+              <CycleCalendar />
+            </div>
+            
+            {cycleInfo?.ovulationDate && (
+              <div className="bg-gradient-to-br from-card/95 via-card/90 to-accent/5 backdrop-blur-xl rounded-3xl border-2 border-accent/20 shadow-accent hover:shadow-glow transition-all duration-500 overflow-hidden">
+                <FertilityTracker
+                  ovulationDate={cycleInfo.ovulationDate}
+                  fertileWindowStart={cycleInfo.fertileWindowStart}
+                  fertileWindowEnd={cycleInfo.fertileWindowEnd}
+                  isFertileWindow={cycleInfo.isFertileWindow}
+                />
+              </div>
+            )}
           </div>
-          <div className="bg-gradient-to-br from-card/95 via-card/90 to-secondary/5 backdrop-blur-xl rounded-3xl border-2 border-secondary/20 shadow-secondary hover:shadow-glow transition-all duration-500 overflow-hidden">
-            <CycleCalendar />
+
+          {/* Right Column - Phase & Tip */}
+          <div className="space-y-6">
+            <div className="bg-gradient-to-br from-card/95 via-card/90 to-primary/5 backdrop-blur-xl rounded-3xl border-2 border-primary/20 shadow-primary hover:shadow-glow transition-all duration-500 overflow-hidden">
+              <PhaseIndicator phase={cycleInfo?.phase || 'irregular'} />
+            </div>
+
+            <Card className="bg-gradient-to-br from-card/95 via-card/90 to-accent/5 backdrop-blur-xl border-2 border-accent/20 shadow-accent" style={{ boxShadow: 'var(--shadow-card)' }}>
+              <CardHeader>
+                <CardTitle className="text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  💡 Consejo del Día
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-foreground leading-relaxed">{String(dailyTip)}</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
-        {/* Fertility Tracker - Magical Card */}
-        {cycleInfo?.ovulationDate && (
-          <div className="bg-gradient-to-br from-card/95 via-card/90 to-accent/5 backdrop-blur-xl rounded-3xl border-2 border-accent/20 shadow-accent hover:shadow-glow transition-all duration-500 overflow-hidden mb-6">
-            <FertilityTracker
-              ovulationDate={cycleInfo.ovulationDate}
-              fertileWindowStart={cycleInfo.fertileWindowStart}
-              fertileWindowEnd={cycleInfo.fertileWindowEnd}
-              isFertileWindow={cycleInfo.isFertileWindow}
-            />
-          </div>
-        )}
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 hover:shadow-glow transition-all cursor-pointer" onClick={() => navigate('/recommendations')}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Heart className="h-5 w-5 text-primary" />
+                Recomendaciones Personalizadas
+              </CardTitle>
+              <CardDescription>Basadas en tu fase actual y registros</CardDescription>
+            </CardHeader>
+          </Card>
 
-        {/* Daily Tip - Magical Card with shimmer */}
-        <div className="shimmer bg-gradient-to-br from-card/95 via-primary/5 to-secondary/5 backdrop-blur-xl rounded-3xl border-2 border-primary/20 shadow-elegant hover:shadow-glow transition-all duration-500 overflow-hidden mb-6">
-          <TipCard tip={dailyTip} />
+          <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20 hover:shadow-glow transition-all cursor-pointer" onClick={() => navigate('/history')}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-secondary" />
+                Ver Historial Completo
+              </CardTitle>
+              <CardDescription>Analiza tus patrones y tendencias</CardDescription>
+            </CardHeader>
+          </Card>
         </div>
 
-        {/* Personalized Recommendations - Magical Card */}
-        <div className="bg-gradient-to-br from-card/95 via-secondary/5 to-accent/5 backdrop-blur-xl rounded-3xl border-2 border-secondary/20 shadow-elegant hover:shadow-glow transition-all duration-500 overflow-hidden mb-6">
-          <PersonalizedRecommendations />
-        </div>
-
-        {/* Wellness Tips - Magical Card */}
-        <div className="bg-gradient-to-br from-card/95 via-accent/5 to-primary/5 backdrop-blur-xl rounded-3xl border-2 border-accent/20 shadow-elegant hover:shadow-glow transition-all duration-500 overflow-hidden mb-6">
-          <WellnessTips />
-        </div>
-
-        {/* Data Export - Magical Card */}
-        <div className="bg-gradient-to-br from-card/95 via-primary/5 to-secondary/5 backdrop-blur-xl rounded-3xl border-2 border-primary/20 shadow-elegant hover:shadow-glow transition-all duration-500 overflow-hidden mb-6">
-          <DataExport />
-        </div>
-
-        {/* FAQ Section - Magical Card */}
-        <div className="bg-gradient-to-br from-card/95 via-secondary/5 to-accent/5 backdrop-blur-xl rounded-3xl border-2 border-secondary/20 shadow-elegant hover:shadow-glow transition-all duration-500 overflow-hidden mb-6">
+        {/* FAQ Section */}
+        <div className="bg-gradient-to-br from-card/95 via-card/90 to-primary/5 backdrop-blur-xl rounded-3xl border-2 border-primary/20 shadow-primary overflow-hidden">
           <FAQSection />
         </div>
       </div>
