@@ -172,34 +172,54 @@ const Index = () => {
                   <p className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-sm">{cycleInfo?.currentDay || '—'}</p>
                 </div>
               </div>
-              <div className="space-y-2 pt-3 border-t border-primary/20">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground font-medium">Fase Actual:</span>
-                  <span className="text-xs text-primary font-bold uppercase tracking-wide px-2 py-1 bg-primary/10 rounded-full">
-                    {cycleInfo?.phase || 'Desconocida'}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground font-medium">Duración del Ciclo:</span>
-                  <span className="text-xs text-foreground font-semibold">{profile?.avg_cycle_length || 28} días</span>
-                </div>
-                {cycleInfo?.currentDay && profile?.avg_cycle_length && (
-                  <div className="mt-3">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-xs text-muted-foreground">Progreso</span>
-                      <span className="text-xs text-primary font-bold">
-                        {Math.min(100, Math.round((cycleInfo.currentDay / profile.avg_cycle_length) * 100))}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                      <div 
-                        className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-500"
-                        style={{ width: `${Math.min(100, (cycleInfo.currentDay / profile.avg_cycle_length) * 100)}%` }}
-                      ></div>
-                    </div>
+              {cycleInfo ? (
+                <div className="space-y-2 pt-3 border-t border-primary/20">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground font-medium">Fase Actual:</span>
+                    <span className="text-xs text-primary font-bold uppercase tracking-wide px-2 py-1 bg-primary/10 rounded-full">
+                      {cycleInfo.phase === 'menstruation' ? '🩸 Menstrual' : 
+                       cycleInfo.phase === 'follicular' ? '🌱 Folicular' :
+                       cycleInfo.phase === 'ovulation' ? '🥚 Ovulación' :
+                       cycleInfo.phase === 'luteal' ? '🌸 Lútea' : '🔄 Irregular'}
+                    </span>
                   </div>
-                )}
-              </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground font-medium">Duración del Ciclo:</span>
+                    <span className="text-xs text-foreground font-semibold">{profile?.avg_cycle_length || 28} días</span>
+                  </div>
+                  {cycleInfo.currentDay && profile?.avg_cycle_length && (
+                    <div className="mt-3">
+                      <div className="flex justify-between mb-1">
+                        <span className="text-xs text-muted-foreground">Progreso</span>
+                        <span className="text-xs text-primary font-bold">
+                          {Math.min(100, Math.round((cycleInfo.currentDay / profile.avg_cycle_length) * 100))}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-500"
+                          style={{ width: `${Math.min(100, (cycleInfo.currentDay / profile.avg_cycle_length) * 100)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="pt-3 border-t border-primary/20">
+                  <p className="text-xs text-muted-foreground text-center py-2">
+                    Configura tu fecha de último período en tu perfil para ver información del ciclo
+                  </p>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="w-full mt-2"
+                    onClick={() => navigate('/profile')}
+                  >
+                    <Settings className="h-3 w-3 mr-2" />
+                    Configurar Perfil
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
 
