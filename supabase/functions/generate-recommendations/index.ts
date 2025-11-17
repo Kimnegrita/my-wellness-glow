@@ -26,16 +26,14 @@ serve(async (req) => {
       throw new Error('Missing authorization header');
     }
 
-    // Create Supabase client with the user's token
+    // Extract token
     const token = authHeader.replace('Bearer ', '');
-    const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
-      global: {
-        headers: { Authorization: authHeader }
-      }
-    });
+    
+    // Create Supabase client with anon key
+    const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
 
-    // Verify the user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    // Verify the user by passing the token directly
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
     
     if (authError || !user) {
       console.error('Auth error:', authError);
