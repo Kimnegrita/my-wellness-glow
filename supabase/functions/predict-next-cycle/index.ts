@@ -14,7 +14,7 @@ serve(async (req) => {
   try {
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
-    const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
     if (!LOVABLE_API_KEY) {
       throw new Error('LOVABLE_API_KEY not configured');
@@ -26,15 +26,14 @@ serve(async (req) => {
       throw new Error('Missing authorization header');
     }
 
-    // Create Supabase client with the user's token
-    const supabaseClient = createClient(
-      SUPABASE_URL!,
-      SUPABASE_ANON_KEY!,
-      { global: { headers: { Authorization: authHeader } } }
-    );
+    // Extract JWT token
+    const jwt = authHeader.replace('Bearer ', '');
 
-    // Verify the user
-    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    // Create Supabase client with service role key for admin operations
+    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+
+    // Verify the JWT token and get user
+    const { data: { user }, error: authError } = await supabase.auth.getUser(jwt);
     
     if (authError || !user) {
       console.error('Auth error:', authError);
@@ -44,7 +43,7 @@ serve(async (req) => {
     console.log('Predicting next cycle for user:', user.id);
 
     // Get user profile
-    const { data: profile, error: profileError } = await supabaseClient
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', user.id)
@@ -58,7 +57,7 @@ serve(async (req) => {
     const twelveMonthsAgo = new Date();
     twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
-    const { data: periodLogs, error: logsError } = await supabaseClient
+    const { data: periodLogs, error: logsError } = await supabase
       .from('daily_logs')
       .select('log_date, symptoms')
       .eq('user_id', user.id)
@@ -89,7 +88,7 @@ serve(async (req) => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const { data: recentLogs, error: recentError } = await supabaseClient
+    const { data: recentLogs, error: recentError } = await supabase
       .from('daily_logs')
       .select('symptoms, sentiment_score, log_date')
       .eq('user_id', user.id)
