@@ -284,13 +284,13 @@ const Index = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 hover:shadow-glow transition-all cursor-pointer" onClick={() => navigate('/recommendations')}>
+          <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 hover:shadow-glow transition-all cursor-pointer" onClick={() => navigate('/assistant')}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Heart className="h-5 w-5 text-primary" />
-                Recomendaciones Personalizadas
+                <MessageSquare className="h-5 w-5 text-primary" />
+                Asistente de IA
               </CardTitle>
-              <CardDescription>Basadas en tu fase actual y registros</CardDescription>
+              <CardDescription>Obtén recomendaciones personalizadas basadas en tu fase actual</CardDescription>
             </CardHeader>
           </Card>
 
