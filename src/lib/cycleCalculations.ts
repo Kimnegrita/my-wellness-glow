@@ -97,11 +97,8 @@ export function getCurrentCycleDay(
   
   const daysSinceLastPeriod = differenceInDays(today, lastPeriod);
   
-  if (!avgCycleLength) return daysSinceLastPeriod + 1;
-  
-  // Calculate which day of the cycle we're in
-  const cycleDay = (daysSinceLastPeriod % avgCycleLength) + 1;
-  return cycleDay;
+  // Retornar días desde el último periodo + 1 (día 1 es el primer día del periodo)
+  return daysSinceLastPeriod + 1;
 }
 
 export function getNextPeriodDate(
@@ -191,11 +188,14 @@ export function getCycleInfo(
   logs?: DailyLog[],
   configuredPeriodDuration?: number
 ): CycleInfo | null {
-  if (!lastPeriodDate) return null;
+  if (!lastPeriodDate && !logs) return null;
   
   // Usar datos reales del calendario si están disponibles
   const actualLastPeriod = logs ? findLastPeriodFromLogs(logs) : null;
   const periodToUse = actualLastPeriod || lastPeriodDate;
+  
+  if (!periodToUse) return null;
+  
   const isInPeriodNow = logs ? isCurrentlyInPeriod(logs) : false;
   const periodDuration = configuredPeriodDuration || 
     (logs ? getAveragePeriodDuration(logs) : 5);
