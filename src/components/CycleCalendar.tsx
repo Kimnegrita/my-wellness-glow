@@ -96,6 +96,14 @@ export const CycleCalendar = () => {
     togglePeriodMutation.mutate({ date: selectedDate, isPeriod });
   };
 
+  const handleEditClick = () => {
+    if (!selectedDate) {
+      toast("Selecciona un día del calendario para editar");
+      return;
+    }
+    setIsDialogOpen(true);
+  };
+
   const periodDates = logs?.filter(log => log.period_started || log.period_ended).map(log => parseISO(log.log_date)) || [];
   const loggedDates = logs?.map(log => parseISO(log.log_date)) || [];
   
@@ -108,7 +116,15 @@ export const CycleCalendar = () => {
       <Card className="p-6 animate-fade-in-up bg-gradient-to-br from-card to-primary/5 border-primary/20 backdrop-blur" style={{ boxShadow: 'var(--shadow-card)' }}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-foreground">Calendario de Ciclo</h2>
-          <Edit2 className="h-4 w-4 text-muted-foreground" />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleEditClick}
+            aria-label="Editar día del calendario"
+          >
+            <Edit2 className="h-4 w-4" />
+            <span className="sr-only">Editar</span>
+          </Button>
         </div>
         <p className="text-sm text-muted-foreground mb-6">
           Haz clic en cualquier día para marcar/desmarcar menstruación
