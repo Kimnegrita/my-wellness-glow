@@ -14,7 +14,7 @@ serve(async (req) => {
   try {
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
-    const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
     if (!LOVABLE_API_KEY) {
       throw new Error('LOVABLE_API_KEY not configured');
@@ -26,27 +26,30 @@ serve(async (req) => {
       throw new Error('Missing authorization header');
     }
 
-    // Extract token
+    // Extract token and user id from JWT (verify_jwt=true already validated token)
     const token = authHeader.replace('Bearer ', '');
-    
-    // Create Supabase client with anon key
-    const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
-
-    // Verify the user by passing the token directly
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-    
-    if (authError || !user) {
-      console.error('Auth error:', authError);
+    let userId = '';
+    try {
+      const base64 = token.split('.')[1];
+      const json = new TextDecoder().decode(Uint8Array.from(atob(base64), c => c.charCodeAt(0)));
+      const payload = JSON.parse(json);
+      userId = payload.sub as string;
+      if (!userId) throw new Error('Missing sub in token');
+    } catch (e) {
+      console.error('JWT parse error:', e);
       throw new Error('Unauthorized');
     }
 
-    console.log('Generating recommendations for user:', user.id);
+    // Use service role for backend queries (safe here because JWT is verified)
+    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+
+    console.log('Generating recommendations for user:', userId);
 
     // Get user profile
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
-      .eq('id', user.id)
+      .eq('id', userId)
       .single();
 
     if (profileError) {
@@ -60,7 +63,7 @@ serve(async (req) => {
     const { data: recentLogs, error: logsError } = await supabase
       .from('daily_logs')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .gte('log_date', sevenDaysAgo.toISOString().split('T')[0])
       .order('log_date', { ascending: false })
       .limit(7);
