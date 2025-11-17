@@ -244,44 +244,70 @@ export default function History() {
           {phaseEmotions.length > 0 && (
             <Card className="shadow-elegant border-primary/20 bg-card/95 backdrop-blur animate-fade-in-up">
               <CardHeader>
-                <CardTitle className="text-2xl">Sentimientos por Fase del Ciclo</CardTitle>
-                <CardDescription>Promedio de sentimiento en cada fase</CardDescription>
+                <CardTitle className="text-2xl flex items-center gap-2">
+                  <Activity className="h-6 w-6 text-primary" />
+                  Sentimientos por Fase del Ciclo
+                </CardTitle>
+                <CardDescription>Cómo te sientes en cada etapa de tu ciclo menstrual</CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={350}>
                   <RadarChart data={phaseEmotions}>
-                    <PolarGrid stroke="hsl(var(--border))" />
+                    <PolarGrid 
+                      stroke="hsl(var(--border))" 
+                      strokeWidth={1}
+                    />
                     <PolarAngleAxis 
                       dataKey="fase" 
-                      stroke="hsl(var(--muted-foreground))"
+                      stroke="hsl(var(--foreground))"
+                      tick={{ fill: 'hsl(var(--foreground))', fontSize: 14, fontWeight: 600 }}
                     />
                     <PolarRadiusAxis 
                       angle={90} 
-                      domain={[-1, 1]}
+                      domain={[-1, 1] as [number, number]}
                       stroke="hsl(var(--muted-foreground))"
+                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
                     />
                     <Radar
-                      name="Sentimiento"
+                      name="Sentimiento Promedio"
                       dataKey="sentimiento"
                       stroke="hsl(var(--primary))"
                       fill="hsl(var(--primary))"
                       fillOpacity={0.6}
+                      strokeWidth={2}
                     />
                     <Tooltip 
                       contentStyle={{ 
                         backgroundColor: 'hsl(var(--card))',
-                        border: '1px solid hsl(var(--border))',
-                        borderRadius: '8px'
+                        border: '2px solid hsl(var(--primary))',
+                        borderRadius: '12px',
+                        padding: '12px'
                       }}
-                      formatter={(value: number) => [
-                        value > 0 ? `Positivo (${value.toFixed(2)})` : value < 0 ? `Negativo (${value.toFixed(2)})` : 'Neutral',
-                        'Sentimiento'
-                      ]}
+                      formatter={(value: number) => {
+                        const label = value > 0.3 ? 'Positivo' : value < -0.3 ? 'Negativo' : 'Neutral';
+                        return [`${label} (${value.toFixed(2)})`, 'Sentimiento'];
+                      }}
+                      labelStyle={{ fontWeight: 'bold', marginBottom: '4px' }}
                     />
                   </RadarChart>
                 </ResponsiveContainer>
-                <div className="mt-4 text-xs text-muted-foreground text-center">
-                  Valores: -1 (muy negativo) a +1 (muy positivo)
+                <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-primary/10 border border-primary/20">
+                    <div className="w-3 h-3 rounded-full bg-primary"></div>
+                    <span className="font-medium">Positivo (+1)</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-border">
+                    <div className="w-3 h-3 rounded-full bg-muted-foreground"></div>
+                    <span className="font-medium">Neutral (0)</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                    <div className="w-3 h-3 rounded-full bg-destructive"></div>
+                    <span className="font-medium">Negativo (-1)</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-accent/10 border border-accent/20">
+                    <div className="w-3 h-3 rounded-full bg-accent"></div>
+                    <span className="text-xs text-muted-foreground">Valores entre -1 y +1</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -406,35 +432,73 @@ export default function History() {
           {/* Top Síntomas */}
           <Card className="shadow-elegant border-secondary/20 bg-card/95 backdrop-blur animate-fade-in-up">
             <CardHeader>
-              <CardTitle className="text-2xl">Síntomas Más Frecuentes</CardTitle>
-              <CardDescription>Top 5 síntomas registrados</CardDescription>
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <Activity className="h-6 w-6 text-secondary" />
+                Síntomas Más Frecuentes
+              </CardTitle>
+              <CardDescription>Los 5 síntomas que más has experimentado</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={350}>
                 <PieChart>
                   <Pie
                     data={topSymptoms}
                     cx="50%"
                     cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={80}
+                    labelLine={{
+                      stroke: 'hsl(var(--foreground))',
+                      strokeWidth: 2
+                    }}
+                    label={({ name, percent, value }) => (
+                      `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
+                    )}
+                    outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
+                    paddingAngle={3}
                   >
                     {topSymptoms.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={COLORS[index % COLORS.length]}
+                        stroke="hsl(var(--card))"
+                        strokeWidth={2}
+                      />
                     ))}
                   </Pie>
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px',
+                      border: '2px solid hsl(var(--primary))',
+                      borderRadius: '12px',
+                      padding: '12px'
                     }}
+                    formatter={(value: number, name: string) => [`${value} veces`, name]}
+                    labelStyle={{ fontWeight: 'bold', marginBottom: '8px' }}
+                  />
+                  <Legend
+                    verticalAlign="bottom"
+                    height={50}
+                    formatter={(value) => (
+                      <span style={{ fontSize: '14px', fontWeight: 500 }}>{value}</span>
+                    )}
                   />
                 </PieChart>
               </ResponsiveContainer>
+              <div className="mt-4 grid grid-cols-1 gap-2">
+                {topSymptoms.map((symptom, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-2 rounded-lg bg-muted/30 border border-border">
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: COLORS[idx % COLORS.length] }}
+                      ></div>
+                      <span className="font-semibold text-foreground">{symptom.name}</span>
+                    </div>
+                    <Badge variant="secondary">{symptom.value} registros</Badge>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>
