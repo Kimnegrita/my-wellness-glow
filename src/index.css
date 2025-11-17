@@ -6,49 +6,49 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 330 100% 98%;
     --foreground: 280 10% 10%;
     --card: 0 0% 100%;
     --card-foreground: 280 10% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 280 10% 10%;
     
-    /* Paleta predominantemente púrpura con toques rosa y brillo mejorado */
-    --primary: 280 75% 65%;
+    /* Paleta suave rosa-lila pastel */
+    --primary: 320 65% 65%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 85% 75%;
+    --primary-glow: 330 75% 75%;
     
-    --secondary: 290 65% 92%;
+    --secondary: 280 50% 95%;
     --secondary-foreground: 280 10% 10%;
     
-    --accent: 320 75% 88%;
+    --accent: 30 90% 70%;
     --accent-foreground: 280 10% 10%;
     
-    --muted: 285 30% 96%;
+    --muted: 280 20% 96%;
     --muted-foreground: 280 10% 45%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 285 20% 90%;
-    --input: 285 20% 85%;
-    --ring: 280 75% 65%;
+    --border: 280 20% 92%;
+    --input: 280 15% 95%;
+    --ring: 320 65% 65%;
     
     --radius: 0.75rem;
     
-    /* Sombras con efectos de brillo púrpura mejorados */
-    --shadow-card: 0 4px 20px -2px hsl(280 75% 65% / 0.15);
-    --shadow-glow: 0 0 40px hsl(280 75% 75% / 0.4), 0 0 80px hsl(320 75% 70% / 0.2);
-    --shadow-elegant: 0 10px 40px -10px hsl(280 75% 65% / 0.3);
-    --shadow-soft: 0 2px 10px -2px hsl(280 50% 70% / 0.2);
+    /* Sombras suaves y elegantes */
+    --shadow-card: 0 2px 15px -3px hsl(320 50% 70% / 0.12);
+    --shadow-glow: 0 0 30px hsl(320 70% 70% / 0.3), 0 0 60px hsl(30 90% 70% / 0.15);
+    --shadow-elegant: 0 8px 30px -8px hsl(320 60% 65% / 0.2);
+    --shadow-soft: 0 1px 8px -2px hsl(320 50% 70% / 0.15);
     
-    /* Gradientes púrpura con toques rosa */
-    --gradient-primary: linear-gradient(135deg, hsl(280 75% 65%), hsl(290 70% 75%));
-    --gradient-purple: linear-gradient(135deg, hsl(280 75% 68%), hsl(260 70% 72%));
-    --gradient-rose-purple: linear-gradient(135deg, hsl(320 75% 70%), hsl(280 75% 65%));
-    --gradient-glow: linear-gradient(135deg, hsl(280 85% 75%), hsl(320 80% 75%));
-    --gradient-subtle: linear-gradient(180deg, hsl(285 30% 98%), hsl(280 25% 96%));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(285 30% 98%));
+    /* Gradientes suaves rosa-naranja */
+    --gradient-primary: linear-gradient(135deg, hsl(320 70% 65%), hsl(30 95% 70%));
+    --gradient-purple: linear-gradient(135deg, hsl(280 60% 75%), hsl(260 55% 80%));
+    --gradient-rose-purple: linear-gradient(135deg, hsl(330 70% 75%), hsl(280 60% 75%));
+    --gradient-glow: linear-gradient(135deg, hsl(320 75% 70%), hsl(30 90% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(330 100% 98%), hsl(280 60% 97%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(330 80% 98%));
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -68,46 +68,46 @@
   }
 
   .dark {
-    --background: 280 20% 8%;
+    --background: 280 20% 10%;
     --foreground: 280 10% 95%;
-    --card: 280 15% 12%;
+    --card: 280 15% 14%;
     --card-foreground: 280 10% 95%;
-    --popover: 280 15% 12%;
+    --popover: 280 15% 14%;
     --popover-foreground: 280 10% 95%;
     
-    --primary: 280 75% 70%;
-    --primary-foreground: 280 20% 8%;
-    --primary-glow: 280 85% 78%;
+    --primary: 320 65% 70%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 330 75% 78%;
     
-    --secondary: 280 25% 18%;
+    --secondary: 280 25% 20%;
     --secondary-foreground: 280 10% 95%;
     
-    --accent: 320 60% 25%;
+    --accent: 30 80% 60%;
     --accent-foreground: 280 10% 95%;
     
-    --muted: 280 15% 15%;
-    --muted-foreground: 280 10% 60%;
+    --muted: 280 15% 18%;
+    --muted-foreground: 280 10% 65%;
     
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 280 15% 20%;
-    --input: 280 15% 20%;
-    --ring: 280 75% 70%;
+    --border: 280 15% 22%;
+    --input: 280 15% 22%;
+    --ring: 320 65% 70%;
     
-    /* Sombras con efectos de brillo púrpura - dark mode */
-    --shadow-card: 0 4px 20px -2px hsl(280 75% 40% / 0.25);
-    --shadow-glow: 0 0 50px hsl(280 75% 60% / 0.3), 0 0 100px hsl(320 75% 55% / 0.15);
-    --shadow-elegant: 0 10px 40px -10px hsl(280 75% 50% / 0.4);
-    --shadow-soft: 0 2px 10px -2px hsl(280 50% 50% / 0.3);
+    /* Sombras suaves - dark mode */
+    --shadow-card: 0 2px 15px -3px hsl(320 50% 50% / 0.2);
+    --shadow-glow: 0 0 35px hsl(320 70% 60% / 0.25), 0 0 70px hsl(30 80% 60% / 0.12);
+    --shadow-elegant: 0 8px 30px -8px hsl(320 60% 55% / 0.3);
+    --shadow-soft: 0 1px 8px -2px hsl(320 50% 50% / 0.2);
     
-    /* Gradientes - dark mode */
-    --gradient-primary: linear-gradient(135deg, hsl(280 75% 55%), hsl(290 70% 60%));
-    --gradient-purple: linear-gradient(135deg, hsl(280 75% 50%), hsl(260 70% 55%));
-    --gradient-rose-purple: linear-gradient(135deg, hsl(320 75% 55%), hsl(280 75% 50%));
-    --gradient-glow: linear-gradient(135deg, hsl(280 85% 60%), hsl(320 80% 60%));
-    --gradient-subtle: linear-gradient(180deg, hsl(280 20% 10%), hsl(280 15% 8%));
-    --gradient-card: linear-gradient(135deg, hsl(280 15% 12%), hsl(280 20% 10%));
+    /* Gradientes suaves - dark mode */
+    --gradient-primary: linear-gradient(135deg, hsl(320 65% 60%), hsl(30 85% 65%));
+    --gradient-purple: linear-gradient(135deg, hsl(280 60% 65%), hsl(260 55% 70%));
+    --gradient-rose-purple: linear-gradient(135deg, hsl(330 70% 65%), hsl(280 60% 65%));
+    --gradient-glow: linear-gradient(135deg, hsl(320 70% 65%), hsl(30 85% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(280 20% 12%), hsl(280 15% 10%));
+    --gradient-card: linear-gradient(135deg, hsl(280 15% 14%), hsl(280 20% 12%));
 
     --sidebar-background: 280 20% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -175,10 +175,10 @@
   
   @keyframes glowPulse {
     0%, 100% {
-      filter: drop-shadow(0 0 25px hsl(280 75% 70% / 0.7)) drop-shadow(0 0 15px hsl(320 75% 65% / 0.5));
+      filter: drop-shadow(0 0 20px hsl(320 70% 70% / 0.5)) drop-shadow(0 0 12px hsl(30 90% 70% / 0.4));
     }
     50% {
-      filter: drop-shadow(0 0 40px hsl(280 75% 70% / 0.9)) drop-shadow(0 0 25px hsl(320 75% 65% / 0.7));
+      filter: drop-shadow(0 0 30px hsl(320 70% 70% / 0.7)) drop-shadow(0 0 18px hsl(30 90% 70% / 0.6));
     }
   }
 
