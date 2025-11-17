@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -45,7 +45,7 @@ const PersonalizedRecommendations = () => {
     };
   };
 
-  const fetchRecommendations = async () => {
+  const fetchRecommendations = useCallback(async () => {
     if (!user) return;
 
     setIsLoading(true);
@@ -71,11 +71,11 @@ const PersonalizedRecommendations = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user, t]);
 
   useEffect(() => {
     fetchRecommendations();
-  }, [user]);
+  }, [fetchRecommendations]);
 
   if (!recommendations && !isLoading) {
     return null;

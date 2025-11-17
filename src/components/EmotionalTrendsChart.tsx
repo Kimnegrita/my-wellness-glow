@@ -165,7 +165,7 @@ const EmotionalTrendsChart = ({ userId }: EmotionalTrendsChartProps) => {
                   borderRadius: '8px',
                 }}
                 labelFormatter={(value) => `${t('trends.day')} ${value}`}
-                formatter={(value: any) => [value.toFixed(2), t('trends.score')]}
+                formatter={(value: number) => [value.toFixed(2), t('trends.score')]}
               />
               <Area 
                 type="monotone" 
@@ -202,13 +202,13 @@ const EmotionalTrendsChart = ({ userId }: EmotionalTrendsChartProps) => {
                 stroke="hsl(var(--muted-foreground))"
                 style={{ fontSize: '12px' }}
               />
-              <Tooltip 
-                contentStyle={{ 
+              <Tooltip
+                contentStyle={{
                   backgroundColor: 'hsl(var(--card))',
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '8px',
                 }}
-                formatter={(value: any) => value.toFixed(2)}
+                formatter={(value: number) => value.toFixed(2)}
               />
               <Bar 
                 dataKey="average" 
