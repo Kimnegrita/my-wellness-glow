@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval, subMonths } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import EmotionalInsights from '@/components/EmotionalInsights';
+import SentimentAnalysis from '@/components/SentimentAnalysis';
+import EmotionalTrendsChart from '@/components/EmotionalTrendsChart';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--destructive))', 'hsl(var(--muted))'];
 
@@ -86,10 +89,21 @@ export default function History() {
 
         {/* Header */}
         <div className="space-y-2 animate-fade-in-up">
-          <h1 className="text-4xl font-bold text-gradient">Historial y Estadísticas</h1>
-          <p className="text-muted-foreground text-lg">
-            Visualiza tus patrones de bienestar de los últimos 3 meses
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-gradient">Historial y Estadísticas</h1>
+              <p className="text-muted-foreground text-lg">
+                Visualiza tus patrones de bienestar de los últimos 3 meses
+              </p>
+            </div>
+            <Button 
+              onClick={() => navigate('/cycle-comparison')}
+              className="bg-gradient-primary hover:opacity-90"
+            >
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Comparar Ciclos
+            </Button>
+          </div>
         </div>
 
         {/* Summary Cards */}
@@ -145,6 +159,12 @@ export default function History() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Emotional Insights */}
+        {user && <EmotionalInsights userId={user.id} />}
+
+        {/* Emotional Trends Charts */}
+        {user && <EmotionalTrendsChart userId={user.id} />}
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -265,6 +285,16 @@ export default function History() {
                       <p className="text-sm text-muted-foreground italic">
                         "{log.journal_entry.substring(0, 100)}{log.journal_entry.length > 100 ? '...' : ''}"
                       </p>
+                    )}
+
+                    {/* Sentiment Analysis for this log */}
+                    {((Array.isArray(log.emotional_patterns) && log.emotional_patterns.length > 0) || log.ai_insights) && (
+                      <div className="mt-3">
+                        <SentimentAnalysis
+                          emotionalPatterns={Array.isArray(log.emotional_patterns) ? log.emotional_patterns.filter((p): p is string => typeof p === 'string') : []}
+                          aiInsights={typeof log.ai_insights === 'string' ? log.ai_insights : undefined}
+                        />
+                      </div>
                     )}
                   </div>
                 </div>

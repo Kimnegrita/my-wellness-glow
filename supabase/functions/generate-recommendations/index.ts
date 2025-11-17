@@ -20,29 +20,36 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
-
     // Get the authorization header
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       throw new Error('Missing authorization header');
     }
 
-    // Verify the user
+    // Extract token and user id from JWT (verify_jwt=true already validated token)
     const token = authHeader.replace('Bearer ', '');
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-    
-    if (authError || !user) {
+    let userId = '';
+    try {
+      const base64 = token.split('.')[1];
+      const json = new TextDecoder().decode(Uint8Array.from(atob(base64), c => c.charCodeAt(0)));
+      const payload = JSON.parse(json);
+      userId = payload.sub as string;
+      if (!userId) throw new Error('Missing sub in token');
+    } catch (e) {
+      console.error('JWT parse error:', e);
       throw new Error('Unauthorized');
     }
 
-    console.log('Generating recommendations for user:', user.id);
+    // Use service role for backend queries (safe here because JWT is verified)
+    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+
+    console.log('Generating recommendations for user:', userId);
 
     // Get user profile
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
-      .eq('id', user.id)
+      .eq('id', userId)
       .single();
 
     if (profileError) {
@@ -56,7 +63,7 @@ serve(async (req) => {
     const { data: recentLogs, error: logsError } = await supabase
       .from('daily_logs')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .gte('log_date', sevenDaysAgo.toISOString().split('T')[0])
       .order('log_date', { ascending: false })
       .limit(7);

@@ -6,106 +6,100 @@
 
 @layer base {
   :root {
-    --background: 280 25% 98%;
-    --foreground: 280 20% 15%;
+    --background: 0 0% 100%;
+    --foreground: 280 10% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 280 20% 15%;
+    --card-foreground: 280 10% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 280 20% 15%;
+    --popover-foreground: 280 10% 15%;
     
-    /* Paleta predominantemente púrpura con toques rosa y brillo */
-    --primary: 280 80% 65%;
+    /* Vibrant purple/pink/gold palette from logo - INTENSIFIED */
+    --primary: 280 95% 65%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 90% 75%;
+    --primary-glow: 280 100% 75%;
     
-    --secondary: 320 75% 68%;
+    --secondary: 320 90% 70%;
     --secondary-foreground: 0 0% 100%;
     
-    --accent: 280 65% 72%;
-    --accent-foreground: 280 20% 15%;
+    --accent: 45 100% 70%;
+    --accent-foreground: 280 10% 15%;
     
-    --muted: 280 20% 96%;
-    --muted-foreground: 280 15% 50%;
+    --muted: 280 10% 96%;
+    --muted-foreground: 280 5% 45%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 280 25% 90%;
-    --input: 280 25% 90%;
-    --ring: 280 80% 65%;
+    --border: 280 10% 88%;
+    --input: 280 10% 88%;
+    --ring: 280 75% 60%;
     
     --radius: 0.75rem;
     
-    /* Sombras con efectos de brillo púrpura */
-    --shadow-card: 0 4px 12px -2px rgba(139, 92, 246, 0.15), 0 2px 6px -1px rgba(168, 85, 247, 0.1);
-    --shadow-glow: 0 0 60px rgba(139, 92, 246, 0.6), 0 0 35px rgba(168, 85, 247, 0.4), 0 0 20px rgba(192, 132, 252, 0.3);
-    --shadow-elegant: 0 12px 40px -12px rgba(139, 92, 246, 0.4), 0 8px 24px -8px rgba(168, 85, 247, 0.3);
+    /* Custom shadows with glow effect - INTENSIFIED */
+    --shadow-card: 0 4px 6px -1px rgba(168, 85, 247, 0.3), 0 2px 4px -1px rgba(168, 85, 247, 0.2);
+    --shadow-glow: 0 0 60px rgba(168, 85, 247, 0.7);
+    --shadow-elegant: 0 10px 40px -10px rgba(168, 85, 247, 0.5);
     
-    /* Gradientes púrpura con toques rosa */
-    --gradient-primary: linear-gradient(135deg, hsl(280 80% 65%), hsl(270 75% 70%), hsl(320 70% 68%));
-    --gradient-purple: linear-gradient(135deg, hsl(280 80% 65%), hsl(260 75% 72%));
-    --gradient-rose-purple: linear-gradient(135deg, hsl(320 75% 68%), hsl(280 70% 70%));
-    --gradient-glow: linear-gradient(135deg, hsl(280 90% 75%), hsl(270 85% 78%), hsl(320 80% 75%));
-    --gradient-subtle: linear-gradient(180deg, hsl(280 25% 98%), hsl(280 20% 96%));
-    --gradient-card: linear-gradient(to bottom right, hsl(280 80% 65% / 0.15), hsl(320 75% 68% / 0.12));
+    /* Gradients - INTENSIFIED */
+    --gradient-primary: linear-gradient(135deg, hsl(280 95% 65%), hsl(320 90% 70%), hsl(45 100% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(280 85% 98%), hsl(320 80% 98%));
+    --gradient-card: linear-gradient(to bottom right, hsl(280 95% 65% / 0.2), hsl(320 90% 70% / 0.2));
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 280 80% 65%;
+    --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 280 20% 95%;
+    --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 280 25% 90%;
-    --sidebar-ring: 280 80% 65%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 280 25% 8%;
-    --foreground: 280 15% 95%;
-    --card: 280 20% 12%;
-    --card-foreground: 280 15% 95%;
-    --popover: 280 20% 12%;
-    --popover-foreground: 280 15% 95%;
+    --background: 280 15% 8%;
+    --foreground: 280 5% 95%;
+    --card: 280 12% 12%;
+    --card-foreground: 280 5% 95%;
+    --popover: 280 12% 12%;
+    --popover-foreground: 280 5% 95%;
     
-    --primary: 280 80% 68%;
+    --primary: 280 95% 65%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 90% 78%;
+    --primary-glow: 280 100% 75%;
     
-    --secondary: 320 75% 70%;
+    --secondary: 320 90% 70%;
     --secondary-foreground: 0 0% 100%;
     
-    --accent: 280 65% 75%;
-    --accent-foreground: 280 15% 95%;
+    --accent: 45 100% 70%;
+    --accent-foreground: 280 5% 95%;
     
-    --muted: 280 18% 20%;
-    --muted-foreground: 280 12% 70%;
+    --muted: 280 10% 20%;
+    --muted-foreground: 280 5% 65%;
     
-    --destructive: 0 72% 55%;
+    --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 280 18% 22%;
-    --input: 280 18% 22%;
-    --ring: 280 80% 68%;
+    --border: 280 10% 20%;
+    --input: 280 10% 20%;
+    --ring: 280 75% 60%;
     
-    --shadow-card: 0 4px 12px -2px rgba(139, 92, 246, 0.3), 0 2px 6px -1px rgba(168, 85, 247, 0.2);
-    --shadow-glow: 0 0 70px rgba(139, 92, 246, 0.7), 0 0 45px rgba(168, 85, 247, 0.5), 0 0 25px rgba(192, 132, 252, 0.4);
-    --shadow-elegant: 0 12px 45px -12px rgba(139, 92, 246, 0.5), 0 8px 28px -8px rgba(168, 85, 247, 0.4);
+    --shadow-card: 0 4px 6px -1px rgba(168, 85, 247, 0.4), 0 2px 4px -1px rgba(168, 85, 247, 0.3);
+    --shadow-glow: 0 0 70px rgba(168, 85, 247, 0.8);
+    --shadow-elegant: 0 10px 50px -10px rgba(168, 85, 247, 0.6);
     
-    --gradient-primary: linear-gradient(135deg, hsl(280 80% 68%), hsl(270 75% 72%), hsl(320 70% 70%));
-    --gradient-purple: linear-gradient(135deg, hsl(280 80% 68%), hsl(260 75% 75%));
-    --gradient-rose-purple: linear-gradient(135deg, hsl(320 75% 70%), hsl(280 70% 72%));
-    --gradient-glow: linear-gradient(135deg, hsl(280 90% 78%), hsl(270 85% 80%), hsl(320 80% 78%));
-    --gradient-subtle: linear-gradient(180deg, hsl(280 25% 10%), hsl(280 20% 12%));
-    --gradient-card: linear-gradient(to bottom right, hsl(280 80% 68% / 0.2), hsl(320 75% 70% / 0.18));
+    --gradient-primary: linear-gradient(135deg, hsl(280 95% 65%), hsl(320 90% 70%), hsl(45 100% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(280 25% 12%), hsl(320 25% 14%));
+    --gradient-card: linear-gradient(to bottom right, hsl(280 95% 65% / 0.25), hsl(320 90% 70% / 0.25));
 
-    --sidebar-background: 280 20% 10%;
+    --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 280 80% 68%;
+    --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 280 18% 18%;
+    --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 280 18% 18%;
-    --sidebar-ring: 280 80% 68%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -157,22 +151,10 @@
   
   @keyframes glowPulse {
     0%, 100% {
-      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.7)) drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+      filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
     }
     50% {
-      filter: drop-shadow(0 0 35px rgba(139, 92, 246, 1)) drop-shadow(0 0 20px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 10px rgba(192, 132, 252, 0.6));
+      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
     }
-  }
-  
-  .gradient-purple {
-    background-image: var(--gradient-purple);
-  }
-  
-  .gradient-rose-purple {
-    background-image: var(--gradient-rose-purple);
-  }
-  
-  .gradient-glow {
-    background-image: var(--gradient-glow);
   }
 }
