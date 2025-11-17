@@ -6,18 +6,24 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, TrendingUp, Calendar, Activity } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval, subMonths } from 'date-fns';
+import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval, subMonths, differenceInDays } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Area, AreaChart } from 'recharts';
 import EmotionalInsights from '@/components/EmotionalInsights';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
 import EmotionalTrendsChart from '@/components/EmotionalTrendsChart';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--destructive))', 'hsl(var(--muted))'];
+const PHASE_COLORS = {
+  'Menstrual': 'hsl(var(--destructive))',
+  'Folicular': 'hsl(var(--primary))',
+  'Ovulación': 'hsl(var(--accent))',
+  'Lútea': 'hsl(var(--secondary))',
+};
 
 export default function History() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
 
   // Fetch logs for last 3 months
   const { data: logs } = useQuery({
@@ -74,6 +80,72 @@ export default function History() {
     fecha: format(parseISO(log.log_date), 'dd MMM', { locale: es }),
     dia: parseISO(log.log_date).getTime(),
   }));
+
+  // NEW: Sentimientos por fase del ciclo
+  const sentimentByPhase = () => {
+    if (!logs || !profile?.avg_cycle_length) return [];
+    
+    const phaseData: Record<string, { total: number; count: number }> = {
+      'Menstrual': { total: 0, count: 0 },
+      'Folicular': { total: 0, count: 0 },
+      'Ovulación': { total: 0, count: 0 },
+      'Lútea': { total: 0, count: 0 },
+    };
+
+    // Find period starts to calculate phases
+    const periodStarts = logs.filter(log => log.period_started).map(log => parseISO(log.log_date));
+    
+    logs.forEach(log => {
+      if (log.sentiment_score === null) return;
+      
+      const logDate = parseISO(log.log_date);
+      // Find which cycle this log belongs to
+      const lastPeriodBefore = periodStarts
+        .filter(start => start <= logDate)
+        .sort((a, b) => b.getTime() - a.getTime())[0];
+      
+      if (!lastPeriodBefore) return;
+      
+      const cycleDay = differenceInDays(logDate, lastPeriodBefore) + 1;
+      const cycleLen = profile.avg_cycle_length;
+      const periodDuration = profile.avg_period_duration || 5;
+      
+      let phase = 'Menstrual';
+      if (cycleDay > periodDuration && cycleDay <= Math.floor(cycleLen / 2) - 2) {
+        phase = 'Folicular';
+      } else if (cycleDay > Math.floor(cycleLen / 2) - 2 && cycleDay <= Math.floor(cycleLen / 2) + 2) {
+        phase = 'Ovulación';
+      } else if (cycleDay > Math.floor(cycleLen / 2) + 2) {
+        phase = 'Lútea';
+      }
+      
+      phaseData[phase].total += Number(log.sentiment_score);
+      phaseData[phase].count += 1;
+    });
+
+    return Object.entries(phaseData).map(([fase, data]) => ({
+      fase,
+      sentimiento: data.count > 0 ? (data.total / data.count) : 0,
+      registros: data.count,
+    }));
+  };
+
+  // NEW: Evolución temporal de sentimientos
+  const sentimentOverTime = () => {
+    if (!logs) return [];
+    
+    return logs
+      .filter(log => log.sentiment_score !== null)
+      .map(log => ({
+        fecha: format(parseISO(log.log_date), 'dd MMM', { locale: es }),
+        sentimiento: Number(log.sentiment_score),
+        timestamp: parseISO(log.log_date).getTime(),
+      }))
+      .sort((a, b) => a.timestamp - b.timestamp);
+  };
+
+  const phaseEmotions = sentimentByPhase();
+  const timelineEmotions = sentimentOverTime();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 p-4">
@@ -168,6 +240,127 @@ export default function History() {
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* NEW: Sentimientos por Fase del Ciclo */}
+          {phaseEmotions.length > 0 && (
+            <Card className="shadow-elegant border-primary/20 bg-card/95 backdrop-blur animate-fade-in-up">
+              <CardHeader>
+                <CardTitle className="text-2xl">Sentimientos por Fase del Ciclo</CardTitle>
+                <CardDescription>Promedio de sentimiento en cada fase</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <RadarChart data={phaseEmotions}>
+                    <PolarGrid stroke="hsl(var(--border))" />
+                    <PolarAngleAxis 
+                      dataKey="fase" 
+                      stroke="hsl(var(--muted-foreground))"
+                    />
+                    <PolarRadiusAxis 
+                      angle={90} 
+                      domain={[-1, 1]}
+                      stroke="hsl(var(--muted-foreground))"
+                    />
+                    <Radar
+                      name="Sentimiento"
+                      dataKey="sentimiento"
+                      stroke="hsl(var(--primary))"
+                      fill="hsl(var(--primary))"
+                      fillOpacity={0.6}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                      formatter={(value: number) => [
+                        value > 0 ? `Positivo (${value.toFixed(2)})` : value < 0 ? `Negativo (${value.toFixed(2)})` : 'Neutral',
+                        'Sentimiento'
+                      ]}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+                <div className="mt-4 text-xs text-muted-foreground text-center">
+                  Valores: -1 (muy negativo) a +1 (muy positivo)
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* NEW: Evolución Temporal de Sentimientos */}
+          {timelineEmotions.length > 0 && (
+            <Card className="shadow-elegant border-secondary/20 bg-card/95 backdrop-blur animate-fade-in-up">
+              <CardHeader>
+                <CardTitle className="text-2xl">Evolución de Sentimientos</CardTitle>
+                <CardDescription>Tendencia emocional a lo largo del tiempo</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <AreaChart data={timelineEmotions}>
+                    <defs>
+                      <linearGradient id="colorSentiment" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="fecha" 
+                      stroke="hsl(var(--muted-foreground))"
+                      tick={{ fontSize: 12 }}
+                    />
+                    <YAxis 
+                      stroke="hsl(var(--muted-foreground))"
+                      domain={[-1, 1]}
+                      ticks={[-1, -0.5, 0, 0.5, 1]}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                      formatter={(value: number) => [
+                        value > 0 ? `Positivo (${value.toFixed(2)})` : value < 0 ? `Negativo (${value.toFixed(2)})` : 'Neutral',
+                        'Sentimiento'
+                      ]}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="sentimiento"
+                      stroke="hsl(var(--primary))"
+                      strokeWidth={2}
+                      fillOpacity={1}
+                      fill="url(#colorSentiment)"
+                    />
+                    {/* Reference line at 0 */}
+                    <Line 
+                      type="monotone" 
+                      dataKey={() => 0} 
+                      stroke="hsl(var(--muted-foreground))" 
+                      strokeDasharray="5 5"
+                      dot={false}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+                <div className="mt-4 flex justify-around text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    Positivo (+1)
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+                    Neutral (0)
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    Negativo (-1)
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Registros por Mes */}
           <Card className="shadow-elegant border-primary/20 bg-card/95 backdrop-blur animate-fade-in-up">
             <CardHeader>
