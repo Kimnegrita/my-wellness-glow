@@ -15,10 +15,12 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
 
   // Redirect if already authenticated
-  if (user) {
-    if (profile?.name) {
+  if (user && profile) {
+    // Si ya tiene nombre, ir directo al dashboard
+    if (profile.name) {
       navigate('/', { replace: true });
     } else {
+      // Solo ir a onboarding si NO tiene nombre
       navigate('/onboarding', { replace: true });
     }
     return null;
