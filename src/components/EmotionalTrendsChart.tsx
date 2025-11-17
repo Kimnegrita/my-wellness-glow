@@ -75,27 +75,20 @@ const EmotionalTrendsChart = ({ userId }: EmotionalTrendsChartProps) => {
       // Group by phase for average sentiment
       const phaseStats = logsWithPhase.reduce((acc, log) => {
         if (!acc[log.phase]) {
-          acc[log.phase] = { scores: [], count: 0, positive: 0, neutral: 0, negative: 0 };
+          acc[log.phase] = { scores: [], count: 0 };
         }
         if (log.sentimentValue !== null && log.sentimentValue !== undefined) {
           acc[log.phase].scores.push(log.sentimentValue);
           acc[log.phase].count++;
-          
-          if (log.sentiment_label === 'positive') acc[log.phase].positive++;
-          else if (log.sentiment_label === 'neutral') acc[log.phase].neutral++;
-          else if (log.sentiment_label === 'negative') acc[log.phase].negative++;
         }
         return acc;
-      }, {} as Record<string, { scores: number[], count: number, positive: number, neutral: number, negative: number }>);
+      }, {} as Record<string, { scores: number[], count: number }>);
 
       const phaseAverages = Object.entries(phaseStats).map(([phase, stats]) => ({
         phase,
         average: stats.scores.length > 0 
           ? stats.scores.reduce((a, b) => a + b, 0) / stats.scores.length 
           : 0,
-        positive: stats.positive,
-        neutral: stats.neutral,
-        negative: stats.negative,
         total: stats.count,
       }));
 
@@ -222,61 +215,6 @@ const EmotionalTrendsChart = ({ userId }: EmotionalTrendsChartProps) => {
                   />
                 ))}
               </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      {/* Sentiment Distribution by Phase */}
-      <Card className="shadow-elegant border-accent/20 bg-card/95 backdrop-blur lg:col-span-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-accent" />
-            {t('trends.distributionByPhase')}
-          </CardTitle>
-          <CardDescription>{t('trends.positiveNeutralNegative')}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={sortedPhaseAverages}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis 
-                dataKey="phase" 
-                stroke="hsl(var(--muted-foreground))"
-                style={{ fontSize: '12px' }}
-              />
-              <YAxis 
-                stroke="hsl(var(--muted-foreground))"
-                style={{ fontSize: '12px' }}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))',
-                  borderRadius: '8px',
-                }}
-              />
-              <Legend />
-              <Bar 
-                dataKey="positive" 
-                stackId="a" 
-                fill="hsl(142, 76%, 36%)"
-                name={t('sentiment.positive')}
-                radius={[0, 0, 0, 0]}
-              />
-              <Bar 
-                dataKey="neutral" 
-                stackId="a" 
-                fill="hsl(47, 96%, 53%)"
-                name={t('sentiment.neutral')}
-              />
-              <Bar 
-                dataKey="negative" 
-                stackId="a" 
-                fill="hsl(0, 84%, 60%)"
-                name={t('sentiment.negative')}
-                radius={[8, 8, 0, 0]}
-              />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>

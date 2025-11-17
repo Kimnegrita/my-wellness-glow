@@ -18,11 +18,6 @@ interface CycleData {
   length: number;
   symptoms: Record<string, number>;
   averageSentiment: number;
-  sentimentDistribution: {
-    positive: number;
-    neutral: number;
-    negative: number;
-  };
   phaseSymptoms: Record<string, string[]>;
 }
 
@@ -84,12 +79,6 @@ export default function CycleComparison() {
           ? sentiments.reduce((a, b) => a + b, 0) / sentiments.length
           : 0;
 
-        const sentimentDist = {
-          positive: cycleLogs.filter(l => l.sentiment_label === 'positive').length,
-          neutral: cycleLogs.filter(l => l.sentiment_label === 'neutral').length,
-          negative: cycleLogs.filter(l => l.sentiment_label === 'negative').length,
-        };
-
         // Group symptoms by phase
         const phaseSymptoms: Record<string, string[]> = {
           'Menstrual': [],
@@ -125,7 +114,6 @@ export default function CycleComparison() {
           length: Math.abs(cycleLength),
           symptoms: symptomCounts,
           averageSentiment: avgSentiment,
-          sentimentDistribution: sentimentDist,
           phaseSymptoms,
         });
       }
@@ -175,9 +163,6 @@ export default function CycleComparison() {
   const sentimentComparisonData = cyclesData.map(cycle => ({
     cycle: `Ciclo ${cycle.cycleNumber}`,
     sentiment: cycle.averageSentiment,
-    positive: cycle.sentimentDistribution.positive,
-    neutral: cycle.sentimentDistribution.neutral,
-    negative: cycle.sentimentDistribution.negative,
   }));
 
   // Top 5 most common symptoms across all cycles
@@ -316,15 +301,15 @@ export default function CycleComparison() {
             </CardContent>
           </Card>
 
-          {/* Sentiment Distribution */}
+          {/* Average Sentiment Over Time */}
           <Card className="shadow-elegant border-accent/20">
             <CardHeader>
-              <CardTitle>{t('comparison.sentimentDistribution')}</CardTitle>
-              <CardDescription>{t('comparison.emotionalBalance')}</CardDescription>
+              <CardTitle>{t('comparison.sentimentTrend')}</CardTitle>
+              <CardDescription>Evolución del estado emocional</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={sentimentComparisonData}>
+                <LineChart data={sentimentComparisonData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="cycle" stroke="hsl(var(--muted-foreground))" style={{ fontSize: '11px' }} />
                   <YAxis stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} />
@@ -336,10 +321,14 @@ export default function CycleComparison() {
                     }}
                   />
                   <Legend />
-                  <Bar dataKey="positive" stackId="a" fill="hsl(142, 76%, 36%)" name={t('sentiment.positive')} />
-                  <Bar dataKey="neutral" stackId="a" fill="hsl(47, 96%, 53%)" name={t('sentiment.neutral')} />
-                  <Bar dataKey="negative" stackId="a" fill="hsl(0, 84%, 60%)" name={t('sentiment.negative')} radius={[8, 8, 0, 0]} />
-                </BarChart>
+                  <Line 
+                    type="monotone" 
+                    dataKey="sentiment" 
+                    stroke="hsl(var(--primary))" 
+                    strokeWidth={2}
+                    name="Estado emocional"
+                  />
+                </LineChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
@@ -431,9 +420,9 @@ export default function CycleComparison() {
                         )}
                         <span className="text-sm">
                           {cycle.averageSentiment > 0.3
-                            ? t('sentiment.positive')
+                            ? "Elevado"
                             : cycle.averageSentiment < -0.3
-                            ? t('sentiment.negative')
+                            ? "Bajo"
                             : t('sentiment.neutral')}
                         </span>
                         <span className="text-xs text-muted-foreground">

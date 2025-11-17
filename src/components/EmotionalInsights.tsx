@@ -80,77 +80,47 @@ const EmotionalInsights = ({ userId }: EmotionalInsightsProps) => {
         <CardDescription>{t('insights.last30days')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Sentiment Distribution */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="text-center p-3 rounded-lg bg-green-500/10">
-            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-              {sentimentCounts.positive || 0}
-            </div>
-            <div className="text-xs text-muted-foreground">{t('sentiment.positive')}</div>
-          </div>
-          <div className="text-center p-3 rounded-lg bg-yellow-500/10">
-            <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
-              {sentimentCounts.neutral || 0}
-            </div>
-            <div className="text-xs text-muted-foreground">{t('sentiment.neutral')}</div>
-          </div>
-          <div className="text-center p-3 rounded-lg bg-red-500/10">
-            <div className="text-2xl font-bold text-red-600 dark:text-red-400">
-              {sentimentCounts.negative || 0}
-            </div>
-            <div className="text-xs text-muted-foreground">{t('sentiment.negative')}</div>
-          </div>
-        </div>
-
         {/* Average Sentiment */}
         <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg">
-          <Heart className="h-5 w-5 text-primary" />
+          <TrendingUp className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <div className="text-sm font-medium">{t('insights.averageMood')}</div>
-            <div className="w-full h-2 bg-secondary rounded-full mt-2">
-              <div
-                className={`h-full rounded-full transition-all ${
-                  avgSentiment > 0.3 
-                    ? 'bg-green-500' 
-                    : avgSentiment < -0.3 
-                    ? 'bg-red-500' 
-                    : 'bg-yellow-500'
-                }`}
-                style={{ width: `${(avgSentiment + 1) * 50}%` }}
+            <p className="text-sm font-medium">{t('insights.averageMood')}</p>
+            <div className="w-full bg-muted rounded-full h-2 mt-2">
+              <div 
+                className="bg-gradient-to-r from-primary to-secondary h-2 rounded-full transition-all"
+                style={{ width: `${Math.abs(avgSentiment) * 100}%` }}
               />
             </div>
           </div>
         </div>
 
-        {/* Top Patterns */}
-        {topPatterns.length > 0 && (
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <TrendingUp className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium">{t('insights.commonPatterns')}</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {topPatterns.map((pattern, index) => (
-                <Badge key={index} variant="secondary" className="bg-primary/10">
+        {/* Top Emotional Patterns */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <Heart className="h-4 w-4 text-primary" />
+            <p className="text-sm font-medium">{t('insights.commonPatterns')}</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {topPatterns.length > 0 ? (
+              topPatterns.map((pattern, idx) => (
+                <Badge key={idx} variant="secondary" className="text-xs">
                   {pattern}
                 </Badge>
-              ))}
-            </div>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground">{t('insights.noPatterns')}</p>
+            )}
           </div>
-        )}
+        </div>
 
-        {/* Dominant Sentiment */}
-        {dominantSentiment && (
-          <div className="flex items-center gap-3 p-3 border border-primary/20 rounded-lg">
-            <Calendar className="h-5 w-5 text-primary" />
-            <div>
-              <div className="text-sm font-medium">{t('insights.dominantMood')}</div>
-              <div className="text-sm text-muted-foreground">
-                {t(`sentiment.${dominantSentiment[0]}`)} ({dominantSentiment[1]} {t('insights.days')})
-              </div>
-            </div>
+        {/* Entry Stats */}
+        <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+          <Calendar className="h-5 w-5 text-muted-foreground" />
+          <div>
+            <p className="text-sm font-medium">{t('insights.totalEntries')}</p>
+            <p className="text-2xl font-bold text-foreground">{totalLogs}</p>
           </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );
