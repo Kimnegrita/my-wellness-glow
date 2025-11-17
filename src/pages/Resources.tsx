@@ -99,27 +99,33 @@ const Resources = () => {
       title: "Organizaciones y Sitios Web Oficiales",
       resources: [
         {
-          name: "North American Menopause Society (NAMS)",
-          url: "https://www.menopause.org",
-          description: "Recursos completos sobre menopausia basados en evidencia científica",
+          name: "Planned Parenthood - Ciclo Menstrual",
+          url: "https://www.plannedparenthood.org/es/temas-de-salud/salud-y-bienestar/ciclo-menstrual",
+          description: "Información completa sobre el ciclo menstrual y salud reproductiva",
           type: "web"
         },
         {
-          name: "International Menopause Society",
-          url: "https://www.imsociety.org",
-          description: "Información global y guías clínicas sobre menopausia",
+          name: "Clue - Educación sobre el Ciclo",
+          url: "https://helloclue.com/es/articulos",
+          description: "Artículos basados en ciencia sobre menstruación, fertilidad y salud hormonal",
           type: "web"
         },
         {
-          name: "Asociación Española para el Estudio de la Menopausia (AEEM)",
-          url: "https://www.aeem.es",
-          description: "Recursos en español sobre menopausia y climaterio",
+          name: "Organización Mundial de la Salud - Salud Sexual",
+          url: "https://www.who.int/es/health-topics/sexual-health",
+          description: "Recursos oficiales de la OMS sobre salud sexual y reproductiva",
           type: "web"
         },
         {
-          name: "Office on Women's Health",
-          url: "https://www.womenshealth.gov/menopause",
-          description: "Información del gobierno de EE.UU. sobre menopausia",
+          name: "Office on Women's Health - Menstruación",
+          url: "https://www.womenshealth.gov/menstrual-cycle",
+          description: "Guía completa del gobierno de EE.UU. sobre el ciclo menstrual",
+          type: "web"
+        },
+        {
+          name: "NHS - Períodos y Fertilidad",
+          url: "https://www.nhs.uk/conditions/periods/",
+          description: "Información del sistema de salud británico sobre menstruación",
           type: "web"
         }
       ]
@@ -128,21 +134,27 @@ const Resources = () => {
       title: "Videos Educativos",
       resources: [
         {
-          name: "Menopausia: Todo lo que necesitas saber - TED Talk",
-          url: "https://www.youtube.com/results?search_query=menopause+ted+talk",
-          description: "Charlas TED sobre menopausia y salud de la mujer",
+          name: "TED-Ed - El Ciclo Menstrual Explicado",
+          url: "https://www.youtube.com/results?search_query=menstrual+cycle+explained+ted+ed",
+          description: "Videos educativos animados sobre cómo funciona el ciclo menstrual",
           type: "video"
         },
         {
-          name: "Johns Hopkins Medicine - Menopause Explained",
-          url: "https://www.youtube.com/c/JohnsHopkinsMedicine",
-          description: "Videos educativos de expertos médicos sobre menopausia",
+          name: "Crash Course - Sistema Reproductivo",
+          url: "https://www.youtube.com/playlist?list=PL8dPuuaLjXtOAKed_MxxWBNaPno5h3Zs8",
+          description: "Serie educativa sobre anatomía y fisiología reproductiva",
           type: "video"
         },
         {
-          name: "The Menopause Society YouTube Channel",
-          url: "https://www.youtube.com/@TheMenopauseSociety",
-          description: "Canal oficial con webinars y contenido educativo",
+          name: "Khan Academy - Hormonas y Ciclo Menstrual",
+          url: "https://www.khanacademy.org/science/health-and-medicine/reproductive-system-diseases",
+          description: "Lecciones en video sobre el sistema reproductivo y hormonas",
+          type: "video"
+        },
+        {
+          name: "Clue - Canal de YouTube",
+          url: "https://www.youtube.com/@clueapp",
+          description: "Videos sobre menstruación, fertilidad y salud hormonal",
           type: "video"
         }
       ]
@@ -151,22 +163,57 @@ const Resources = () => {
       title: "Guías y Documentos",
       resources: [
         {
-          name: "Guía de Práctica Clínica sobre la Menopausia",
-          url: "https://portal.guiasalud.es",
-          description: "Guías clínicas basadas en evidencia para profesionales y pacientes",
+          name: "ACOG - Guías sobre Menstruación",
+          url: "https://www.acog.org/womens-health/faqs/menstruation",
+          description: "Guías del Colegio Americano de Obstetras y Ginecólogos",
           type: "document"
         },
         {
-          name: "Manual de Menopausia - OMS",
-          url: "https://www.who.int/health-topics/menopause",
-          description: "Recursos de la Organización Mundial de la Salud",
+          name: "Mayo Clinic - Ciclo Menstrual",
+          url: "https://www.mayoclinic.org/es/healthy-lifestyle/womens-health/in-depth/menstrual-cycle/art-20047186",
+          description: "Información médica detallada sobre el ciclo menstrual",
           type: "document"
         },
         {
-          name: "Menopause Matters",
-          url: "https://www.menopausematters.co.uk",
-          description: "Información práctica y recursos descargables",
+          name: "WebMD - Salud Menstrual",
+          url: "https://www.webmd.com/women/guide/normal-menstruation",
+          description: "Guía completa sobre menstruación normal y anormalidades",
           type: "document"
+        },
+        {
+          name: "Harvard Health - Problemas Menstruales",
+          url: "https://www.health.harvard.edu/topics/womens-health",
+          description: "Recursos de la Escuela de Medicina de Harvard",
+          type: "document"
+        }
+      ]
+    },
+    {
+      title: "Apps y Herramientas",
+      resources: [
+        {
+          name: "Clue",
+          url: "https://helloclue.com/",
+          description: "App de seguimiento del ciclo basada en ciencia",
+          type: "web"
+        },
+        {
+          name: "Flo Health",
+          url: "https://flo.health/",
+          description: "Calendario menstrual y seguimiento de ovulación",
+          type: "web"
+        },
+        {
+          name: "Period Tracker by GP Apps",
+          url: "https://www.period-tracker.com/",
+          description: "Aplicación simple para rastrear tu período",
+          type: "web"
+        },
+        {
+          name: "MyFLO",
+          url: "https://www.floliving.com/app/",
+          description: "App para optimizar salud hormonal según fase del ciclo",
+          type: "web"
         }
       ]
     },
@@ -174,21 +221,56 @@ const Resources = () => {
       title: "Comunidades y Apoyo",
       resources: [
         {
-          name: "HealthUnlocked - Menopause Community",
-          url: "https://healthunlocked.com/menopausematters",
-          description: "Comunidad en línea para compartir experiencias y apoyo",
+          name: "Reddit - r/Periods",
+          url: "https://www.reddit.com/r/Periods/",
+          description: "Comunidad para discutir sobre menstruación y salud menstrual",
           type: "web"
         },
         {
-          name: "Reddit - r/Menopause",
-          url: "https://www.reddit.com/r/Menopause",
-          description: "Foro activo con miles de mujeres compartiendo experiencias",
+          name: "Reddit - r/WomensHealth",
+          url: "https://www.reddit.com/r/WomensHealth/",
+          description: "Foro para discutir temas de salud femenina",
           type: "web"
         },
         {
-          name: "Menopause Support Facebook Groups",
-          url: "https://www.facebook.com/search/groups/?q=menopause%20support",
-          description: "Grupos de apoyo en Facebook en diferentes idiomas",
+          name: "HealthUnlocked - Period Problems",
+          url: "https://healthunlocked.com/period-problems",
+          description: "Comunidad de apoyo para problemas menstruales",
+          type: "web"
+        },
+        {
+          name: "Grupos de Facebook - Salud Menstrual",
+          url: "https://www.facebook.com/search/groups/?q=menstrual%20health",
+          description: "Grupos de apoyo en Facebook sobre salud menstrual",
+          type: "web"
+        }
+      ]
+    },
+    {
+      title: "Recursos en Español",
+      resources: [
+        {
+          name: "Doctoralia - Ciclo Menstrual",
+          url: "https://www.doctoralia.es/preguntas-respuestas/ciclo-menstrual",
+          description: "Preguntas y respuestas sobre el ciclo menstrual en español",
+          type: "web"
+        },
+        {
+          name: "Cuidate Plus - Menstruación",
+          url: "https://cuidateplus.marca.com/sexualidad/diccionario/menstruacion.html",
+          description: "Información médica en español sobre menstruación",
+          type: "web"
+        },
+        {
+          name: "Sanitas - Salud de la Mujer",
+          url: "https://www.sanitas.es/sanitas/seguros/es/particulares/biblioteca-de-salud/mujer/index.html",
+          description: "Biblioteca de salud femenina de Sanitas",
+          type: "web"
+        },
+        {
+          name: "Medline Plus - Menstruación",
+          url: "https://medlineplus.gov/spanish/menstruation.html",
+          description: "Recursos del NIH en español sobre menstruación",
           type: "web"
         }
       ]
@@ -253,13 +335,13 @@ const Resources = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="perimenopausia" className="space-y-6">
+        <Tabs defaultValue="recursos" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
+            <TabsTrigger value="recursos">{t('resources.onlineResources')}</TabsTrigger>
             <TabsTrigger value="perimenopausia">{t('resources.perimenopause')}</TabsTrigger>
             <TabsTrigger value="menopausia">{t('resources.menopause')}</TabsTrigger>
             <TabsTrigger value="sintomas">{t('resources.symptoms')}</TabsTrigger>
             <TabsTrigger value="tratamientos">{t('resources.treatments')}</TabsTrigger>
-            <TabsTrigger value="recursos">{t('resources.onlineResources')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="perimenopausia" className="space-y-4">
