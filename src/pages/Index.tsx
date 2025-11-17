@@ -86,16 +86,36 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 relative">
+      {/* WomanLog-style Stats Bar */}
+      <div className="bg-gradient-to-r from-secondary via-primary to-accent text-white py-3 px-4">
+        <div className="container mx-auto flex justify-around items-center text-center">
+          <div>
+            <div className="text-xl font-bold">{cycleInfo?.currentDay || 0}</div>
+            <div className="text-xs opacity-90">Día del Ciclo</div>
+          </div>
+          <div className="h-8 w-px bg-white/30"></div>
+          <div>
+            <div className="text-xl font-bold">{cycleInfo?.daysUntilNext || '—'}</div>
+            <div className="text-xs opacity-90">Días hasta periodo</div>
+          </div>
+          <div className="h-8 w-px bg-white/30"></div>
+          <div>
+            <div className="text-xl font-bold">{weekLogs?.length || 0}</div>
+            <div className="text-xs opacity-90">Registros esta semana</div>
+          </div>
+        </div>
+      </div>
+
       {/* Header */}
-      <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <header className="bg-card/95 backdrop-blur-sm border-b border-border/50 sticky top-0 z-40 shadow-sm">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="My Wellness Glow" className="h-10 w-10" />
+            <img src="/logo.png" alt="My Wellness Glow" className="h-8 w-8" />
             <div>
-              <h1 className="text-2xl font-bold text-gradient">
+              <h1 className="text-xl font-bold text-gradient">
                 My Wellness Glow
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 ¡Hola, {profile?.name}! ✨
               </p>
             </div>
@@ -128,82 +148,99 @@ const Index = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 space-y-8 pb-24">
-        {/* Main Tip Card */}
-        <div className="animate-fade-in-up">
-          <TipCard tip={dailyTip} />
-        </div>
-
-        {/* Cycle Status */}
-        {cycleInfo && (
-          <div className="bg-gradient-to-br from-card to-primary/5 rounded-2xl p-8 shadow-elegant border border-primary/20 animate-fade-in-up backdrop-blur">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-foreground">Estado del Ciclo</h2>
-              <PhaseIndicator phase={cycleInfo.phase} className="text-base px-4 py-2" />
-            </div>
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-card/80 backdrop-blur rounded-xl p-5 border border-primary/10">
-                <p className="text-sm text-muted-foreground mb-2 font-medium">Día del ciclo</p>
-                <p className="text-5xl font-bold bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent">
-                  {cycleInfo.currentDay}
-                </p>
+      {/* Dashboard Cards - WomanLog Style */}
+      <div className="container mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-card/95 backdrop-blur rounded-2xl p-6 border border-border/50 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-md">
+                <Calendar className="h-6 w-6 text-primary-foreground" />
               </div>
-              <div className="bg-card/80 backdrop-blur rounded-xl p-5 border border-secondary/10">
-                <p className="text-sm text-muted-foreground mb-2 font-medium">Próxima menstruación</p>
-                <p className="text-4xl font-bold bg-gradient-to-br from-secondary to-accent bg-clip-text text-transparent">
-                  {cycleInfo.daysUntilNext > 0 ? `${cycleInfo.daysUntilNext}d` : 'Hoy'}
+              <div className="flex-1">
+                <p className="text-sm text-muted-foreground mb-1">Día del Ciclo</p>
+                <p className="text-3xl font-bold text-foreground mb-1">{cycleInfo?.currentDay || '—'}</p>
+                <p className="text-xs text-primary font-medium">{cycleInfo?.phase || 'Desconocida'}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-card/95 backdrop-blur rounded-2xl p-6 border border-border/50 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-md">
+                <Heart className="h-6 w-6 text-secondary-foreground" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-muted-foreground mb-1">Próximo Período</p>
+                <p className="text-3xl font-bold text-foreground mb-1">{cycleInfo?.daysUntilNext || '—'}</p>
+                <p className="text-xs text-secondary font-medium">
+                  {cycleInfo?.nextPeriodDate ? format(new Date(cycleInfo.nextPeriodDate), 'dd MMM') : 'No disponible'}
                 </p>
               </div>
             </div>
           </div>
-        )}
 
-        {/* Dashboard Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-fade-in-up">
-          <DashboardCard
-            icon={<Calendar className="h-6 w-6" />}
-            title="Registros esta semana"
-            value={weekLogs?.length.toString() || '0'}
-            description="Días con registro"
-          />
-          <DashboardCard
-            icon={<Heart className="h-6 w-6" />}
-            title="Síntoma más frecuente"
-            value={mostFrequent}
-            description="Esta semana"
-          />
-          <DashboardCard
-            icon={<Flame className="h-6 w-6" />}
-            title="Tu racha"
-            value={weekLogs?.length.toString() || '0'}
-            description="Días consecutivos"
-          />
+          <div className="bg-card/95 backdrop-blur rounded-2xl p-6 border border-border/50 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-md">
+                <Flame className="h-6 w-6 text-accent-foreground" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-muted-foreground mb-1">Síntoma Frecuente</p>
+                <p className="text-lg font-bold text-foreground mb-1">{mostFrequent}</p>
+                <p className="text-xs text-accent font-medium">Esta semana</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Fertility Tracker */}
-        {cycleInfo && (
-          <FertilityTracker
-            ovulationDate={cycleInfo.ovulationDate}
-            fertileWindowStart={cycleInfo.fertileWindowStart}
-            fertileWindowEnd={cycleInfo.fertileWindowEnd}
-            isFertileWindow={cycleInfo.isFertileWindow}
-          />
+        {/* Phase Indicator & Cycle Calendar - Enhanced */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+          <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden">
+            <PhaseIndicator phase={cycleInfo?.phase || 'irregular'} />
+          </div>
+          <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden">
+            <CycleCalendar />
+          </div>
+        </div>
+
+        {/* Fertility Tracker - Enhanced Card */}
+        {cycleInfo?.ovulationDate && (
+          <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden mb-6">
+            <FertilityTracker
+              ovulationDate={cycleInfo.ovulationDate}
+              fertileWindowStart={cycleInfo.fertileWindowStart}
+              fertileWindowEnd={cycleInfo.fertileWindowEnd}
+              isFertileWindow={cycleInfo.isFertileWindow}
+            />
+          </div>
         )}
 
-        {/* Personalized Recommendations */}
-        <PersonalizedRecommendations />
+        {/* Daily Tip - Enhanced Card */}
+        <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden mb-6">
+          <TipCard tip={dailyTip} />
+        </div>
 
-        {/* Calendar and Tips Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <CycleCalendar />
+        {/* Personalized Recommendations - Enhanced Card */}
+        <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden mb-6">
+          <PersonalizedRecommendations />
+        </div>
+
+        {/* Wellness Tips - Enhanced Card */}
+        <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden mb-6">
           <WellnessTips />
         </div>
 
-        {/* FAQ Section */}
-        <FAQSection />
+        {/* Data Export - Enhanced Card */}
+        <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden mb-6">
+          <DataExport />
+        </div>
+
+        {/* FAQ Section - Enhanced Card */}
+        <div className="bg-card/95 backdrop-blur rounded-2xl border border-border/50 shadow-lg overflow-hidden mb-6">
+          <FAQSection />
+        </div>
       </div>
 
-      {/* Floating Action Button */}
       <FloatingActionButton onClick={() => navigate('/checkin')} />
     </div>
   );
