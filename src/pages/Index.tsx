@@ -6,6 +6,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { PhaseIndicator } from "@/components/PhaseIndicator";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
+import { BackgroundParticles } from "@/components/BackgroundParticles";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getCycleInfo } from "@/lib/cycleCalculations";
@@ -63,7 +64,8 @@ const Index = () => {
   const mostFrequent = Object.entries(symptomCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Ninguno';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 relative">
+      <BackgroundParticles />
       {/* Header */}
       <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
