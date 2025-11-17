@@ -10,86 +10,92 @@ const Resources = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const perimenopauseArticles = [
+  const cycleBasicsArticles = [
     {
-      title: t('resources.perimenopauseArticles.what.title'),
-      description: t('resources.perimenopauseArticles.what.desc'),
-      content: t('resources.perimenopauseArticles.what.content'),
+      title: t('resources.cycleBasicsArticles.what.title'),
+      description: t('resources.cycleBasicsArticles.what.desc'),
+      content: t('resources.cycleBasicsArticles.what.content'),
       icon: BookOpen,
     },
     {
-      title: t('resources.perimenopauseArticles.symptoms.title'),
-      description: t('resources.perimenopauseArticles.symptoms.desc'),
-      content: t('resources.perimenopauseArticles.symptoms.content'),
+      title: t('resources.cycleBasicsArticles.tracking.title'),
+      description: t('resources.cycleBasicsArticles.tracking.desc'),
+      content: t('resources.cycleBasicsArticles.tracking.content'),
       icon: Activity,
     },
     {
-      title: t('resources.perimenopauseArticles.duration.title'),
-      description: t('resources.perimenopauseArticles.duration.desc'),
-      content: t('resources.perimenopauseArticles.duration.content'),
+      title: t('resources.cycleBasicsArticles.variations.title'),
+      description: t('resources.cycleBasicsArticles.variations.desc'),
+      content: t('resources.cycleBasicsArticles.variations.content'),
       icon: Heart,
     },
   ];
 
-  const menopauseArticles = [
+  const phasesArticles = [
     {
-      title: "Entendiendo la Menopausia",
-      description: "Todo lo que necesitas saber sobre esta etapa natural de la vida.",
-      content: "La menopausia es el cese permanente de la menstruación. Se confirma después de 12 meses consecutivos sin período menstrual. La edad promedio es alrededor de los 51 años, aunque puede ocurrir antes o después. Es una fase natural y no una enfermedad.",
+      title: t('resources.phasesArticles.menstrual.title'),
+      description: t('resources.phasesArticles.menstrual.desc'),
+      content: t('resources.phasesArticles.menstrual.content'),
       icon: BookOpen,
     },
     {
-      title: "Cambios Hormonales",
-      description: "Cómo afectan las hormonas a tu cuerpo durante la menopausia.",
-      content: "Durante la menopausia, los ovarios producen menos estrógeno y progesterona. Esta disminución hormonal afecta a múltiples sistemas del cuerpo, incluyendo el sistema cardiovascular, óseo, metabólico y nervioso. Entender estos cambios ayuda a manejar mejor los síntomas.",
+      title: t('resources.phasesArticles.follicular.title'),
+      description: t('resources.phasesArticles.follicular.desc'),
+      content: t('resources.phasesArticles.follicular.content'),
       icon: Activity,
     },
     {
-      title: "Salud Ósea",
-      description: "La importancia del cuidado de los huesos en la menopausia.",
-      content: "La disminución de estrógeno aumenta el riesgo de osteoporosis. Es crucial consumir suficiente calcio (1200mg/día) y vitamina D, realizar ejercicio de resistencia, evitar el tabaco y el exceso de alcohol, y consultar sobre densitometría ósea.",
+      title: t('resources.phasesArticles.ovulatory.title'),
+      description: t('resources.phasesArticles.ovulatory.desc'),
+      content: t('resources.phasesArticles.ovulatory.content'),
       icon: Heart,
+    },
+    {
+      title: t('resources.phasesArticles.luteal.title'),
+      description: t('resources.phasesArticles.luteal.desc'),
+      content: t('resources.phasesArticles.luteal.content'),
+      icon: Pill,
     },
   ];
 
   const symptomsArticles = [
     {
-      title: "Sofocos y Sudores Nocturnos",
-      description: "Manejo de los síntomas vasomotores más comunes.",
-      content: "Los sofocos afectan al 75% de las mujeres. Estrategias de manejo: vestirse en capas, mantener el ambiente fresco, evitar desencadenantes (alcohol, cafeína, comidas picantes), técnicas de respiración profunda, y considerar terapias hormonales si son severos.",
+      title: t('resources.symptomsArticles.cramps.title'),
+      description: t('resources.symptomsArticles.cramps.desc'),
+      content: t('resources.symptomsArticles.cramps.content'),
       icon: Activity,
     },
     {
-      title: "Cambios de Humor y Ansiedad",
-      description: "Comprendiendo el impacto emocional de los cambios hormonales.",
-      content: "Las fluctuaciones hormonales pueden causar irritabilidad, ansiedad y depresión. El ejercicio regular, técnicas de relajación, mantener conexiones sociales, dormir bien y buscar apoyo profesional cuando sea necesario son estrategias importantes.",
+      title: t('resources.symptomsArticles.mood.title'),
+      description: t('resources.symptomsArticles.mood.desc'),
+      content: t('resources.symptomsArticles.mood.content'),
       icon: Heart,
     },
     {
-      title: "Problemas de Sueño",
-      description: "Estrategias para mejorar la calidad del sueño.",
-      content: "Mantén un horario regular de sueño, crea un ambiente fresco y oscuro, evita pantallas antes de dormir, limita la cafeína por la tarde, practica técnicas de relajación y considera la melatonina bajo supervisión médica.",
+      title: t('resources.symptomsArticles.irregular.title'),
+      description: t('resources.symptomsArticles.irregular.desc'),
+      content: t('resources.symptomsArticles.irregular.content'),
       icon: BookOpen,
     },
   ];
 
-  const treatmentsArticles = [
+  const wellnessArticles = [
     {
-      title: "Terapia Hormonal",
-      description: "Opciones de tratamiento hormonal y sus consideraciones.",
-      content: "La terapia hormonal puede aliviar síntomas severos. Incluye estrógeno solo o combinado con progesterona. Es más efectiva cuando se inicia cerca del inicio de la menopausia. Debe ser personalizada y supervisada médicamente, evaluando riesgos y beneficios individuales.",
+      title: t('resources.wellnessArticles.nutrition.title'),
+      description: t('resources.wellnessArticles.nutrition.desc'),
+      content: t('resources.wellnessArticles.nutrition.content'),
       icon: Pill,
     },
     {
-      title: "Tratamientos No Hormonales",
-      description: "Alternativas efectivas sin hormonas.",
-      content: "Opciones incluyen: antidepresivos (ISRS/IRSN) para sofocos, gabapentina, fitoestrógenos, lubricantes vaginales, terapia cognitivo-conductual, acupuntura, y suplementos como cohosh negro. Consulta siempre con un profesional antes de iniciar cualquier tratamiento.",
-      icon: Pill,
+      title: t('resources.wellnessArticles.exercise.title'),
+      description: t('resources.wellnessArticles.exercise.desc'),
+      content: t('resources.wellnessArticles.exercise.content'),
+      icon: Activity,
     },
     {
-      title: "Cambios en el Estilo de Vida",
-      description: "Modificaciones diarias que marcan la diferencia.",
-      content: "Dieta balanceada rica en calcio y vitamina D, ejercicio regular (150 min/semana), mantener peso saludable, no fumar, limitar alcohol, técnicas de manejo del estrés (yoga, meditación), y mantener vida social activa son fundamentales.",
+      title: t('resources.wellnessArticles.selfcare.title'),
+      description: t('resources.wellnessArticles.selfcare.desc'),
+      content: t('resources.wellnessArticles.selfcare.content'),
       icon: Heart,
     },
   ];
@@ -277,7 +283,7 @@ const Resources = () => {
     }
   ];
 
-  const renderArticles = (articles: typeof perimenopauseArticles) => (
+  const renderArticles = (articles: typeof cycleBasicsArticles) => (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {articles.map((article, index) => {
         const Icon = article.icon;
@@ -338,50 +344,50 @@ const Resources = () => {
         <Tabs defaultValue="recursos" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
             <TabsTrigger value="recursos">{t('resources.onlineResources')}</TabsTrigger>
-            <TabsTrigger value="perimenopausia">{t('resources.perimenopause')}</TabsTrigger>
-            <TabsTrigger value="menopausia">{t('resources.menopause')}</TabsTrigger>
+            <TabsTrigger value="basics">{t('resources.cycleBasics')}</TabsTrigger>
+            <TabsTrigger value="phases">{t('resources.phases')}</TabsTrigger>
             <TabsTrigger value="sintomas">{t('resources.symptoms')}</TabsTrigger>
-            <TabsTrigger value="tratamientos">{t('resources.treatments')}</TabsTrigger>
+            <TabsTrigger value="wellness">{t('resources.wellness')}</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="perimenopausia" className="space-y-4">
+          <TabsContent value="basics" className="space-y-4">
             <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Perimenopausia</h2>
+              <h2 className="text-2xl font-semibold mb-2">Fundamentos del Ciclo Menstrual</h2>
               <p className="text-muted-foreground">
-                La fase de transición hacia la menopausia y todo lo que necesitas saber.
+                Aprende los conceptos básicos sobre cómo funciona tu ciclo menstrual.
               </p>
             </div>
-            {renderArticles(perimenopauseArticles)}
+            {renderArticles(cycleBasicsArticles)}
           </TabsContent>
 
-          <TabsContent value="menopausia" className="space-y-4">
+          <TabsContent value="phases" className="space-y-4">
             <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Menopausia</h2>
+              <h2 className="text-2xl font-semibold mb-2">Las 4 Fases del Ciclo</h2>
               <p className="text-muted-foreground">
-                Comprende esta etapa natural y cómo cuidar tu salud.
+                Comprende cada fase de tu ciclo y cómo afecta tu cuerpo y mente.
               </p>
             </div>
-            {renderArticles(menopauseArticles)}
+            {renderArticles(phasesArticles)}
           </TabsContent>
 
           <TabsContent value="sintomas" className="space-y-4">
             <div className="mb-4">
               <h2 className="text-2xl font-semibold mb-2">Síntomas Comunes</h2>
               <p className="text-muted-foreground">
-                Identifica y maneja los síntomas más frecuentes de forma efectiva.
+                Identifica y maneja los síntomas menstruales más frecuentes de forma efectiva.
               </p>
             </div>
             {renderArticles(symptomsArticles)}
           </TabsContent>
 
-          <TabsContent value="tratamientos" className="space-y-4">
+          <TabsContent value="wellness" className="space-y-4">
             <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2">Opciones de Tratamiento</h2>
+              <h2 className="text-2xl font-semibold mb-2">Bienestar y Cuidado</h2>
               <p className="text-muted-foreground">
-                Explora las diferentes alternativas disponibles para aliviar los síntomas.
+                Optimiza tu salud adaptando tu estilo de vida a las fases de tu ciclo.
               </p>
             </div>
-            {renderArticles(treatmentsArticles)}
+            {renderArticles(wellnessArticles)}
           </TabsContent>
 
           <TabsContent value="recursos" className="space-y-4">

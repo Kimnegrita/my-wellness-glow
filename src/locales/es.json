@@ -92,89 +92,96 @@
   },
   "resources": {
     "title": "Recursos Educativos",
-    "description": "Información completa y confiable sobre perimenopausia, menopausia, síntomas y tratamientos para ayudarte a navegar esta etapa con conocimiento y confianza.",
-    "perimenopause": "Perimenopausia",
-    "menopause": "Menopausia",
-    "symptoms": "Síntomas",
-    "treatments": "Tratamientos",
+    "description": "Información completa y confiable sobre el ciclo menstrual, salud reproductiva, síntomas y bienestar para ayudarte a conocer mejor tu cuerpo.",
+    "cycleBasics": "Fundamentos del Ciclo",
+    "phases": "Fases del Ciclo",
+    "symptoms": "Síntomas Comunes",
+    "wellness": "Bienestar y Cuidado",
     "onlineResources": "Recursos Online",
     "onlineResourcesDesc": "Enlaces a organizaciones, videos educativos, documentos y comunidades de apoyo disponibles en internet.",
     "visitResource": "Visitar recurso",
-    "disclaimer": "Esta información tiene fines educativos y no reemplaza la consulta médica profesional. Cada mujer es única y los síntomas, así como los tratamientos apropiados, varían. Siempre consulta con tu profesional de la salud para obtener asesoramiento personalizado.",
+    "disclaimer": "Esta información tiene fines educativos y no reemplaza la consulta médica profesional. Cada mujer es única y los síntomas, así como las necesidades de salud, varían. Siempre consulta con tu profesional de la salud para obtener asesoramiento personalizado.",
     "importantNote": "Nota Importante",
-    "perimenopauseArticles": {
+    "cycleBasicsArticles": {
       "what": {
-        "title": "¿Qué es la Perimenopausia?",
-        "desc": "Comprende la fase de transición antes de la menopausia y sus características principales.",
-        "content": "La perimenopausia es el período de transición que precede a la menopausia. Puede comenzar varios años antes de que cese la menstruación, típicamente entre los 40 y 44 años, aunque puede empezar antes. Durante esta fase, los niveles hormonales fluctúan de manera irregular, causando diversos síntomas."
+        "title": "¿Qué es el Ciclo Menstrual?",
+        "desc": "Comprende el funcionamiento básico de tu ciclo y sus características.",
+        "content": "El ciclo menstrual es el proceso mensual que prepara al cuerpo para un posible embarazo. Típicamente dura entre 21 y 35 días, con un promedio de 28 días. Comienza el primer día de la menstruación y termina el día antes del siguiente período. Está regulado por hormonas y afecta a todo tu cuerpo, no solo al sistema reproductivo."
       },
-      "symptoms": {
-        "title": "Síntomas Comunes",
-        "desc": "Identifica los signos más frecuentes de la perimenopausia.",
-        "content": "Los síntomas incluyen: ciclos menstruales irregulares, sofocos, sudores nocturnos, problemas de sueño, cambios de humor, sequedad vaginal, disminución de la libido, dificultad para concentrarse y cambios en el peso. La intensidad varía en cada mujer."
+      "tracking": {
+        "title": "Beneficios del Seguimiento",
+        "desc": "Por qué es importante rastrear tu ciclo menstrual.",
+        "content": "El seguimiento del ciclo te ayuda a: predecir tu próxima menstruación, identificar patrones en tu estado de ánimo y energía, detectar irregularidades temprano, planificar actividades según tu fase del ciclo, conocer tu ventana fértil, y tener conversaciones más informadas con tu médico sobre tu salud reproductiva."
       },
-      "duration": {
-        "title": "Duración y Etapas",
-        "desc": "Conoce cuánto puede durar esta fase de transición.",
-        "content": "La perimenopausia puede durar desde unos meses hasta 10 años, con una duración promedio de 4 años. Termina oficialmente cuando una mujer no ha tenido menstruación durante 12 meses consecutivos, momento en el que se considera que ha llegado a la menopausia."
+      "variations": {
+        "title": "Variaciones Normales",
+        "desc": "Cuándo las diferencias en tu ciclo son normales.",
+        "content": "Es normal que la duración del ciclo varíe entre 21-35 días. La menstruación puede durar 2-7 días. Factores como estrés, ejercicio intenso, cambios de peso, viajes, y enfermedad pueden afectar tu ciclo. Los primeros años después de la primera menstruación y antes de la menopausia suelen ser más irregulares."
       }
     },
-    "menopauseArticles": {
-      "understanding": {
-        "title": "Entendiendo la Menopausia",
-        "desc": "Todo lo que necesitas saber sobre esta etapa natural de la vida.",
-        "content": "La menopausia es el cese permanente de la menstruación. Se confirma después de 12 meses consecutivos sin período menstrual. La edad promedio es alrededor de los 51 años, aunque puede ocurrir antes o después. Es una fase natural y no una enfermedad."
+    "phasesArticles": {
+      "menstrual": {
+        "title": "Fase Menstrual (Días 1-5)",
+        "desc": "El comienzo de tu ciclo cuando ocurre la menstruación.",
+        "content": "Esta fase comienza el primer día de tu período. El revestimiento uterino se desprende causando el sangrado menstrual. Los niveles hormonales están bajos. Es común sentir cólicos, fatiga, y cambios de humor. Es importante descansar, mantenerse hidratada, y usar calor para aliviar los cólicos."
       },
-      "hormonal": {
-        "title": "Cambios Hormonales",
-        "desc": "Cómo afectan las hormonas a tu cuerpo durante la menopausia.",
-        "content": "Durante la menopausia, los ovarios producen menos estrógeno y progesterona. Esta disminución hormonal afecta a múltiples sistemas del cuerpo, incluyendo el sistema cardiovascular, óseo, metabólico y nervioso. Entender estos cambios ayuda a manejar mejor los síntomas."
+      "follicular": {
+        "title": "Fase Folicular (Días 6-13)",
+        "desc": "Después del período, preparándose para la ovulación.",
+        "content": "El estrógeno aumenta gradualmente, estimulando el crecimiento del revestimiento uterino. Los folículos ováricos maduran. Muchas mujeres experimentan más energía, mejor estado de ánimo, claridad mental, y mayor confianza. Es un buen momento para actividades sociales, aprendizaje, y ejercicio intenso."
       },
-      "bone": {
-        "title": "Salud Ósea",
-        "desc": "La importancia del cuidado de los huesos en la menopausia.",
-        "content": "La disminución de estrógeno aumenta el riesgo de osteoporosis. Es crucial consumir suficiente calcio (1200mg/día) y vitamina D, realizar ejercicio de resistencia, evitar el tabaco y el exceso de alcohol, y consultar sobre densitometría ósea."
+      "ovulatory": {
+        "title": "Fase de Ovulación (Día 14)",
+        "desc": "Cuando el óvulo es liberado del ovario.",
+        "content": "El óvulo es liberado y puede ser fertilizado. Los niveles de estrógeno están en su punto máximo. Puedes notar: aumento de la libido, energía elevada, piel más clara, y cambios en el flujo cervical (más claro y elástico). Esta es tu ventana fértil si buscas concebir."
+      },
+      "luteal": {
+        "title": "Fase Lútea (Días 15-28)",
+        "desc": "Después de la ovulación hasta el próximo período.",
+        "content": "La progesterona aumenta para preparar el útero. Si no hay embarazo, los niveles hormonales bajan causando la menstruación. Puedes experimentar: sensibilidad en los senos, hinchazón, cambios de humor, antojos, fatiga. Escucha a tu cuerpo y practica autocuidado extra."
       }
     },
     "symptomsArticles": {
-      "hotFlashes": {
-        "title": "Sofocos y Sudores Nocturnos",
-        "desc": "Manejo de los síntomas vasomotores más comunes.",
-        "content": "Los sofocos afectan al 75% de las mujeres. Estrategias de manejo: vestirse en capas, mantener el ambiente fresco, evitar desencadenantes (alcohol, cafeína, comidas picantes), técnicas de respiración profunda, y considerar terapias hormonales si son severos."
+      "cramps": {
+        "title": "Cólicos Menstruales",
+        "desc": "Manejo del dolor durante la menstruación.",
+        "content": "Los cólicos son contracciones uterinas causadas por prostaglandinas. Estrategias de alivio: aplicar calor (bolsa térmica), ejercicio suave (yoga, caminata), masaje abdominal, hidratación, descanso adecuado, antiinflamatorios (ibuprofeno), y técnicas de relajación. Si el dolor es severo, consulta a tu médico."
       },
       "mood": {
-        "title": "Cambios de Humor y Ansiedad",
-        "desc": "Comprendiendo el impacto emocional de los cambios hormonales.",
-        "content": "Las fluctuaciones hormonales pueden causar irritabilidad, ansiedad y depresión. El ejercicio regular, técnicas de relajación, mantener conexiones sociales, dormir bien y buscar apoyo profesional cuando sea necesario son estrategias importantes."
+        "title": "Cambios de Humor y SPM",
+        "desc": "Comprendiendo las fluctuaciones emocionales del ciclo.",
+        "content": "Los cambios hormonales afectan neurotransmisores como la serotonina. Es normal sentir irritabilidad, tristeza, o ansiedad antes del período. Ayuda: ejercicio regular, dieta balanceada, sueño adecuado, reducción de estrés, evitar cafeína y alcohol excesivo, y apoyo emocional. El SPM severo requiere atención médica."
       },
-      "sleep": {
-        "title": "Problemas de Sueño",
-        "desc": "Estrategias para mejorar la calidad del sueño.",
-        "content": "Mantén un horario regular de sueño, crea un ambiente fresco y oscuro, evita pantallas antes de dormir, limita la cafeína por la tarde, practica técnicas de relajación y considera la melatonina bajo supervisión médica."
+      "irregular": {
+        "title": "Ciclos Irregulares",
+        "desc": "Cuándo preocuparse por irregularidades.",
+        "content": "Consulta a un médico si: tus períodos son muy dolorosos, duran más de 7 días, sangras abundantemente, tienes manchado entre períodos, tu ciclo varía más de 7-9 días cada mes, o no menstrúas por 3+ meses sin estar embarazada. Las irregularidades pueden indicar SOP, endometriosis, problemas tiroideos, u otras condiciones tratables."
       }
     },
-    "treatmentsArticles": {
-      "hormonal": {
-        "title": "Terapia Hormonal",
-        "desc": "Opciones de tratamiento hormonal y sus consideraciones.",
-        "content": "La terapia hormonal puede aliviar síntomas severos. Incluye estrógeno solo o combinado con progesterona. Es más efectiva cuando se inicia cerca del inicio de la menopausia. Debe ser personalizada y supervisada médicamente, evaluando riesgos y beneficios individuales."
+    "wellnessArticles": {
+      "nutrition": {
+        "title": "Nutrición Según tu Ciclo",
+        "desc": "Cómo adaptar tu dieta a cada fase.",
+        "content": "Fase menstrual: hierro (carnes, espinacas), omega-3 (pescado, nueces). Fase folicular: proteínas, vegetales frescos. Ovulación: antioxidantes (bayas, vegetales coloridos), fibra. Fase lútea: carbohidratos complejos, magnesio (aguacate, chocolate oscuro), vitamina B6. Mantén hidratación constante."
       },
-      "nonHormonal": {
-        "title": "Tratamientos No Hormonales",
-        "desc": "Alternativas efectivas sin hormonas.",
-        "content": "Opciones incluyen: antidepresivos (ISRS/IRSN) para sofocos, gabapentina, fitoestrógenos, lubricantes vaginales, terapia cognitivo-conductual, acupuntura, y suplementos como cohosh negro. Consulta siempre con un profesional antes de iniciar cualquier tratamiento."
+      "exercise": {
+        "title": "Ejercicio y tu Ciclo",
+        "desc": "Optimiza tu rutina según la fase del ciclo.",
+        "content": "Fase menstrual: yoga suave, caminatas, estiramientos. Fase folicular: ejercicio intenso, pesas, HIIT, nuevos desafíos. Ovulación: actividades sociales, deportes de equipo, máxima resistencia. Fase lútea: moderado, pilates, natación, escucha a tu cuerpo. No te fuerces si necesitas descanso."
       },
-      "lifestyle": {
-        "title": "Cambios en el Estilo de Vida",
-        "desc": "Modificaciones diarias que marcan la diferencia.",
-        "content": "Dieta balanceada rica en calcio y vitamina D, ejercicio regular (150 min/semana), mantener peso saludable, no fumar, limitar alcohol, técnicas de manejo del estrés (yoga, meditación), y mantener vida social activa son fundamentales."
+      "selfcare": {
+        "title": "Autocuidado Hormonal",
+        "desc": "Prácticas para apoyar tu salud hormonal.",
+        "content": "Sueño regular (7-9 horas), manejo del estrés (meditación, respiración profunda), evitar disruptores hormonales (plásticos, químicos), reducir azúcar refinada, ejercicio regular, mantener peso saludable, limitar alcohol y cafeína, conexiones sociales, y chequeos médicos regulares."
       }
     },
     "externalResources": {
       "organizations": "Organizaciones y Sitios Web Oficiales",
       "videos": "Videos Educativos",
       "documents": "Guías y Documentos",
-      "community": "Comunidades y Apoyo"
+      "apps": "Apps y Herramientas",
+      "community": "Comunidades y Apoyo",
+      "spanish": "Recursos en Español"
     }
   },
   "contacts": {
