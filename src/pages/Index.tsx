@@ -6,7 +6,6 @@ import { FAQSection } from "@/components/FAQSection";
 import { PhaseIndicator } from "@/components/PhaseIndicator";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
-import { BackgroundParticles } from "@/components/BackgroundParticles";
 import { FertilityTracker } from "@/components/FertilityTracker";
 import { DataExport } from "@/components/DataExport";
 import { useAuth } from "@/contexts/AuthContext";
@@ -67,7 +66,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 relative">
-      <BackgroundParticles />
       {/* Header */}
       <header className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
