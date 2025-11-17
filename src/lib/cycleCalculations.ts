@@ -1,6 +1,12 @@
-import { differenceInDays, addDays } from 'date-fns';
+import { differenceInDays, addDays, parseISO } from 'date-fns';
 
 export type CyclePhase = 'menstruation' | 'follicular' | 'ovulation' | 'luteal' | 'irregular';
+
+export interface DailyLog {
+  log_date: string;
+  period_started: boolean | null;
+  period_ended: boolean | null;
+}
 
 export interface CycleInfo {
   currentDay: number;
@@ -11,6 +17,71 @@ export interface CycleInfo {
   fertileWindowStart?: Date;
   fertileWindowEnd?: Date;
   isFertileWindow?: boolean;
+}
+
+// Encuentra el último periodo registrado en los logs
+function findLastPeriodFromLogs(logs: DailyLog[]): Date | null {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  // Buscar el log más reciente con period_started = true que sea hoy o en el pasado
+  const periodLogs = logs
+    .filter(log => {
+      const logDate = parseISO(log.log_date);
+      return log.period_started && logDate <= today;
+    })
+    .sort((a, b) => parseISO(b.log_date).getTime() - parseISO(a.log_date).getTime());
+  
+  return periodLogs.length > 0 ? parseISO(periodLogs[0].log_date) : null;
+}
+
+// Determina si hoy está en periodo basándose en los logs
+function isCurrentlyInPeriod(logs: DailyLog[]): boolean {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayStr = today.toISOString().split('T')[0];
+  
+  // Buscar si hay un log de hoy con periodo
+  const todayLog = logs.find(log => log.log_date === todayStr);
+  return !!(todayLog && (todayLog.period_started || todayLog.period_ended));
+}
+
+// Calcula la duración promedio del periodo desde los logs
+function getAveragePeriodDuration(logs: DailyLog[]): number {
+  const periodGroups: number[] = [];
+  let currentPeriodDays = 0;
+  let inPeriod = false;
+  
+  const sortedLogs = [...logs].sort((a, b) => 
+    parseISO(a.log_date).getTime() - parseISO(b.log_date).getTime()
+  );
+  
+  for (const log of sortedLogs) {
+    const hasPeriod = log.period_started || log.period_ended;
+    
+    if (hasPeriod && !inPeriod) {
+      inPeriod = true;
+      currentPeriodDays = 1;
+    } else if (hasPeriod && inPeriod) {
+      currentPeriodDays++;
+    } else if (!hasPeriod && inPeriod) {
+      if (currentPeriodDays > 0) {
+        periodGroups.push(currentPeriodDays);
+      }
+      inPeriod = false;
+      currentPeriodDays = 0;
+    }
+  }
+  
+  // Si estamos en periodo actualmente, agregar esos días también
+  if (inPeriod && currentPeriodDays > 0) {
+    periodGroups.push(currentPeriodDays);
+  }
+  
+  if (periodGroups.length === 0) return 5; // Default
+  
+  const sum = periodGroups.reduce((a, b) => a + b, 0);
+  return Math.round(sum / periodGroups.length);
 }
 
 export function getCurrentCycleDay(
@@ -54,13 +125,21 @@ export function getDaysUntilNextPeriod(nextPeriodDate: Date | null): number | nu
   return differenceInDays(next, today);
 }
 
-export function getCurrentPhase(cycleDay: number | null, isIrregular: boolean = false): CyclePhase {
+export function getCurrentPhase(
+  cycleDay: number | null, 
+  isIrregular: boolean = false,
+  periodDuration: number = 5,
+  isInPeriodNow: boolean = false
+): CyclePhase {
   if (isIrregular) return 'irregular';
   if (!cycleDay) return 'irregular';
   
-  // Standard cycle phases
-  if (cycleDay >= 1 && cycleDay <= 5) return 'menstruation';
-  if (cycleDay >= 6 && cycleDay <= 13) return 'follicular';
+  // Si estamos actualmente en periodo, mostrar menstruación
+  if (isInPeriodNow) return 'menstruation';
+  
+  // Fases del ciclo basadas en la duración real del periodo
+  if (cycleDay >= 1 && cycleDay <= periodDuration) return 'menstruation';
+  if (cycleDay >= periodDuration + 1 && cycleDay <= 13) return 'follicular';
   if (cycleDay >= 14 && cycleDay <= 16) return 'ovulation';
   if (cycleDay >= 17) return 'luteal';
   
@@ -108,17 +187,26 @@ export function isInFertileWindow(
 export function getCycleInfo(
   lastPeriodDate: Date | null,
   avgCycleLength: number | null,
-  isIrregular: boolean = false
+  isIrregular: boolean = false,
+  logs?: DailyLog[],
+  configuredPeriodDuration?: number
 ): CycleInfo | null {
   if (!lastPeriodDate) return null;
   
-  const currentDay = getCurrentCycleDay(lastPeriodDate, avgCycleLength);
-  const phase = getCurrentPhase(currentDay, isIrregular);
-  const nextPeriodDate = getNextPeriodDate(lastPeriodDate, avgCycleLength);
+  // Usar datos reales del calendario si están disponibles
+  const actualLastPeriod = logs ? findLastPeriodFromLogs(logs) : null;
+  const periodToUse = actualLastPeriod || lastPeriodDate;
+  const isInPeriodNow = logs ? isCurrentlyInPeriod(logs) : false;
+  const periodDuration = configuredPeriodDuration || 
+    (logs ? getAveragePeriodDuration(logs) : 5);
+  
+  const currentDay = getCurrentCycleDay(periodToUse, avgCycleLength);
+  const phase = getCurrentPhase(currentDay, isIrregular, periodDuration, isInPeriodNow);
+  const nextPeriodDate = getNextPeriodDate(periodToUse, avgCycleLength);
   const daysUntilNext = getDaysUntilNextPeriod(nextPeriodDate);
-  const ovulationDate = getOvulationDate(lastPeriodDate, avgCycleLength);
-  const fertileWindow = getFertileWindow(lastPeriodDate, avgCycleLength);
-  const isFertileWindow = isInFertileWindow(lastPeriodDate, avgCycleLength);
+  const ovulationDate = getOvulationDate(periodToUse, avgCycleLength);
+  const fertileWindow = getFertileWindow(periodToUse, avgCycleLength);
+  const isFertileWindow = isInFertileWindow(periodToUse, avgCycleLength);
   
   return {
     currentDay: currentDay || 0,
