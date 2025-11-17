@@ -7,6 +7,8 @@ import { PhaseIndicator } from "@/components/PhaseIndicator";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
 import { BackgroundParticles } from "@/components/BackgroundParticles";
+import { FertilityTracker } from "@/components/FertilityTracker";
+import { DataExport } from "@/components/DataExport";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getCycleInfo } from "@/lib/cycleCalculations";
@@ -81,6 +83,7 @@ const Index = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <DataExport />
             <ThemeToggle />
             <Button variant="ghost" size="sm" onClick={() => navigate('/assistant')}>
               <MessageSquare className="h-4 w-4" />
@@ -94,7 +97,7 @@ const Index = () => {
             <Button variant="ghost" size="sm" onClick={() => navigate('/history')}>
               <BarChart3 className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/cycle-comparison')}>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/comparison')}>
               <GitCompare className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
@@ -158,6 +161,16 @@ const Index = () => {
             description="Días consecutivos"
           />
         </div>
+
+        {/* Fertility Tracker */}
+        {cycleInfo && (
+          <FertilityTracker
+            ovulationDate={cycleInfo.ovulationDate}
+            fertileWindowStart={cycleInfo.fertileWindowStart}
+            fertileWindowEnd={cycleInfo.fertileWindowEnd}
+            isFertileWindow={cycleInfo.isFertileWindow}
+          />
+        )}
 
         {/* Personalized Recommendations */}
         <PersonalizedRecommendations />
