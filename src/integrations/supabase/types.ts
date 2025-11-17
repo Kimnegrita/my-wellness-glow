@@ -125,6 +125,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           avg_cycle_length: number | null
+          avg_period_duration: number | null
           created_at: string | null
           id: string
           is_irregular: boolean | null
@@ -136,6 +137,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           avg_cycle_length?: number | null
+          avg_period_duration?: number | null
           created_at?: string | null
           id: string
           is_irregular?: boolean | null
@@ -147,6 +149,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           avg_cycle_length?: number | null
+          avg_period_duration?: number | null
           created_at?: string | null
           id?: string
           is_irregular?: boolean | null

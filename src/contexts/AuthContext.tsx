@@ -11,6 +11,7 @@ interface Profile {
   avg_cycle_length: number | null;
   is_irregular: boolean;
   language: string;
+  avg_period_duration: number;
   created_at: string;
   updated_at: string;
 }
