@@ -23,6 +23,24 @@ const Index = () => {
   const { profile, signOut, user } = useAuth();
   const navigate = useNavigate();
 
+  // Fetch ALL logs to calculate accurate cycle info
+  const { data: allLogs } = useQuery({
+    queryKey: ['all_logs', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      
+      const { data, error } = await supabase
+        .from('daily_logs')
+        .select('log_date, period_started, period_ended')
+        .eq('user_id', user.id)
+        .order('log_date', { ascending: false });
+      
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!user,
+  });
+
   // Fetch logs for this week
   const { data: weekLogs } = useQuery({
     queryKey: ['weekly_logs', user?.id],
@@ -45,12 +63,14 @@ const Index = () => {
     enabled: !!user,
   });
 
-  // Calculate cycle info
+  // Calculate cycle info usando datos reales del calendario
   const cycleInfo = profile?.last_period_date
     ? getCycleInfo(
         new Date(profile.last_period_date),
         profile.avg_cycle_length,
-        profile.is_irregular
+        profile.is_irregular,
+        allLogs || [],
+        profile.avg_period_duration
       )
     : null;
 
