@@ -14,6 +14,12 @@ import { format, differenceInDays } from 'date-fns';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
 import { getCurrentPhase, getCurrentCycleDay } from '@/lib/cycleCalculations';
 
+interface SentimentData {
+  label: string;
+  score: number;
+  [key: string]: unknown;
+}
+
 const SYMPTOMS = [
   // Síntomas Menstruales
   'Cólicos',
@@ -199,7 +205,7 @@ export default function DailyCheckin() {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [journalEntry, setJournalEntry] = useState('');
-  const [sentimentAnalysis, setSentimentAnalysis] = useState<any>(null);
+  const [sentimentAnalysis, setSentimentAnalysis] = useState<SentimentData | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   // Calcular fase actual del ciclo

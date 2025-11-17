@@ -49,11 +49,12 @@ export default function Profile() {
       console.log('Profile saved, changing i18n language to:', language);
       // Force language change immediately after save
       await i18n.changeLanguage(language);
-      
+
       toast.success(t('profile.saveSuccess'));
       navigate('/', { replace: true });
-    } catch (error: any) {
+    } catch (error) {
       toast.error(t('profile.saveError'));
+      console.error('Error saving profile:', error);
     } finally {
       setLoading(false);
     }
