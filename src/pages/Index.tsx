@@ -52,7 +52,7 @@ const Index = () => {
   const dailyTip = cycleInfo ? getDailyTip(cycleInfo.phase) : getDailyTip('irregular');
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark font-display" style={{ paddingBottom: "96px" }}>
+    <div className="relative flex h-auto min-h-screen w-full flex-col bg-gradient-to-br from-background via-primary/5 to-accent/10 font-display" style={{ paddingBottom: "96px" }}>
       <Header />
 
       <main className="flex-grow flex flex-col gap-6">
@@ -60,53 +60,56 @@ const Index = () => {
         
         {/* AI Features Quick Access */}
         <div className="px-4">
-          <h2 className="text-lg font-bold mb-3 text-foreground">🤖 Insights con IA</h2>
+          <h2 className="text-lg font-bold mb-3 text-foreground flex items-center gap-2">
+            <span className="text-2xl">🤖</span>
+            <span className="bg-gradient-primary bg-clip-text text-transparent">Insights con IA</span>
+          </h2>
           <div className="grid grid-cols-1 gap-3">
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-all border-primary/20 hover:border-primary/40"
+              className="cursor-pointer hover:shadow-glow transition-all duration-300 border-primary/30 hover:border-primary/60 bg-gradient-card backdrop-blur-sm hover:scale-[1.02] active:scale-[0.98]"
               onClick={() => navigate('/predictions')}
             >
               <CardContent className="p-4 flex items-center gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-primary" />
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-purple flex items-center justify-center shadow-glow animate-glow-pulse">
+                  <Calendar className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Predicción de Ciclo</h3>
                   <p className="text-xs text-muted-foreground">IA predice tu próximo período</p>
                 </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                <ArrowRight className="h-5 w-5 text-primary transition-transform group-hover:translate-x-1" />
               </CardContent>
             </Card>
 
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-all border-orange-200/50 dark:border-orange-900/50 hover:border-orange-300 dark:hover:border-orange-800"
+              className="cursor-pointer hover:shadow-glow transition-all duration-300 border-rose-light/30 hover:border-rose-light/60 bg-gradient-card backdrop-blur-sm hover:scale-[1.02] active:scale-[0.98]"
               onClick={() => navigate('/health-center')}
             >
               <CardContent className="p-4 flex items-center gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <Heart className="h-6 w-6 text-orange-500" />
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-rose-purple flex items-center justify-center shadow-glow animate-glow-pulse">
+                  <Heart className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Centro de Salud</h3>
                   <p className="text-xs text-muted-foreground">Detecta anomalías y patrones</p>
                 </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                <ArrowRight className="h-5 w-5 text-rose-light transition-transform group-hover:translate-x-1" />
               </CardContent>
             </Card>
 
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-all border-purple-200/50 dark:border-purple-900/50 hover:border-purple-300 dark:hover:border-purple-800"
+              className="cursor-pointer hover:shadow-glow transition-all duration-300 border-purple-light/30 hover:border-purple-light/60 bg-gradient-card backdrop-blur-sm hover:scale-[1.02] active:scale-[0.98]"
               onClick={() => navigate('/insights')}
             >
               <CardContent className="p-4 flex items-center gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center">
-                  <Lightbulb className="h-6 w-6 text-purple-500" />
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-glow flex items-center justify-center shadow-glow animate-glow-pulse">
+                  <Lightbulb className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Insights Personalizados</h3>
                   <p className="text-xs text-muted-foreground">Correlaciones en tus datos</p>
                 </div>
-                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                <ArrowRight className="h-5 w-5 text-purple-light transition-transform group-hover:translate-x-1" />
               </CardContent>
             </Card>
           </div>
