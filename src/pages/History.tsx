@@ -13,6 +13,7 @@ import EmotionalInsights from '@/components/EmotionalInsights';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
 import EmotionalTrendsChart from '@/components/EmotionalTrendsChart';
 import { getPhaseFromCycleDay } from '@/lib/cycleCalculations';
+import { useTranslation } from 'react-i18next';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--destructive))', 'hsl(var(--muted))'];
 const PHASE_COLORS = {
@@ -25,6 +26,7 @@ const PHASE_COLORS = {
 export default function History() {
   const navigate = useNavigate();
   const { user, profile } = useAuth();
+  const { t } = useTranslation();
 
   // Fetch logs for last 3 months
   const { data: logs } = useQuery({
