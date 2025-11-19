@@ -37,7 +37,28 @@
     "resources": "Recursos educativos",
     "healthContacts": "Contactos de salud",
     "completeProfile": "Completa tu perfil",
-    "completeProfileDesc": "Añade información sobre tu ciclo para obtener predicciones personalizadas"
+    "completeProfileDesc": "Añade información sobre tu ciclo para obtener predicciones personalizadas",
+    "aiAssistant": "Asistente de IA",
+    "aiAssistantDesc": "Obtén recomendaciones personalizadas basadas en tu fase actual",
+    "statsBar": {
+      "dayOfCycle": "Día {{day}}",
+      "cycleDayLabel": "Día del Ciclo",
+      "currentPhaseLabel": "Fase Actual",
+      "nextPeriodLabel": "Próximo Período",
+      "in": "En",
+      "days": "días"
+    },
+    "dashboardCards": {
+      "weekSummary": "Resumen de la Semana",
+      "weekSummaryDesc": "Tus registros de los últimos 7 días",
+      "logsThisWeek": "Registros esta semana",
+      "mostFrequentSymptom": "Síntoma más frecuente",
+      "none": "Ninguno"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "subtitle": "Respuestas a las dudas más comunes sobre My Wellness Glow"
+    }
   },
   "profile": {
     "title": "Perfil",
@@ -68,6 +89,23 @@
     "journalPlaceholder": "¿Cómo te sientes hoy? Escribe cualquier observación...",
     "saveSuccess": "Registro guardado correctamente",
     "saveError": "Error al guardar el registro",
+    "moodTitle": "Mi Estado de Ánimo",
+    "moodDescription": "¿Cómo te sientes emocionalmente hoy?",
+    "suggestedSymptoms": "Síntomas Comunes en tu Fase Actual",
+    "otherSymptoms": "Otros Síntomas",
+    "validation": {
+      "minSelection": "Por favor, selecciona al menos un estado de ánimo, síntoma o escribe algo en el diario"
+    },
+    "moods": {
+      "calm": "Tranquila",
+      "happy": "Feliz",
+      "energetic": "Energética",
+      "sad": "Triste",
+      "anxious": "Ansiosa",
+      "irritable": "Irritable",
+      "tired": "Cansada",
+      "focused": "Concentrada"
+    },
     "symptomsList": {
       "hotFlashes": "Sofocos",
       "nightSweats": "Sudores nocturnos",
@@ -78,7 +116,15 @@
       "brainFog": "Niebla mental",
       "jointPain": "Dolor articular",
       "headache": "Dolor de cabeza",
-      "irritability": "Irritabilidad"
+      "irritability": "Irritabilidad",
+      "cramps": "Cólicos",
+      "bloating": "Hinchazón",
+      "acne": "Acné",
+      "breastTenderness": "Sensibilidad en los senos",
+      "backPain": "Dolor de espalda",
+      "nausea": "Náuseas",
+      "dizziness": "Mareos",
+      "foodCravings": "Antojos"
     }
   },
   "history": {
@@ -88,7 +134,31 @@
     "noLogsDesc": "Comienza a registrar tus síntomas diarios para ver tu historial aquí",
     "periodDay": "Día de menstruación",
     "symptoms": "Síntomas",
-    "notes": "Notas"
+    "notes": "Notas",
+    "charts": {
+      "phaseEmotions": "¿Cómo te sientes en cada fase?",
+      "phaseEmotionsDesc": "Tu estado emocional según la etapa de tu ciclo menstrual",
+      "phaseEmotionsExplanation": "Este gráfico muestra cómo varía tu estado de ánimo durante las 4 fases de tu ciclo menstrual. Cada punto representa tu promedio emocional en esa fase específica.",
+      "moodLevel": "Nivel de Ánimo",
+      "moodPhase": "Estado de Ánimo",
+      "veryPositive": "😊 Muy Positivo",
+      "positive": "🙂 Positivo",
+      "neutral": "😐 Neutral",
+      "someNegative": "😕 Algo Negativo",
+      "negative": "😔 Negativo",
+      "phaseLabel": "Fase",
+      "positiveZone": "ÁNIMO POSITIVO",
+      "positiveZoneDesc": "Fases donde te sientes mejor",
+      "lowZone": "ÁNIMO BAJO",
+      "lowZoneDesc": "Momentos para mayor autocuidado",
+      "symptomsOverTime": "Evolución de Síntomas",
+      "symptomsOverTimeDesc": "Frecuencia de tus síntomas más comunes a lo largo del tiempo",
+      "symptomsOverTimeExplanation": "Observa cómo han variado tus síntomas principales en los últimos meses. Esto te ayuda a identificar patrones y prepararte mejor.",
+      "frequency": "Frecuencia",
+      "date": "Fecha",
+      "symptomTracking": "SEGUIMIENTO DE SÍNTOMAS",
+      "symptomTrackingDesc": "Identifica patrones y anticipa cambios"
+    }
   },
   "resources": {
     "title": "Recursos Educativos",

@@ -14,10 +14,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format, startOfWeek, endOfWeek } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
   const { profile, signOut, user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Fetch ALL logs to calculate accurate cycle info
   const { data: allLogs } = useQuery({
@@ -78,7 +80,7 @@ const Index = () => {
     acc[symptom] = (acc[symptom] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
-  const mostFrequent = Object.entries(symptomCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Ninguno';
+  const mostFrequent = Object.entries(symptomCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || t('home.dashboardCards.none');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 relative overflow-hidden">
@@ -93,17 +95,17 @@ const Index = () => {
         <div className="container mx-auto flex justify-around items-center text-center relative z-10">
           <div className="transform hover:scale-110 transition-transform">
             <div className="text-2xl font-bold drop-shadow-lg">{cycleInfo?.currentDay || 0}</div>
-            <div className="text-xs opacity-90 font-medium">Día del Ciclo</div>
+            <div className="text-xs opacity-90 font-medium">{t('home.statsBar.cycleDayLabel')}</div>
           </div>
           <div className="h-10 w-px bg-white/40 shadow-lg"></div>
           <div className="transform hover:scale-110 transition-transform">
             <div className="text-2xl font-bold drop-shadow-lg">{cycleInfo?.daysUntilNext || '—'}</div>
-            <div className="text-xs opacity-90 font-medium">Días hasta periodo</div>
+            <div className="text-xs opacity-90 font-medium">{t('home.statsBar.nextPeriodLabel')}</div>
           </div>
           <div className="h-10 w-px bg-white/40 shadow-lg"></div>
           <div className="transform hover:scale-110 transition-transform">
             <div className="text-2xl font-bold drop-shadow-lg">{weekLogs?.length || 0}</div>
-            <div className="text-xs opacity-90 font-medium">Registros esta semana</div>
+            <div className="text-xs opacity-90 font-medium">{t('home.dashboardCards.logsThisWeek')}</div>
           </div>
         </div>
       </div>
@@ -116,9 +118,9 @@ const Index = () => {
               <img src="/logo.png" alt="FlowCare Logo" className="w-10 h-10 rounded-full shadow-lg" />
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  ¡Hola, {profile?.name || 'Amiga'}!
+                  {t('home.welcome')}, {profile?.name || t('home.welcome')}!
                 </h1>
-                <p className="text-sm text-muted-foreground">Bienvenida a tu espacio de bienestar</p>
+                <p className="text-sm text-muted-foreground">{t('home.welcomeBack')}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">

@@ -37,7 +37,28 @@
     "resources": "Educational resources",
     "healthContacts": "Health contacts",
     "completeProfile": "Complete your profile",
-    "completeProfileDesc": "Add information about your cycle to get personalized predictions"
+    "completeProfileDesc": "Add information about your cycle to get personalized predictions",
+    "aiAssistant": "AI Assistant",
+    "aiAssistantDesc": "Get personalized recommendations based on your current phase",
+    "statsBar": {
+      "dayOfCycle": "Day {{day}}",
+      "cycleDayLabel": "Cycle Day",
+      "currentPhaseLabel": "Current Phase",
+      "nextPeriodLabel": "Next Period",
+      "in": "In",
+      "days": "days"
+    },
+    "dashboardCards": {
+      "weekSummary": "Week Summary",
+      "weekSummaryDesc": "Your records from the last 7 days",
+      "logsThisWeek": "Logs this week",
+      "mostFrequentSymptom": "Most frequent symptom",
+      "none": "None"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers to the most common questions about My Wellness Glow"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -68,6 +89,23 @@
     "journalPlaceholder": "How are you feeling today? Write any observations...",
     "saveSuccess": "Check-in saved successfully",
     "saveError": "Error saving check-in",
+    "moodTitle": "My Mood",
+    "moodDescription": "How do you feel emotionally today?",
+    "suggestedSymptoms": "Common Symptoms in your Current Phase",
+    "otherSymptoms": "Other Symptoms",
+    "validation": {
+      "minSelection": "Please select at least one mood, symptom or write something in the journal"
+    },
+    "moods": {
+      "calm": "Calm",
+      "happy": "Happy",
+      "energetic": "Energetic",
+      "sad": "Sad",
+      "anxious": "Anxious",
+      "irritable": "Irritable",
+      "tired": "Tired",
+      "focused": "Focused"
+    },
     "symptomsList": {
       "hotFlashes": "Hot flashes",
       "nightSweats": "Night sweats",
@@ -78,7 +116,15 @@
       "brainFog": "Brain fog",
       "jointPain": "Joint pain",
       "headache": "Headache",
-      "irritability": "Irritability"
+      "irritability": "Irritability",
+      "cramps": "Cramps",
+      "bloating": "Bloating",
+      "acne": "Acne",
+      "breastTenderness": "Breast tenderness",
+      "backPain": "Back pain",
+      "nausea": "Nausea",
+      "dizziness": "Dizziness",
+      "foodCravings": "Food cravings"
     }
   },
   "history": {
@@ -88,7 +134,31 @@
     "noLogsDesc": "Start recording your daily symptoms to see your history here",
     "periodDay": "Period day",
     "symptoms": "Symptoms",
-    "notes": "Notes"
+    "notes": "Notes",
+    "charts": {
+      "phaseEmotions": "How do you feel in each phase?",
+      "phaseEmotionsDesc": "Your emotional state according to your menstrual cycle stage",
+      "phaseEmotionsExplanation": "This chart shows how your mood varies during the 4 phases of your menstrual cycle. Each point represents your emotional average in that specific phase.",
+      "moodLevel": "Mood Level",
+      "moodPhase": "Mood",
+      "veryPositive": "😊 Very Positive",
+      "positive": "🙂 Positive",
+      "neutral": "😐 Neutral",
+      "someNegative": "😕 Somewhat Negative",
+      "negative": "😔 Negative",
+      "phaseLabel": "Phase",
+      "positiveZone": "POSITIVE MOOD",
+      "positiveZoneDesc": "Phases where you feel better",
+      "lowZone": "LOW MOOD",
+      "lowZoneDesc": "Moments for greater self-care",
+      "symptomsOverTime": "Symptoms Evolution",
+      "symptomsOverTimeDesc": "Frequency of your most common symptoms over time",
+      "symptomsOverTimeExplanation": "Observe how your main symptoms have varied in recent months. This helps you identify patterns and prepare better.",
+      "frequency": "Frequency",
+      "date": "Date",
+      "symptomTracking": "SYMPTOM TRACKING",
+      "symptomTrackingDesc": "Identify patterns and anticipate changes"
+    }
   },
   "resources": {
     "title": "Educational Resources",

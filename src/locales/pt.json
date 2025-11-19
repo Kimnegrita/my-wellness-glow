@@ -39,7 +39,26 @@
     "completeProfile": "Complete o seu perfil",
     "completeProfileDesc": "Adicione informação sobre o seu ciclo para obter previsões personalizadas",
     "aiAssistant": "Assistente de IA",
-    "aiAssistantDesc": "Obtenha recomendações personalizadas baseadas na sua fase atual"
+    "aiAssistantDesc": "Obtenha recomendações personalizadas baseadas na sua fase atual",
+    "statsBar": {
+      "dayOfCycle": "Dia {{day}}",
+      "cycleDayLabel": "Dia do Ciclo",
+      "currentPhaseLabel": "Fase Atual",
+      "nextPeriodLabel": "Próximo Período",
+      "in": "Dentro de",
+      "days": "dias"
+    },
+    "dashboardCards": {
+      "weekSummary": "Resumo da Semana",
+      "weekSummaryDesc": "Os seus registos dos últimos 7 dias",
+      "logsThisWeek": "Registos esta semana",
+      "mostFrequentSymptom": "Sintoma mais frequente",
+      "none": "Nenhum"
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "subtitle": "Respostas às dúvidas mais comuns sobre My Wellness Glow"
+    }
   },
   "profile": {
     "title": "Perfil",
@@ -70,6 +89,23 @@
     "journalPlaceholder": "Como se sente hoje? Escreva qualquer observação...",
     "saveSuccess": "Registo guardado com sucesso",
     "saveError": "Erro ao guardar o registo",
+    "moodTitle": "O Meu Estado de Espírito",
+    "moodDescription": "Como se sente emocionalmente hoje?",
+    "suggestedSymptoms": "Sintomas Comuns na sua Fase Atual",
+    "otherSymptoms": "Outros Sintomas",
+    "validation": {
+      "minSelection": "Por favor, selecione pelo menos um estado de espírito, sintoma ou escreva algo no diário"
+    },
+    "moods": {
+      "calm": "Calma",
+      "happy": "Feliz",
+      "energetic": "Energética",
+      "sad": "Triste",
+      "anxious": "Ansiosa",
+      "irritable": "Irritável",
+      "tired": "Cansada",
+      "focused": "Concentrada"
+    },
     "symptomsList": {
       "hotFlashes": "Afrontamentos",
       "nightSweats": "Suores noturnos",
@@ -80,7 +116,15 @@
       "brainFog": "Névoa mental",
       "jointPain": "Dor articular",
       "headache": "Dor de cabeça",
-      "irritability": "Irritabilidade"
+      "irritability": "Irritabilidade",
+      "cramps": "Cólicas",
+      "bloating": "Inchaço",
+      "acne": "Acne",
+      "breastTenderness": "Sensibilidade nos seios",
+      "backPain": "Dor nas costas",
+      "nausea": "Náuseas",
+      "dizziness": "Tonturas",
+      "foodCravings": "Desejos alimentares"
     }
   },
   "history": {
@@ -90,7 +134,31 @@
     "noLogsDesc": "Comece a registar os seus sintomas diários para ver o seu histórico aqui",
     "periodDay": "Dia de menstruação",
     "symptoms": "Sintomas",
-    "notes": "Notas"
+    "notes": "Notas",
+    "charts": {
+      "phaseEmotions": "Como se sente em cada fase?",
+      "phaseEmotionsDesc": "O seu estado emocional segundo a etapa do seu ciclo menstrual",
+      "phaseEmotionsExplanation": "Este gráfico mostra como varia o seu estado de espírito durante as 4 fases do seu ciclo menstrual. Cada ponto representa a sua média emocional nessa fase específica.",
+      "moodLevel": "Nível de Humor",
+      "moodPhase": "Estado de Espírito",
+      "veryPositive": "😊 Muito Positivo",
+      "positive": "🙂 Positivo",
+      "neutral": "😐 Neutral",
+      "someNegative": "😕 Algo Negativo",
+      "negative": "😔 Negativo",
+      "phaseLabel": "Fase",
+      "positiveZone": "HUMOR POSITIVO",
+      "positiveZoneDesc": "Fases onde se sente melhor",
+      "lowZone": "HUMOR BAIXO",
+      "lowZoneDesc": "Momentos para maior autocuidado",
+      "symptomsOverTime": "Evolução de Sintomas",
+      "symptomsOverTimeDesc": "Frequência dos seus sintomas mais comuns ao longo do tempo",
+      "symptomsOverTimeExplanation": "Observe como variaram os seus sintomas principais nos últimos meses. Isto ajuda-a a identificar padrões e preparar-se melhor.",
+      "frequency": "Frequência",
+      "date": "Data",
+      "symptomTracking": "SEGUIMENTO DE SINTOMAS",
+      "symptomTrackingDesc": "Identifique padrões e antecipe mudanças"
+    }
   },
   "resources": {
     "title": "Recursos Educativos",
