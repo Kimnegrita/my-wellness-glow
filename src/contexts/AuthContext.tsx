@@ -146,8 +146,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       if (error) throw error;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    onSuccess: async (_, variables) => {
+      // Invalidate and wait for refetch
+      await queryClient.invalidateQueries({ queryKey: ['profile'] });
+      
+      // If language was updated, change it immediately after profile is refetched
+      if (variables.language) {
+        console.log('Language updated in profile, changing to:', variables.language);
+        await i18n.changeLanguage(variables.language);
+      }
     },
   });
 

@@ -48,12 +48,14 @@ export default function Profile() {
         avg_period_duration: periodDuration,
       });
 
-      console.log('Profile saved, changing i18n language to:', language);
-      // Force language change immediately after save
-      await i18n.changeLanguage(language);
+      console.log('Profile saved successfully');
       
       toast.success(t('profile.saveSuccess'));
-      navigate('/', { replace: true });
+      
+      // Wait a bit for the query to invalidate and reload before navigating
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 500);
     } catch (error: any) {
       toast.error(t('profile.saveError'));
     } finally {
