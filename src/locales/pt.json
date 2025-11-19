@@ -16,7 +16,7 @@
     "email": "E-mail",
     "password": "Palavra-passe",
     "confirmPassword": "Confirmar palavra-passe",
-    "forgotPassword": "Esqueceu a palavra-passe?",
+    "forgotPassword": "Esqueceu-se da palavra-passe?",
     "alreadyHaveAccount": "Já tem uma conta?",
     "dontHaveAccount": "Não tem uma conta?",
     "signInSuccess": "Sessão iniciada com sucesso",
@@ -29,7 +29,7 @@
     "cycleDay": "Dia do ciclo",
     "currentPhase": "Fase atual",
     "nextPeriod": "Próxima menstruação",
-    "daysUntil": "Em {{days}} dias",
+    "daysUntil": "Dentro de {{days}} dias",
     "todaysTip": "Dica do dia",
     "quickActions": "Ações rápidas",
     "dailyCheckin": "Registo diário",
@@ -37,7 +37,9 @@
     "resources": "Recursos educativos",
     "healthContacts": "Contactos de saúde",
     "completeProfile": "Complete o seu perfil",
-    "completeProfileDesc": "Adicione informação sobre o seu ciclo para obter previsões personalizadas"
+    "completeProfileDesc": "Adicione informação sobre o seu ciclo para obter previsões personalizadas",
+    "aiAssistant": "Assistente de IA",
+    "aiAssistantDesc": "Obtenha recomendações personalizadas baseadas na sua fase atual"
   },
   "profile": {
     "title": "Perfil",
@@ -92,15 +94,15 @@
   },
   "resources": {
     "title": "Recursos Educativos",
-    "description": "Informação completa e confiável sobre perimenopausa, menopausa, sintomas e tratamentos para ajudá-la a navegar esta etapa com conhecimento e confiança.",
+    "description": "Informação completa e fiável sobre perimenopausa, menopausa, sintomas e tratamentos para ajudá-la a navegar esta etapa com conhecimento e confiança.",
     "perimenopause": "Perimenopausa",
     "menopause": "Menopausa",
     "symptoms": "Sintomas",
     "treatments": "Tratamentos",
     "onlineResources": "Recursos Online",
-    "onlineResourcesDesc": "Links para organizações, vídeos educativos, documentos e comunidades de apoio disponíveis na internet.",
+    "onlineResourcesDesc": "Ligações para organizações, vídeos educativos, documentos e comunidades de apoio disponíveis na internet.",
     "visitResource": "Visitar recurso",
-    "disclaimer": "Esta informação tem fins educativos e não substitui a consulta médica profissional. Cada mulher é única e os sintomas, bem como os tratamentos apropriados, variam. Consulte sempre o seu profissional de saúde para aconselhamento personalizado.",
+    "disclaimer": "Esta informação é educativa e não substitui a consulta médica profissional. Cada mulher é única e os sintomas, bem como os tratamentos apropriados, variam. Consulte sempre o seu profissional de saúde para aconselhamento personalizado.",
     "importantNote": "Nota Importante",
     "perimenopauseArticles": {
       "what": {
@@ -162,12 +164,12 @@
       "nonHormonal": {
         "title": "Tratamentos Não Hormonais",
         "desc": "Alternativas eficazes sem hormonas.",
-        "content": "As opções incluem: antidepressivos (ISRS/IRSN) para afrontamentos, gabapentina, fitoestrogénios, lubrificantes vaginais, terapia cognitivo-comportamental, acupuntura, e suplementos como cohosh negro. Consulte sempre um profissional antes de iniciar qualquer tratamento."
+        "content": "As opções incluem: antidepressivos (ISRS/IRSN) para afrontamentos, gabapentina, fitoestrogénios, lubrificantes vaginais, terapia cognitivo-comportamental, acupunctura, e suplementos como cohosh negro. Consulte sempre um profissional antes de iniciar qualquer tratamento."
       },
       "lifestyle": {
         "title": "Mudanças no Estilo de Vida",
         "desc": "Modificações diárias que fazem a diferença.",
-        "content": "Dieta equilibrada rica em cálcio e vitamina D, exercício regular (150 min/semana), manter peso saudável, não fumar, limitar álcool, técnicas de gestão do stress (yoga, meditação), e manter vida social ativa são fundamentais."
+        "content": "Dieta equilibrada rica em cálcio e vitamina D, exercício regular (150 min/semana), manter peso saudável, não fumar, limitar álcool, técnicas de gestão do stress (ioga, meditação), e manter vida social ativa são fundamentais."
       }
     },
     "externalResources": {
@@ -205,60 +207,50 @@
       "selfcare": "Autocuidado"
     },
     "menstruation": {
-      "nutrition_iron": "Inclua alimentos ricos em ferro: espinafre, lentilhas, carne vermelha",
+      "nutrition_iron": "Inclua alimentos ricos em ferro: espinafres, lentilhas, carne vermelha",
       "nutrition_hydration": "Mantenha-se hidratada com água e chá de gengibre",
-      "exercise_yoga": "Yoga restaurativo e exercício suave para aliviar cólicas",
-      "exercise_walks": "Caminhadas leves se você se sentir energizada",
+      "exercise_yoga": "Ioga restaurativa e exercício suave para aliviar cólicas",
+      "exercise_walks": "Caminhadas leves se se sentir energizada",
       "selfcare_rest": "Descanse e ouça as necessidades do seu corpo",
       "selfcare_introspection": "Permita-se um espaço para introspecção"
     },
     "follicular": {
       "nutrition_protein": "Aumente proteínas de qualidade em cada refeição",
-      "nutrition_metabolism": "Seu metabolismo está acelerado, coma nutritivo",
-      "exercise_intense": "Exercício intenso: seu corpo responderá muito bem",
+      "nutrition_metabolism": "O seu metabolismo está acelerado, coma nutritivo",
+      "exercise_intense": "Exercício intenso: o seu corpo responderá muito bem",
       "exercise_strength": "Experimente treinos de força e cardio",
-      "selfcare_projects": "Momento ideal para novos projetos e planejamento",
-      "selfcare_energy": "Aproveite sua energia e criatividade aumentadas"
+      "selfcare_projects": "Momento ideal para novos projetos e planeamento",
+      "selfcare_energy": "Aproveite a sua energia e criatividade aumentadas"
     },
     "ovulation": {
-      "nutrition_antioxidants": "Antioxidantes: frutas vermelhas, chá verde, vegetais de folha",
+      "nutrition_antioxidants": "Antioxidantes: frutos vermelhos, chá verde, vegetais de folha",
       "nutrition_fresh": "Alimentos frescos e coloridos para pico de energia",
-      "exercise_social": "Atividades sociais: esportes em equipe, aulas em grupo",
-      "exercise_stamina": "Sua resistência está no máximo",
-      "selfcare_conversations": "Momento perfeito para conversas importantes",
-      "selfcare_confidence": "Aproveite sua confiança para apresentações ou entrevistas"
+      "exercise_cardio": "Cardio e treinos de alta intensidade",
+      "exercise_social": "Atividades sociais: dança, desportos de equipa",
+      "selfcare_connection": "Momento ideal para comunicação e conexão social",
+      "selfcare_confidence": "Aproveite a sua confiança e carisma naturais"
     },
     "luteal": {
-      "nutrition_carbs": "Carboidratos complexos para equilibrar o humor",
-      "nutrition_magnesium": "Magnésio: nozes, sementes, para inchaço e cãibras",
-      "exercise_moderate": "Caminhadas leves e exercício moderado",
-      "exercise_listen": "Reduza a intensidade, ouça seu corpo",
-      "selfcare_priority": "Priorize autocuidado: banhos mornos, meditação",
-      "selfcare_caffeine": "Reduza cafeína se sentir ansiedade"
-    },
-    "irregular": {
-      "nutrition_omega": "Ômega-3 para regular hormônios naturalmente",
-      "nutrition_balanced": "Dieta equilibrada e consistente",
-      "exercise_routine": "Rotina de exercício regular para equilíbrio hormonal",
-      "exercise_consistency": "Evite extremos, busque consistência",
-      "selfcare_sleep": "Rotina de sono regular é fundamental",
-      "selfcare_stress": "Gerenciamento do estresse: respiração profunda, mindfulness"
+      "nutrition_complex": "Hidratos de carbono complexos: aveia, quinoa, batata-doce",
+      "nutrition_magnesium": "Magnésio para o humor: nozes, sementes, chocolate amargo",
+      "exercise_moderate": "Exercício moderado: ioga, pilates, caminhadas",
+      "exercise_gentle": "Seja gentil consigo, evite sobrecarga",
+      "selfcare_boundaries": "Pratique estabelecer limites e dizer não",
+      "selfcare_comfort": "Priorize conforto e atividades relaxantes"
     }
   },
   "assistant": {
     "title": "Assistente de IA",
-    "subtitle": "Sua companheira de saúde menstrual",
-    "pageTitle": "Assistente Luna",
-    "pageDescription": "Converse com Luna, sua assistente pessoal de saúde menstrual. Tire dúvidas, peça conselhos personalizados baseados na sua fase do ciclo, e aprenda mais sobre seu corpo.",
-    "greeting": "Olá! 👋 Sou a Luna, sua assistente de saúde menstrual. Como posso te ajudar hoje?",
-    "inputPlaceholder": "Escreva sua pergunta...",
-    "disclaimer": "Esta IA oferece informação geral e não substitui consulta médica.",
-    "suggestionsTitle": "Experimente perguntar:",
-    "suggestion1": "Quais exercícios são melhores na minha fase atual?",
-    "suggestion2": "Por que tenho mais energia durante a ovulação?",
-    "suggestion3": "Como posso aliviar cólicas naturalmente?",
-    "suggestion4": "Quais alimentos são bons para a fase lútea?",
-    "quickAccessTitle": "Fale com Luna",
-    "quickAccessDescription": "Tire suas dúvidas sobre saúde menstrual"
+    "description": "Oi! Sou a Luna, a sua assistente pessoal de bem-estar menstrual. Estou aqui para responder às suas perguntas, oferecer conselhos personalizados e acompanhá-la em cada fase do seu ciclo. Como posso ajudá-la hoje?",
+    "suggestedQuestions": "Perguntas sugeridas:",
+    "question1": "Como posso aliviar os meus sintomas atuais?",
+    "question2": "Que tipo de exercício é melhor para a minha fase atual?",
+    "question3": "Que alimentos devo consumir nesta fase do ciclo?",
+    "question4": "Como posso melhorar a qualidade do meu sono?",
+    "inputPlaceholder": "Escreva a sua mensagem...",
+    "send": "Enviar",
+    "loadingAuth": "A verificar autenticação...",
+    "notAuthenticated": "Precisa de iniciar sessão para usar o assistente de IA.",
+    "signInButton": "Iniciar sessão"
   }
 }
