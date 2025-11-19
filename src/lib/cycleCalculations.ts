@@ -122,6 +122,19 @@ export function getDaysUntilNextPeriod(nextPeriodDate: Date | null): number | nu
   return differenceInDays(next, today);
 }
 
+// Helper to get phase name from cycle day
+export function getPhaseFromCycleDay(cycleDay: number, cycleLength: number = 28): string {
+  if (cycleDay <= 5) {
+    return 'Menstrual';
+  } else if (cycleDay > 5 && cycleDay <= Math.floor(cycleLength / 2) - 2) {
+    return 'Folicular';
+  } else if (cycleDay > Math.floor(cycleLength / 2) - 2 && cycleDay <= Math.floor(cycleLength / 2) + 2) {
+    return 'Ovulación';
+  } else {
+    return 'Lútea';
+  }
+}
+
 export function getCurrentPhase(
   cycleDay: number | null, 
   isIrregular: boolean = false,

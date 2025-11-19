@@ -12,6 +12,7 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import EmotionalInsights from '@/components/EmotionalInsights';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
 import EmotionalTrendsChart from '@/components/EmotionalTrendsChart';
+import { getPhaseFromCycleDay } from '@/lib/cycleCalculations';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--destructive))', 'hsl(var(--muted))'];
 const PHASE_COLORS = {
@@ -81,9 +82,9 @@ export default function History() {
     dia: parseISO(log.log_date).getTime(),
   }));
 
-  // NEW: Sentimientos por fase del ciclo
+  // Sentimientos por fase del ciclo - OPTIMIZADO
   const sentimentByPhase = () => {
-    if (!logs || !profile?.avg_cycle_length) return [];
+    if (!logs || !profile?.avg_cycle_length || !profile?.last_period_date) return [];
     
     const phaseData: Record<string, { total: number; count: number }> = {
       'Menstrual': { total: 0, count: 0 },
@@ -99,7 +100,6 @@ export default function History() {
       if (log.sentiment_score === null) return;
       
       const logDate = parseISO(log.log_date);
-      // Find which cycle this log belongs to
       const lastPeriodBefore = periodStarts
         .filter(start => start <= logDate)
         .sort((a, b) => b.getTime() - a.getTime())[0];

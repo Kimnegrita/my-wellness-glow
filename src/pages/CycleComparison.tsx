@@ -10,6 +10,7 @@ import { format, parseISO, differenceInDays } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, LineChart, Line, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { useTranslation } from 'react-i18next';
+import { getPhaseFromCycleDay } from '@/lib/cycleCalculations';
 
 interface CycleData {
   cycleNumber: number;
@@ -90,15 +91,7 @@ export default function CycleComparison() {
         const cycleLen = profile?.avg_cycle_length || 28;
         cycleLogs.forEach((log, idx) => {
           const cycleDay = idx + 1;
-          let phase = 'Menstrual';
-          
-          if (cycleDay > 5 && cycleDay <= Math.floor(cycleLen / 2) - 2) {
-            phase = 'Folicular';
-          } else if (cycleDay > Math.floor(cycleLen / 2) - 2 && cycleDay <= Math.floor(cycleLen / 2) + 2) {
-            phase = 'Ovulación';
-          } else if (cycleDay > Math.floor(cycleLen / 2) + 2) {
-            phase = 'Lútea';
-          }
+          const phase = getPhaseFromCycleDay(cycleDay, cycleLen);
 
           (log.symptoms || []).forEach((symptom: string) => {
             if (!phaseSymptoms[phase].includes(symptom)) {
