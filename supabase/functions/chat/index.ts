@@ -102,7 +102,7 @@ serve(async (req) => {
     const languageMap: { [key: string]: string } = {
       'es': 'espanhol',
       'en': 'inglês',
-      'pt': 'português'
+      'pt': 'português europeu (de Portugal)'
     };
 
     // System prompt especializado
