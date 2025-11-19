@@ -13,6 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { format, differenceInDays } from 'date-fns';
 import SentimentAnalysis from '@/components/SentimentAnalysis';
 import { getCurrentPhase, getCurrentCycleDay } from '@/lib/cycleCalculations';
+import { useTranslation } from 'react-i18next';
 
 const SYMPTOMS = [
   // Síntomas Menstruales
@@ -194,6 +195,7 @@ export default function DailyCheckin() {
   const navigate = useNavigate();
   const { user, profile, updateProfile } = useAuth();
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const [periodStatus, setPeriodStatus] = useState<'started' | 'ended' | 'none'>('none');
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
@@ -361,7 +363,7 @@ export default function DailyCheckin() {
 
   const handleSave = () => {
     if (selectedMoods.length === 0 && selectedSymptoms.length === 0 && !journalEntry) {
-      toast.error('Por favor, selecciona al menos un estado de ánimo, síntoma o escribe algo en el diario');
+      toast.error(t('checkin.validation.minSelection'));
       return;
     }
     saveMutation.mutate();
@@ -376,16 +378,16 @@ export default function DailyCheckin() {
           className="mb-4"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Volver
+          {t('common.backToHome')}
         </Button>
 
         <Card className="shadow-elegant border-primary/20 bg-card/95 backdrop-blur">
           <CardHeader className="space-y-1 pb-6">
             <CardTitle className="text-3xl font-bold">
-              <span className="text-gradient">¿Cómo te sientes hoy?</span>
+              <span className="text-gradient">{t('checkin.title')}</span>
             </CardTitle>
             <CardDescription className="text-base">
-              Día {format(new Date(), 'd')} • Toma un momento para conectar con tu cuerpo
+              {t('checkin.description')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
@@ -427,7 +429,7 @@ export default function DailyCheckin() {
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground flex items-center gap-2">
                 <span className="text-lg">💭</span>
-                Mi Estado de Ánimo
+                {t('checkin.moodTitle')}
               </h3>
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                 {MOODS.map((mood) => (
@@ -453,7 +455,7 @@ export default function DailyCheckin() {
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground flex items-center gap-2">
                 <span className="text-lg">🌡️</span>
-                Síntomas Físicos
+                {t('checkin.symptoms')}
               </h3>
               <p className="text-xs text-muted-foreground mb-2">
                 Selecciona todos los síntomas que estés experimentando hoy
@@ -484,7 +486,7 @@ export default function DailyCheckin() {
 
               {/* Todos los demás síntomas */}
               <div>
-                <p className="text-xs text-muted-foreground mb-2">Otros síntomas</p>
+                <p className="text-xs text-muted-foreground mb-2">{t('checkin.otherSymptoms')}</p>
                 <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto p-2 bg-muted/20 rounded-lg">
                   {otherSymptoms.map((symptom) => (
                     <SymptomChip
@@ -502,17 +504,17 @@ export default function DailyCheckin() {
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground flex items-center gap-2">
                 <span className="text-lg">✨</span>
-                Intención o Gratitud
+                {t('checkin.journalEntry')}
               </h3>
               <Textarea
-                placeholder="Escribe sobre tu intención o gratitud de hoy..."
+                placeholder={t('checkin.journalPlaceholder')}
                 value={journalEntry}
                 onChange={(e) => setJournalEntry(e.target.value)}
                 rows={4}
                 className="resize-none border-2 focus:border-primary/50"
               />
               <p className="text-xs text-muted-foreground">
-                Este es tu espacio privado para reflexionar
+                {t('checkin.description')}
               </p>
             </div>
 
@@ -540,7 +542,7 @@ export default function DailyCheckin() {
               className="w-full bg-gradient-primary hover:opacity-90 h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               size="lg"
             >
-              {saveMutation.isPending ? 'Guardando...' : isAnalyzing ? 'Analizando...' : 'Guardar Registro'}
+              {saveMutation.isPending ? t('common.loading') : isAnalyzing ? t('common.loading') : t('common.save')}
               <Save className="ml-2 h-5 w-5" />
             </Button>
           </CardContent>
