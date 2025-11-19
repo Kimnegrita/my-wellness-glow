@@ -11,15 +11,15 @@ const Contacts = () => {
   const hospitals = [
     {
       name: "Hospital CUF Lisboa",
-      description: "Red de hospitales privados con consultas especializadas en ginecología y menopausia",
-      location: "Lisboa, Porto, Cascais, Sintra y otras ciudades",
+      description: "Red de hospitales privados con servicios de ginecología",
+      location: "Lisboa, Porto, Cascais, Sintra",
       phone: "217 780 700",
       website: "www.saudecuf.pt",
       icon: Hospital,
     },
     {
       name: "Hospital da Luz",
-      description: "Hospital privado con unidad de salud de la mujer y consultas de menopausia",
+      description: "Hospital privado con unidad de salud de la mujer",
       location: "Lisboa, Oeiras, Setúbal, Aveiro",
       phone: "217 104 400",
       website: "www.hospitaldaluz.pt",
@@ -37,16 +37,16 @@ const Contacts = () => {
 
   const clinics = [
     {
-      name: "Multicare - Consulta da Menopausa",
-      description: "Consulta especializada en menopausa con atención online y presencial",
+      name: "Multicare - Consultas de Salud Femenina",
+      description: "Servicio de consultas especializadas con atención online y presencial",
       location: "Portugal (servicio online disponible)",
-      phone: "Días útiles 9h-19h mediante cita previa",
+      phone: "Días útiles 9h-19h",
       website: "medicinaonline.multicare.pt",
       icon: Heart,
     },
     {
       name: "Malo Clinic Ginemed Lisboa",
-      description: "Unidad hospitalaria especializada en salud reproductiva y ginecología",
+      description: "Clínica especializada en salud reproductiva y ginecología",
       location: "Lisboa",
       phone: "Consultar en web",
       website: "www.ginemed.es/centros/lisboa",
@@ -56,8 +56,8 @@ const Contacts = () => {
 
   const supportLines = [
     {
-      name: "Linha Médis - Saúde da Mulher",
-      description: "Línea de apoyo telefónico con enfermeras especializadas en salud de la mujer. Apoyo en todas las fases de la vida, incluyendo menopausia.",
+      name: "Línea Médis - Salud de la Mujer",
+      description: "Línea de apoyo telefónico con enfermeras especializadas en salud femenina",
       phone: "Consultar número en área de cliente",
       website: "www.medis.pt/saude-da-mulher",
       icon: Phone,
@@ -73,17 +73,17 @@ const Contacts = () => {
 
   const associations = [
     {
-      name: "A Menopausa - Portal Informativo",
-      description: "Portal portugués con información sobre menopausia, podcast y recursos educativos",
+      name: "Portal Informativo de Salud Femenina",
+      description: "Recursos educativos sobre salud menstrual y bienestar",
       contact: "Contacto vía web",
       website: "amenopausa.pt",
       icon: Users,
     },
     {
-      name: "Associação Portuguesa de Menopausa",
-      description: "Asociación científica dedicada al estudio y divulgación sobre menopausia",
+      name: "Asociaciones de Salud Femenina",
+      description: "Organizaciones dedicadas al estudio de la salud de la mujer",
       contact: "Contacto vía redes sociales",
-      website: "Facebook: Associação Portuguesa de Menopausa",
+      website: "Consultar directorios locales",
       icon: Users,
     },
   ];
@@ -157,12 +157,12 @@ const Contacts = () => {
           {t('common.backToHome')}
         </Button>
 
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            {t('contacts.title')}
+        <div className="text-center space-y-2 mb-8">
+          <h1 className="text-4xl font-bold text-gradient">
+            {t('contacts.title') || 'Contactos de Salud en Portugal'}
           </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            {t('contacts.description')}
+          <p className="text-muted-foreground text-lg">
+            {t('contacts.subtitle') || 'Directorio de servicios de salud femenina'}
           </p>
         </div>
 
